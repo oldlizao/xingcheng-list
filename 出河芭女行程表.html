@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>艺人行程查询表</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Microsoft Yahei}
+body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
+.box{background:#fff;padding:22px;border-radius:10px;box-shadow:0 1px 4px #0002}
+.filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+input,select{padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px}
+#searchInput{width:260px;}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ddd;padding:10px;text-align:left}
+th{background:#eef2f7}
+tr:hover{background:#f7f9fc}
+.tip{color:#666;font-size:13px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="tip">💡修改：右键html→打开方式→记事本，修改eventList里的数据，保存后F5刷新页面
+    <br>多艺人搜索用空格隔开，例：A演员 B歌手
+  </div>
+
+  <div class="filter-row">
+    <input id="searchInput" placeholder="搜索艺人/城市/活动，多艺人空格分开">
+    <select id="selActivity">
+      <option value="">全部活动</option>
+      <option value="一日店长">一日店长</option>
+      <option value="音乐节">音乐节</option>
+      <option value="live">live</option>
+      <option value="见面会">见面会</option>
+      <option value="音乐剧">音乐剧</option>
+      <option value="嘉宾">嘉宾</option>
+      <option value="生日会">生日会</option>
+      <option value="路演">路演</option>
+      <option value="其他">其他</option>
+    </select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>艺人</th>
+        <th>城市</th>
+        <th>活动类型</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<script>
+// ===================== 在记事本这里编辑行程数据 =====================
+const eventList = [
+  {date:"2026-08-28", artist:"曾艾佳 张笑盈 易嘉爱 罗海琳 黄黎蓉 赖梓惜 李姗姗 杨若惜 陈倩楠", city:"杭州", activity:"live"},
+  {date:"2026-08-29", artist:"戴萌", city:"北京", activity:"live"},
+  {date:"2026-08-29", artist:"卢静 梁乔 梁娇 龙亦瑞", city:"广州", activity:"路演"},
+  {date:"2026-08-29", artist:"罗寒月 林芝", city:"广州", activity:"live"},
+  {date:"2026-08-29", artist:"李姗姗", city:"杭州", activity:"嘉宾"},
+  {date:"2026-08-30", artist:"张语格", city:"北京", activity:"live"},
+  {date:"2026-08-30", artist:"曾艾佳", city:"上海", activity:"live"},
+  {date:"2026-09-05", artist:"符冰冰", city:"广州", activity:"生日会"},
+  {date:"2026-09-05", artist:"姜杉", city:"南京", activity:"一日店长"},
+  {date:"2026-09-05", artist:"蒋芸", city:"北京", activity:"其他"},
+  {date:"2026-09-06", artist:"黄婷婷", city:"上海", activity:"生日会"},
+  {date:"2026-09-06", artist:"卢静", city:"杭州", activity:"一日店长"},
+  {date:"2026-09-12", artist:"卢静,刘倩倩,唐莉佳,刘力菲", city:"广州", activity:"其他"},
+  {date:"2026-09-12", artist:"黄婷婷,沈梦瑶", city:"武汉", activity:"音乐节"},
+  {date:"2026-09-13", artist:"郑丹妮,陈珂", city:"马来西亚", activity:"其他"},
+  {date:"2026-09-25", artist:"唐莉佳,曾艾佳", city:"中国台湾", activity:"见面会"},
+  {date:"2026-09-25", artist:"许杨玉琢", city:"上海", activity:"生日会"},
+  {date:"2026-09-25", artist:"李艺彤", city:"上海", activity:"音乐剧"},
+  {date:"2026-09-26", artist:"王允宸", city:"上海", activity:"音乐剧"},
+  {date:"2026-09-26", artist:"李艺彤", city:"上海", activity:"音乐剧"},
+  {date:"2026-10-01", artist:"李艺彤", city:"上海", activity:"音乐剧"},
+  {date:"2026-10-02", artist:"戴萌", city:"常州", activity:"音乐节"},
+  {date:"2026-10-03", artist:"周诗雨", city:"成都", activity:"live"},
+  {date:"2026-10-03", artist:"王允宸", city:"上海", activity:"音乐剧"},
+  {date:"2026-10-04", artist:"戴萌", city:"泸州", activity:"音乐节"},
+  {date:"2026-10-04", artist:"王允宸", city:"上海", activity:"音乐剧"},
+  {date:"2026-10-05", artist:"李艺彤", city:"上海", activity:"音乐剧"},
+  {date:"2026-10-06", artist:"李艺彤", city:"上海", activity:"音乐剧"},
+  {date:"2026-10-17", artist:"刘力菲,张昕", city:"北京", activity:"live"},
+  {date:"2026-10-00", artist:"唐莉佳", city:"武汉", activity:"live"},
+  {date:"2026-11-06", artist:"卢静", city:"广州", activity:"生日会"}
+
+  //新增复制示例：
+  //{date:"2026-09-10", artist:"XXX", city:"杭州", activity:"音乐剧"},
+];
+// ====================================================================
+
+const searchInput = document.getElementById('searchInput');
+const selActivity = document.getElementById('selActivity');
+const tableBody = document.getElementById('tableBody');
+
+function render(){
+  let kwText = searchInput.value.trim().toLowerCase();
+  let actFilter = selActivity.value;
+
+  // 空格分割，支持多关键词
+  let keywords = kwText ? kwText.split(/\s+/).filter(x=>x) : [];
+
+  // 永远按日期升序排序
+  let arr = [...eventList].sort((a,b)=>{
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  arr = arr.filter(item=>{
+    //多关键词匹配：任意一个关键词命中艺人/城市/活动即可显示
+    if(keywords.length>0){
+      const allText = (item.artist + item.city + item.activity).toLowerCase();
+      let hit = keywords.some(word=> allText.includes(word));
+      if(!hit) return false;
+    }
+    //活动下拉筛选（可叠加）
+    if(actFilter && item.activity!==actFilter) return false;
+    return true;
+  });
+
+  tableBody.innerHTML = "";
+  arr.forEach(row=>{
+    let tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.date}</td>
+      <td>${row.artist}</td>
+      <td>${row.city}</td>
+      <td>${row.activity}</td>
+    `;
+    tableBody.appendChild(tr);
+  })
+}
+
+searchInput.addEventListener('input',render);
+selActivity.addEventListener('change',render);
+
+render();
+</script>
+</body>
+</html>

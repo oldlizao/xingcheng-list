@@ -36,6 +36,15 @@ tr:hover{background:#f7f9fc}
       <option value="路演">路演</option>
       <option value="其他">其他</option>
     </select>
+<select id="areaSelect" style="margin-left:8px;padding:4px;">
+        <option value="">全部地区</option>
+        <option value="京津冀">京津冀</option>
+        <option value="江浙沪皖">江浙沪皖</option>
+        <option value="闽粤桂湘">闽粤桂湘</option>
+        <option value="云贵川渝">云贵川渝</option>
+        <option value="港澳台">港澳台</option>
+        <option value="其他">其他</option>
+    </select>
   </div>
 
   <table>
@@ -96,10 +105,36 @@ const eventList = [
 const searchInput = document.getElementById('searchInput');
 const selActivity = document.getElementById('selActivity');
 const tableBody = document.getElementById('tableBody');
+const areaSelect = document.getElementById('areaSelect');
+
+
+// =========大区城市对照表=========
+const areaMap = {
+  "京津冀":["北京","天津","石家庄","唐山","秦皇岛","邯郸","邢台","保定","张家口","承德","沧州","廊坊","衡水"],
+  "江浙沪皖":["上海","南京","无锡","徐州","常州","苏州","南通","连云港","淮安","盐城","扬州","镇江","泰州","宿迁","杭州","宁波","温州","嘉兴","湖州","绍兴","金华","衢州","舟山","台州","丽水","合肥","芜湖","蚌埠","淮南","马鞍山","淮北","铜陵","安庆","黄山","滁州","阜阳","宿州","六安","亳州","池州","宣城"],
+  "闽粤桂湘":["福州","厦门","莆田","三明","泉州","漳州","南平","龙岩","宁德","广州","深圳","珠海","汕头","佛山","韶关","湛江","肇庆","江门","茂名","惠州","梅州","汕尾","河源","阳江","清远","东莞","中山","潮州","揭阳","云浮","南宁","柳州","桂林","梧州","北海","防城港","钦州","贵港","玉林","百色","贺州","河池","来宾","崇左","长沙","株洲","湘潭","衡阳","邵阳","岳阳","常德","张家界","益阳","郴州","永州","怀化","娄底","湘西"],
+  "云贵川渝":["昆明","曲靖","玉溪","保山","昭通","丽江","普洱","临沧","楚雄","红河","文山","西双版纳","大理","德宏","怒江","迪庆","贵阳","六盘水","遵义","安顺","毕节","铜仁","黔西南","黔东南","黔南","成都","自贡","攀枝花","泸州","德阳","绵阳","广元","遂宁","内江","乐山","南充","眉山","宜宾","广安","达州","雅安","巴中","资阳","阿坝","甘孜","凉山","重庆"],
+  "港澳台":["中国香港","中国澳门","中国台湾"],
+  "其他":["太原","呼和浩特","沈阳","大连","长春","哈尔滨","南昌","济南","青岛","郑州","武汉","拉萨","西安","兰州","西宁","银川","乌鲁木齐"]
+};
+
+// 根据城市自动算出大区
+function getAreaByCity(cityName){
+    for(let areaName in areaMap){
+        let cityArr = areaMap[areaName];
+        if(cityArr.includes(cityName.trim())){
+            return areaName;
+        }
+    }
+    return "其他";
+}
+
 
 function render(){
   let kwText = searchInput.value.trim().toLowerCase();
   let actFilter = selActivity.value;
+  let areaFilter = areaSelect.value;
+
 
   // 空格分割，支持多关键词
   let keywords = kwText ? kwText.split(/\s+/).filter(x=>x) : [];
@@ -110,16 +145,22 @@ function render(){
   });
 
   arr = arr.filter(item=>{
-    //多关键词匹配：任意一个关键词命中艺人/城市/活动即可显示
+    //====新增地区校验====
+    let cityArea = getAreaByCity(item.city);
+    let areaOk = areaFilter === "" || cityArea === areaFilter;
+    if(!areaOk) return false;
+
+    //多关键词匹配: 任意一个关键词命中艺人/城市/活动即可显示
     if(keywords.length>0){
       const allText = (item.artist + item.city + item.activity).toLowerCase();
       let hit = keywords.some(word=> allText.includes(word));
       if(!hit) return false;
     }
-    //活动下拉筛选（可叠加）
+    //活动下拉筛选 (可叠加)
     if(actFilter && item.activity!==actFilter) return false;
     return true;
-  });
+});
+
 
   tableBody.innerHTML = "";
   arr.forEach(row=>{
@@ -136,6 +177,7 @@ function render(){
 
 searchInput.addEventListener('input',render);
 selActivity.addEventListener('change',render);
+areaSelect.addEventListener('change',render);
 
 render();
 </script>

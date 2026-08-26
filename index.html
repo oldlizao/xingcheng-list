@@ -15,6 +15,21 @@ th,td{border:1px solid #ddd;padding:10px;text-align:left}
 th{background:#eef2f7}
 tr:hover{background:#f7f9fc}
 .tip{color:#666;font-size:13px;margin-bottom:12px}
+/*艺人列自动换行*/
+td:nth-child(2) {
+    white-space: normal;
+    word-break: break-all;
+    font-size: 13px;
+    line-height: 1.5;
+}
+th,td{
+    vertical-align: top;
+}
+th:nth-child(1),td:nth-child(1){width:120px;}   /*日期*/
+th:nth-child(2),td:nth-child(2){width:380px;}  /*艺人*/
+th:nth-child(3),td:nth-child(3){width:100px;}  /*城市*/
+th:nth-child(4),td:nth-child(4){width:100px;}  /*活动类型*/
+
 </style>
 </head>
 <body>
@@ -75,10 +90,13 @@ const eventList = [
   {date:"2026-09-05", artist:"姜杉", city:"南京", activity:"一日店长"},
   {date:"2026-09-05", artist:"蒋芸", city:"北京", activity:"其他"},
   {date:"2026-09-05", artist:"王思予", city:"广州", activity:"见面会"},
+  {date:"2026-09-05", artist:"曾艾佳", city:"广州", activity:"live"},
   {date:"2026-09-06", artist:"黄婷婷", city:"上海", activity:"生日会"},
+  {date:"2026-09-11", artist:"曾艾佳", city:"上海", activity:"live"},
   {date:"2026-09-12", artist:"卢静 刘倩倩 唐莉佳 刘力菲", city:"广州", activity:"live"},
   {date:"2026-09-12", artist:"黄婷婷 沈梦瑶", city:"武汉", activity:"音乐节"},
   {date:"2026-09-13", artist:"陈珂 郑丹妮", city:"马来西亚", activity:"live"},
+  {date:"2026-09-19", artist:"曾艾佳", city:"北京", activity:"live"},
   {date:"2026-09-25", artist:"唐莉佳 曾艾佳", city:"中国台湾", activity:"见面会"},
   {date:"2026-09-25", artist:"许杨玉琢", city:"上海", activity:"生日会"},
   {date:"2026-09-25", artist:"李艺彤", city:"上海", activity:"音乐剧"},

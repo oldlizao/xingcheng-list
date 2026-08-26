@@ -73,6 +73,27 @@ th:nth-child(2),td:nth-child(2){
         <option value="港澳台">港澳台</option>
         <option value="其他">其他</option>
     </select>
+<select id="yearSelect" style="margin-left:8px;padding:4px;">
+    <option value="">全部年份</option>
+    <option value="2026">2026</option>
+    <option value="2027">2027</option>
+</select>
+<select id="monthSelect" style="margin-left:8px;padding:4px;">
+    <option value="">全部月份</option>
+    <option value="01">1月</option>
+    <option value="02">2月</option>
+    <option value="03">3月</option>
+    <option value="04">4月</option>
+    <option value="05">5月</option>
+    <option value="06">6月</option>
+    <option value="07">7月</option>
+    <option value="08">8月</option>
+    <option value="09">9月</option>
+    <option value="10">10月</option>
+    <option value="11">11月</option>
+    <option value="12">12月</option>
+</select>
+
   </div>
 
   <table>
@@ -138,7 +159,8 @@ const searchInput = document.getElementById('searchInput');
 const selActivity = document.getElementById('selActivity');
 const tableBody = document.getElementById('tableBody');
 const areaSelect = document.getElementById('areaSelect');
-
+const yearSelect = document.getElementById('yearSelect');
+const monthSelect = document.getElementById('monthSelect');
 
 // =========大区城市对照表=========
 const areaMap = {
@@ -166,6 +188,8 @@ function render(){
   let kwText = searchInput.value.trim().toLowerCase();
   let actFilter = selActivity.value;
   let areaFilter = areaSelect.value;
+  let yearFilter = yearSelect.value;
+  let monthFilter = monthSelect.value;
 
 
   // 空格分割，支持多关键词
@@ -181,6 +205,10 @@ function render(){
     let cityArea = getAreaByCity(item.city);
     let areaOk = areaFilter === "" || cityArea === areaFilter;
     if(!areaOk) return false;
+// ==========新增 年份月份筛选 ==========
+    let [y,m] = item.date.split('-');
+    if(yearFilter && y !== yearFilter) return false;
+    if(monthFilter && m !== monthFilter) return false;
 
     //多关键词匹配: 任意一个关键词命中艺人/城市/活动即可显示
     if(keywords.length>0){
@@ -210,6 +238,8 @@ function render(){
 searchInput.addEventListener('input',render);
 selActivity.addEventListener('change',render);
 areaSelect.addEventListener('change',render);
+yearSelect.addEventListener('change',render);
+monthSelect.addEventListener('change',render);
 
 render();
 </script>

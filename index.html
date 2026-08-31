@@ -7,37 +7,53 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:Microsoft Yahei}
 body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
 .box{background:#fff;padding:22px;border-radius:10px;box-shadow:0 1px 4px #0002}
-.filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
-input,select{padding:8px 10px;border:1px solid #ccc;border-radius:6px;font-size:14px}
-#searchInput{width:260px;}
+.filter-row{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+    align-items:center;
+}
+#searchInput{
+    width:280px;
+}
 table{width:100%;border-collapse:collapse}
 th,td{
     border:1px solid #ddd;
-    padding:10px;
-    text-align:left;
+    padding:12px 10px;
     font-size:13px;
     vertical-align: middle;
 }
 th{
     background:#eef2f7 !important;
     text-align:center;
+    font-weight:bold;
 }
-th{
-    background:#eef2f7 !important;
+/* 日期、城市、活动居中 */
+td:nth-child(1),
+td:nth-child(3),
+td:nth-child(4){
     text-align:center;
 }
-tr:hover{background:#f7f9fc}
-.tip{color:#666;font-size:13px;margin-bottom:12px}
-/*艺人列自动换行*/
+/* 艺人列左对齐+换行 */
 td:nth-child(2) {
+    text-align:left;
     white-space: normal;
     word-break: break-all;
-    font-size: 13px;
     line-height: 1.5;
 }
-th,td{
-    vertical-align: middle;
+/* 备注列左对齐 + 强制自动换行，解决长名单溢出 */
+td:nth-child(5){
+    text-align:left;
+    max-width: 380px;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 1.5;
 }
+tr:hover{background:#f7f9fc}
+/*斑马隔行底色，可选，不想要可以删掉下面一行*/
+tbody tr:nth-child(even){background-color:#f9fafc;}
+.tip{color:#666;font-size:13px;margin-bottom:12px}
 th:nth-child(1),td:nth-child(1){width:120px;}   /*日期*/
 th:nth-child(2),td:nth-child(2){width:230px;}  /*艺人*/
 th:nth-child(3),td:nth-child(3){width:100px;}  /*城市*/
@@ -80,7 +96,7 @@ tbody td:nth-child(5)
       <option value="地偶">地偶</option>
       <option value="其他">其他</option>
     </select>
-<select id="areaSelect" style="margin-left:8px;padding:4px;">
+<select id="areaSelect" >
         <option value="">全部地区</option>
         <option value="京津冀">京津冀</option>
         <option value="江浙沪皖">江浙沪皖</option>
@@ -89,12 +105,12 @@ tbody td:nth-child(5)
         <option value="港澳台">港澳台</option>
         <option value="其他">其他</option>
     </select>
-<select id="yearSelect" style="margin-left:8px;padding:4px;">
+<select id="yearSelect">
     <option value="">全部年份</option>
     <option value="2026">2026</option>
     <option value="2027">2027</option>
 </select>
-<select id="monthSelect" style="margin-left:8px;padding:4px;">
+<select id="monthSelect">
     <option value="">全部月份</option>
     <option value="01">1月</option>
     <option value="02">2月</option>

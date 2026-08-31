@@ -147,7 +147,7 @@ const eventList = [
   {date:"2026-09-26", artist:"易嘉爱", city:"上海", activity:"演出"},
   {date:"2026-09-26", artist:"曾艾佳", city:"中国台湾", activity:"演出"},
   {date:"2026-09-26", artist:"梁婉琳", city:"广州", activity:"地偶"},
-  {date:"2026-09-27", artist:"王允宸", city:"张家口", activity:"其他"},
+  {date:"2026-09-27", artist:"王允宸", city:"张家口宣化", activity:"其他"},
   {date:"2026-10-01", artist:"李艺彤", city:"上海", activity:"音乐剧"},
   {date:"2026-10-02", artist:"戴萌", city:"常州", activity:"音乐节"},
   {date:"2026-10-02", artist:"陈珂", city:"广州", activity:"演出"},
@@ -193,10 +193,14 @@ const areaMap = {
 
 // 根据城市自动算出大区
 function getAreaByCity(cityName){
+    let name = cityName.trim();
     for(let areaName in areaMap){
         let cityArr = areaMap[areaName];
-        if(cityArr.includes(cityName.trim())){
-            return areaName;
+        for(let c of cityArr){
+            //模糊包含匹配，只要文字里面含有地级市名字就命中大区
+            if(name.includes(c)){
+                return areaName;
+            }
         }
     }
     return "其他";

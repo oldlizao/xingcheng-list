@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh‑CN">
+<head>
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<title></title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f0f4f8;display:flex;justify-content:center;padding-top:40px;padding-bottom:40px;}
+.wrap{width:680px;background:white;padding:35px;border-radius:12px;box-shadow: 0 4px 14px rgba(0,0,0,0.1);}
+h1{text-align:center;color:#2c3e50;margin-bottom:20px;font-size:22px;}
+.tip-mode{text-align:center;color:#444;margin-bottom:20px;font-size:17px;}
+.stats{display:flex;justify-content:space-around;font-size:17px;margin-bottom:24px;flex-wrap:wrap;gap:8px;}
+.hint-block{font-size:32px;font-weight:bold;text-align:center;color:#2980b9;background:#ecf4fc;padding:24px;border-radius:8px;margin-bottom:22px;line-height:1.6;}
+#inputBox{width:100%;font-size:22px;padding:14px 16px;border:2px solid #bdc3c7;border-radius:8px;outline:none;}
+#inputBox:focus{border-color:#2980b9;}
+.tip-text{text-align:center;margin-top:10px;color:#777;}
+.feedback{text-align:center;margin-top:18px;font-size:21px;min-height:30px;}
+.ok{color:#27ae60;}
+.fail{color:#e74c3c;}
+#restartBtn{width:100%;margin-top:24px;padding:14px;background:#3498db;border:none;color:white;font-size:18px;border-radius:8px;cursor:pointer;}
+.wrong-title{margin-top:28px;font-size:18px;}
+.wrong-list{margin-top:10px;color:#c0392b;line-height:1.8;white-space:pre‑line;}
+.finish-mask{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:99;}
+.finish-box{background:white;padding:40px;border-radius:12px;text-align:center;width:520px;max-width:90%;}
+.finish‑wrong{text-align:left;margin-top:20px;line-height:1.7;color:#c0392b;max-height:320px;overflow-y:auto;white-space:pre‑line;}
+.finish-box button{margin-top:22px;padding:10px 22px;font-size:17px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>📝</h1>
+    <div class="tip-mode">当前：随机题型（音标/中文/单词互译）</div>
+    <div class="stats">
+        <div>✅正确：<span id="rightCount">0</span></div>
+        <div>❌错误：<span id="errCount">0</span></div>
+        <div>正确率：<span id="rate">0%</span></div>
+        <div>🔹剩余：<span id="remain">0</span></div>
+    </div>
+    <div class="hint-block" id="showHint">点击开始练习</div>
+    <input type="text" id="inputBox" autocomplete="off" spellcheck="false" placeholder="输入答案，回车提交">
+    <div class="tip-text">输入完成按下回车键</div>
+    <div class="feedback" id="feedbackBox"></div>
+    <button id="restartBtn">重新开始本轮</button>
+    <div class="wrong-title">📋本轮错题对照：</div>
+    <div class="wrong-list" id="wrongWords"></div>
+</div>
+
+<div class="finish-mask" id="finishMask">
+    <div class="finish-box">
+        <h2>🎉全部单词练习完毕！</h2>
+        <p style="font-size:20px;margin:12px 0">正确：<span id="finRight"></span></p>
+        <p style="font-size:20px;margin:12px 0">错误：<span id="finErr"></span></p>
+        <p style="font-size:22px;margin:12px 0">最终正确率：<span id="finRate"></span></p>
+        <div class="finish‑wrong" id="finishWrongList"></div>
+        <button id="closeFinish">再来一轮</button>
+    </div>
+</div>
+
+<script>
+//=======译林三年级下册 Unit1‑Unit8 词库（多释义数组，音标）=======
+let wordBank = [
+    {en:"hello",phon:"[hə'ləʊ]",cn:["哈啰","你好"]},
+    {en:"hi",phon:"[haɪ]",cn:["喂","嗨"]},
+    {en:"Good morning.",phon:"[ɡʊd ˈmɔːnɪŋ]",cn:["早上好"]},
+    {en:"I",phon:"[aɪ]",cn:["我"]},
+    {en:"am",phon:"[æm]",cn:["是"]},
+    {en:"I'm = I am",phon:"[aɪm]",cn:["我是"]},
+    {en:"ah",phon:"[ɑː]",cn:["啊"]},
+    {en:"a",phon:"[ə]",cn:["一（个）"]},
+    {en:"cat",phon:"[kæt]",cn:["猫"]},
+    {en:"Miss",phon:"[mɪs]",cn:["小姐","女士"]},
+    {en:"Good afternoon.",phon:"[ɡʊd ˌɑːftəˈnuːn]",cn:["下午好"]},
+    {en:"class",phon:"[klɑːs]",cn:["同学们","班级"]},
+    {en:"goodbye",phon:"[ˌɡʊdˈbaɪ]",cn:["再见","再会"]},
+    {en:"bye",phon:"[baɪ]",cn:["再见","再会"]},
+    {en:"what",phon:"[wɒt]",cn:["什么"]},
+    {en:"is",phon:"[ɪz]",cn:["是"]},
+    {en:"what's = what is",phon:"[wɒts]",cn:["是什么"]},
+    {en:"your",phon:"[jɔː(r)]",cn:["你的","你们的"]},
+    {en:"name",phon:"[neɪm]",cn:["名字"]},
+    {en:"my",phon:"[maɪ]",cn:["我的"]},
+    {en:"Nice to meet you!",phon:"[naɪs tu miːt juː]",cn:["很高兴认识你"]},
+    {en:"too",phon:"[tuː]",cn:["也"]},
+    {en:"boy",phon:"[bɔɪ]",cn:["男孩"]},
+    {en:"and",phon:"[ænd]",cn:["和","与"]},
+    {en:"girl",phon:"[ɡɜːl]",cn:["女孩"]},
+    {en:"Mr",phon:"[ˈmɪstə(r)]",cn:["先生"]},
+    {en:"are",phon:"[ɑː(r)]",cn:["是"]},
+    {en:"you",phon:"[juː]",cn:["你","你们"]},
+    {en:"no",phon:"[nəʊ]",cn:["不","不是"]},
+    {en:"not",phon:"[nɒt]",cn:["不","没有"]},
+    {en:"yes",phon:"[jes]",cn:["是","对"]},
+    {en:"ha",phon:"[hɑː]",cn:["（笑声）哈"]},
+    {en:"Here I am!",phon:"[hɪə(r) aɪ æm]",cn:["我在这里"]},
+    {en:"but",phon:"[bʌt]",cn:["但是"]},
+    {en:"oh",phon:"[əʊ]",cn:["啊","哦"]},
+    {en:"sorry",phon:"[ˈsɒri]",cn:["对不起"]},
+    {en:"you're = you are",phon:"[jʊə(r)]",cn:["你是"]},
+    {en:"twin",phon:"[twɪn]",cn:["双胞胎之一"]},
+    {en:"we",phon:"[wiː]",cn:["我们"]},
+    {en:"excuse me",phon:"[ɪkˈskjuːz miː]",cn:["对不起"]},
+    {en:"in",phon:"[ɪn]",cn:["在……内","在……中"]},
+    {en:"er",phon:"[ɜː(r)]",cn:["哦","嗯"]},
+    {en:"with",phon:"[wɪð]",cn:["和……在一起"]},
+    {en:"right",phon:"[raɪt]",cn:["正确的"]},
+    {en:"this",phon:"[ðɪs]",cn:["这","这个"]},
+    {en:"friend",phon:"[frend]",cn:["朋友"]},
+    {en:"she",phon:"[ʃiː]",cn:["她"]},
+    {en:"she's = she is",phon:"[ʃiːz]",cn:["她是"]},
+    {en:"he",phon:"[hiː]",cn:["他"]},
+    {en:"he's = he is",phon:"[hiːz]",cn:["他是"]},
+    {en:"it",phon:"[ɪt]",cn:["它"]},
+    {en:"it's = it is",phon:"[ɪts]",cn:["它是"]},
+    {en:"good",phon:"[ɡʊd]",cn:["好的"]},
+    {en:"Thank you.",phon:"[θæŋk juː]",cn:["谢谢你"]},
+    {en:"have",phon:"[hæv]",cn:["有","持有"]},
+    {en:"many",phon:"[ˈmeni]",cn:["许多"]},
+    {en:"wow",phon:"[waʊ]",cn:["哇","呀"]},
+    {en:"big",phon:"[bɪɡ]",cn:["大的"]},
+    {en:"isn't = is not",phon:"[ˈɪznt]",cn:["不是"]},
+    {en:"happy",phon:"[ˈhæpi]",cn:["感到快乐的","高兴的"]},
+    {en:"love",phon:"[lʌv]",cn:["爱","热爱"]},
+    {en:"mother",phon:"[ˈmʌðə(r)]",cn:["母亲","妈妈"]},
+    {en:"father",phon:"[ˈfɑːðə(r)]",cn:["父亲","爸爸"]},
+    {en:"dad",phon:"[dæd]",cn:["爸爸"]},
+    {en:"mum",phon:"[mʌm]",cn:["妈妈"]},
+    {en:"brother",phon:"[ˈbrʌðə(r)]",cn:["哥哥","弟弟"]},
+    {en:"baby",phon:"[ˈbeɪbi]",cn:["婴儿"]},
+    {en:"sister",phon:"[ˈsɪstə(r)]",cn:["姐姐","妹妹"]},
+    {en:"Good evening.",phon:"[ɡʊd ˈiːvnɪŋ]",cn:["晚上好"]},
+    {en:"quick",phon:"[kwɪk]",cn:["快","快点"]},
+    {en:"look",phon:"[lʊk]",cn:["看","瞧"]},
+    {en:"the",phon:"[ðə]",cn:["这个","这些","那个","那些"]},
+    {en:"pond",phon:"[pɒnd]",cn:["池塘","水池"]},
+    {en:"who",phon:"[huː]",cn:["谁","什么人"]},
+    {en:"who's = who is",phon:"[huːz]",cn:["是谁"]},
+    {en:"great",phon:"[ɡreɪt]",cn:["好极的","好棒的"]},
+    {en:"come",phon:"[kʌm]",cn:["来"]},
+    {en:"meet",phon:"[miːt]",cn:["相识","结识","被引见","介绍（给某人）"]},
+    {en:"family",phon:"[ˈfæməli]",cn:["家","家庭"]},
+    {en:"say",phon:"[seɪ]",cn:["说"]},
+    {en:"grandpa (grandfather)",phon:"[ˈɡrænpɑː]",cn:["祖父","外祖父"]},
+    {en:"uncle",phon:"[ˈʌŋkl]",cn:["舅父","叔父","伯父","姑父","姨父"]},
+    {en:"aunt",phon:"[ɑːnt]",cn:["姑母","姨母","伯母","婶母","舅母"]},
+    {en:"grandmother (grandma)",phon:"[ˈɡrænmʌðə(r)]",cn:["祖母","外祖母"]},
+    {en:"cousin",phon:"[ˈkʌzn]",cn:["堂兄(弟)","堂姐(妹)","表兄(弟)","表姐(妹)"]},
+    {en:"cool",phon:"[kuːl]",cn:["妙极的","酷的"]},
+    {en:"me",phon:"[miː]",cn:["我"]},
+    {en:"Happy Birthday!",phon:"[ˈhæpi ˈbɜːθdeɪ]",cn:["生日快乐"]},
+    {en:"one",phon:"[wʌn]",cn:["一"]},
+    {en:"two",phon:"[tuː]",cn:["二"]},
+    {en:"three",phon:"[θriː]",cn:["三"]},
+    {en:"four",phon:"[fɔː(r)]",cn:["四"]},
+    {en:"five",phon:"[faɪv]",cn:["五"]},
+    {en:"six",phon:"[sɪks]",cn:["六"]},
+    {en:"seven",phon:"[ˈsevən]",cn:["七"]},
+    {en:"eight",phon:"[eɪt]",cn:["八"]},
+    {en:"nine",phon:"[naɪn]",cn:["九"]},
+    {en:"ten",phon:"[ten]",cn:["十"]},
+    {en:"now",phon:"[naʊ]",cn:["现在","此刻"]},
+    {en:"want",phon:"[wɒnt]",cn:["要","想要"]},
+    {en:"car",phon:"[kɑː(r)]",cn:["小汽车","轿车"]},
+    {en:"book",phon:"[bʊk]",cn:["书"]},
+    {en:"ball",phon:"[bɔːl]",cn:["球"]},
+    {en:"cake",phon:"[keɪk]",cn:["蛋糕","糕饼"]},
+    {en:"How lovely!",phon:"[haʊ ˈlʌvli]",cn:["真可爱"]},
+    {en:"Can I help you?",phon:"[kæn aɪ help juː]",cn:["你要买什么"]},
+    {en:"Yes, please.",phon:"[jes pliːz]",cn:["好的","谢谢"]},
+    {en:"some",phon:"[sʌm]",cn:["一些"]},
+    {en:"toy",phon:"[tɔɪ]",cn:["玩具"]},
+    {en:"for",phon:"[fɔː(r)]",cn:["给","对","供","为了"]},
+    {en:"OK",phon:"[əʊˈkeɪ]",cn:["对","好","行"]},
+    {en:"How old are you?",phon:"[haʊ əʊld ɑː(r) juː]",cn:["你多大了"]},
+    {en:"please",phon:"[pliːz]",cn:["请"]},
+    {en:"here",phon:"[hɪə(r)]",cn:["到这里","在这里"]},
+    {en:"Here you are.",phon:"[hɪə(r) juː ɑː(r)]",cn:["给你"]},
+    {en:"You're welcome.",phon:"[jʊə(r) ˈwelkəm]",cn:["别客气","不用谢"]},
+    {en:"thanks",phon:"[θæŋks]",cn:["谢谢"]},
+    {en:"can",phon:"[kæn]",cn:["能","会"]},
+    {en:"do",phon:"[duː]",cn:["做","干","办（某事）"]},
+    {en:"clean",phon:"[kliːn]",cn:["使……干净","打扫"]},
+    {en:"table",phon:"[ˈteɪbl]",cn:["桌子"]},
+    {en:"draw",phon:"[drɔː]",cn:["画","描画"]},
+    {en:"sing",phon:"[sɪŋ]",cn:["唱（歌）","演唱"]},
+    {en:"take pictures",phon:"[teɪk ˈpɪktʃəz]",cn:["拍照"]},
+    {en:"dance",phon:"[dɑːns]",cn:["跳舞"]},
+    {en:"Are you OK?",phon:"[ɑː(r) juː əʊˈkeɪ]",cn:["你没事吧"]},
+    {en:"dizzy",phon:"[ˈdɪzi]",cn:["头晕目眩的","眩晕的"]},
+    {en:"picture",phon:"[ˈpɪktʃə(r)]",cn:["图画","绘画","照片"]},
+    {en:"of",phon:"[ɒv]",cn:["属于（某人）","关于（某人）"]},
+    {en:"fox",phon:"[fɒks]",cn:["狐狸"]},
+    {en:"get together",phon:"[ɡet təˈɡeðə(r)]",cn:["聚集","相聚"]},
+    {en:"on",phon:"[ɒn]",cn:["在（某一天）"]},
+    {en:"child (pl. children)",phon:"[tʃaɪld]",cn:["儿童","小孩"]},
+    {en:"thing",phon:"[θɪŋ]",cn:["事情"]}
+];
+//=======================================================
+
+let current;
+let currentType;
+let right=0,err=0;
+let wrongRecord=[];
+let remainingPool = [];
+
+const hintDom = document.getElementById("showHint");
+const inputDom = document.getElementById("inputBox");
+const rightDom = document.getElementById("rightCount");
+const errDom = document.getElementById("errCount");
+const rateDom = document.getElementById("rate");
+const remainDom = document.getElementById("remain");
+const feedDom = document.getElementById("feedbackBox");
+const restartBtn = document.getElementById("restartBtn");
+const wrongDom = document.getElementById("wrongWords");
+const finishMask = document.getElementById("finishMask");
+const finRight = document.getElementById("finRight");
+const finErr = document.getElementById("finErr");
+const finRate = document.getElementById("finRate");
+const finishWrongList = document.getElementById("finishWrongList");
+const closeFinish = document.getElementById("closeFinish");
+
+//清洗答案：去除标点符号、多余空格，统一小写
+function cleanText(str){
+    return str.replace(/[.,!?;:'""，。！？；：]/g,"").trim().toLowerCase();
+}
+
+//洗牌打乱
+function shuffle(arr){
+    let temp = [...arr];
+    for(let i=temp.length-1;i>0;i--){
+        let j = Math.floor(Math.random()*(i+1));
+        [temp[i],temp[j]] = [temp[j],temp[i]];
+    }
+    return temp;
+}
+
+function initGame(){
+    right=0;err=0;wrongRecord=[];
+    remainingPool = shuffle(wordBank);
+    rightDom.innerText=0;
+    errDom.innerText=0;
+    rateDom.innerText="0%";
+    remainDom.innerText=remainingPool.length;
+    wrongDom.innerText="";
+    feedDom.innerText="";
+    finishMask.style.display="none";
+    nextWord();
+}
+
+function nextWord(){
+    if(remainingPool.length === 0){
+        showFinishReport();
+        return;
+    }
+    current = remainingPool.pop();
+    remainDom.innerText = remainingPool.length;
+    //随机3种题型：0音标写英文 1中文写英文 2英文写中文
+    let r = Math.floor(Math.random()*3);
+    currentType = r;
+    if(r===0){
+        hintDom.innerText = current.phon;
+    }else if(r===1){
+        hintDom.innerText = current.cn[0];
+    }else{
+        hintDom.innerText = current.en;
+    }
+    inputDom.value="";
+    feedDom.innerText="";
+    inputDom.focus();
+}
+
+function showFinishReport(){
+    let total = right+err;
+    let percent = total>0 ? Math.round((right/total)*100) : 0;
+    finRight.innerText = right;
+    finErr.innerText = err;
+    finRate.innerText = percent+"%";
+    finishWrongList.innerText = wrongRecord.join("\n");
+    inputDom.blur();
+    finishMask.style.display="flex";
+}
+
+function checkAnswer(){
+    let userRaw = inputDom.value;
+    let userClean = cleanText(userRaw);
+    let isCorrect = false;
+    let showAnswer;
+    if(currentType===0 || currentType===1){
+        //音标/中文写英文
+        let target = cleanText(current.en);
+        isCorrect = (userClean === target);
+        showAnswer = current.en;
+    }else{
+        //英文写中文：多个释义答对任意1个即正确
+        for(let item of current.cn){
+            if(cleanText(item) === userClean){
+                isCorrect = true;
+                break;
+            }
+        }
+        showAnswer = current.cn.join(" / ");
+    }
+
+    if(isCorrect){
+        right++;
+        feedDom.innerHTML = `<span class="ok">✅回答正确！</span>`;
+    }else{
+        err++;
+        feedDom.innerHTML = `<span class="fail">❌答错啦！正确：${showAnswer}</span>`;
+        wrongRecord.push(`题目：${hintDom.innerText}｜正确答案：${showAnswer}`);
+        wrongDom.innerText = wrongRecord.join("  \n");
+    }
+    let total = right+err;
+    let percent = total>0 ? Math.round((right/total)*100) : 0;
+    rightDom.innerText=right;
+    errDom.innerText=err;
+    rateDom.innerText=percent+"%";
+    setTimeout(nextWord,800);
+}
+
+inputDom.addEventListener("keydown",e=>{
+    if(e.key==="Enter") checkAnswer();
+});
+
+restartBtn.onclick = initGame;
+closeFinish.onclick = initGame;
+
+initGame();
+</script>
+</body>
+</html>

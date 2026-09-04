@@ -53,7 +53,12 @@ td:nth-child(5){
 tr:hover{background:#f7f9fc}
 /*斑马隔行底色，可选，不想要可以删掉下面一行*/
 tbody tr:nth-child(even){background-color:#f9fafc;}
-.tip{color:#666;font-size:13px;margin-bottom:12px}
+.tip{
+  color:#666;
+  font-size:13px;
+  margin-bottom:12px;
+  line-height:1.6;
+}
 th:nth-child(1),td:nth-child(1){width:120px;}   /*日期*/
 th:nth-child(2),td:nth-child(2){width:230px;}  /*艺人*/
 th:nth-child(3),td:nth-child(3){width:100px;}  /*城市*/
@@ -78,8 +83,10 @@ tbody td:nth-child(5)
 </head>
 <body>
 <div class="box">
-  <div class="tip">
-  </div>
+ <div class="tip">
+  🌹仅供参考，人工搜索整理无法涵盖所有成员，<br>
+  活动详细讯息请见微博等平台🌹
+</div>
 
   <div class="filter-row">
     <input id="searchInput" placeholder="">

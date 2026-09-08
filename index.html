@@ -11,11 +11,56 @@ body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
     display:flex;
     gap:16px;
     flex-wrap:wrap;
-    margin-bottom:24px;
+    margin-bottom:22px;
     align-items:center;
 }
 #searchInput{
     width:280px;
+}
+/* 多选下拉组件，外框和原生select统一尺寸 */
+.multi-select-act{
+    position:relative;
+    width:132px;
+}
+.multi-trigger{
+    height:22px;
+    line-height:20px;
+    padding:0 8px;
+    border:1px solid #000;
+    border-radius:4px;
+    background:#fff;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.multi-dropdown{
+    display:none;
+    position:absolute;
+    top:calc(100% + 2px);
+    left:0;
+    z-index:100;
+    width:100%;
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:4px;
+    max-height:210px;
+    overflow-y:auto;
+    box-shadow:0 2px 8px rgba(0,0,0,0.12);
+    padding:6px 4px;
+}
+.multi-dropdown.show{
+    display:block;
+}
+.multi-dropdown label{
+    display:block;
+    font-size:13px;
+    padding:4px 6px;
+    cursor:pointer;
+}
+.multi-dropdown label:hover{
+    background:#f5f7fa;
 }
 table{width:100%;border-collapse:collapse}
 th,td{
@@ -65,7 +110,6 @@ th:nth-child(2),td:nth-child(2){width:230px;}  /*艺人*/
 th:nth-child(3),td:nth-child(3){width:100px;}  /*城市*/
 th:nth-child(4),td:nth-child(4){width:100px;}  /*活动类型*/
 th:nth-child(5),td:nth-child(5){width:250px;}  /*备注*/
-
 /* ==========只控制下面的数据单元格，表头不动！========== */
 tbody td:nth-child(1),
 tbody td:nth-child(3),
@@ -78,8 +122,18 @@ tbody td:nth-child(5)
 {
     text-align:left;
 }
-
-
+/* 统一所有原生select高度，保证筛选栏全部格子一样高 */
+.filter-row select{
+    height:24px;
+    font-size:13px;
+    padding:0 6px;
+}
+#resetBtn{
+    height:24px;
+    font-size:13px;
+    padding:0 12px;
+    cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -87,22 +141,24 @@ tbody td:nth-child(5)
  <div class="tip">
   🌹仅供参考，人工搜索整理无法涵盖所有成员，活动详细讯息请见微博等平台🌹
 </div>
-
   <div class="filter-row">
     <input id="searchInput" placeholder="">
-    <select id="selActivity">
-      <option value="">全部活动</option>
-      <option value="一日店长">一日店长</option>
-      <option value="音乐节">音乐节</option>
-      <option value="演出">演出</option>
-      <option value="见面会">见面会</option>
-      <option value="音乐剧">音乐剧</option>
-      <option value="嘉宾">嘉宾</option>
-      <option value="生日会">生日会</option>
-      <option value="路演">路演</option>
-      <option value="地偶">地偶</option>
-      <option value="其他">其他</option>
-    </select>
+    <!-- 替换为多选下拉 -->
+    <div class="multi-select-act">
+        <div class="multi-trigger">全部活动</div>
+        <div class="multi-dropdown">
+            <label><input type="checkbox" value="一日店长">一日店长</label>
+            <label><input type="checkbox" value="音乐节">音乐节</label>
+            <label><input type="checkbox" value="演出">演出</label>
+            <label><input type="checkbox" value="见面会">见面会</label>
+            <label><input type="checkbox" value="音乐剧">音乐剧</label>
+            <label><input type="checkbox" value="嘉宾">嘉宾</label>
+            <label><input type="checkbox" value="生日会">生日会</label>
+            <label><input type="checkbox" value="路演">路演</label>
+            <label><input type="checkbox" value="地偶">地偶</label>
+            <label><input type="checkbox" value="其他">其他</label>
+        </div>
+    </div>
 <select id="areaSelect" >
         <option value="">全部地区</option>
         <option value="京津冀">京津冀</option>
@@ -132,9 +188,8 @@ tbody td:nth-child(5)
     <option value="11">11月</option>
     <option value="12">12月</option>
 </select>
-
+<button id="resetBtn">重置</button>
   </div>
-
   <table>
     <thead>
       <tr>
@@ -151,7 +206,6 @@ tbody td:nth-child(5)
     最后更新：2026-09-08 10:40
   </div>
 </div>
-
 <script>
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
@@ -211,35 +265,71 @@ const eventList = [
   {date:"2026-10-30", artist:"刘力菲", city:"广州", activity:"生日会", remark:"/"},
   {date:"2026-11-06", artist:"卢静", city:"广州", activity:"生日会", remark:"/"},
   {date:"2026-11-14", artist:"许佳琪", city:"成都", activity:"演出", remark:"续假期"},
-
   
 ];
 // ====================================================================
-
 const searchInput = document.getElementById('searchInput');
-const selActivity = document.getElementById('selActivity');
 const tableBody = document.getElementById('tableBody');
 const areaSelect = document.getElementById('areaSelect');
 const yearSelect = document.getElementById('yearSelect');
 const monthSelect = document.getElementById('monthSelect');
-
+const resetBtn = document.getElementById('resetBtn');
+//多选下拉变量
+const multiWrap = document.querySelector('.multi-select-act');
+const multiTrigger = multiWrap.querySelector('.multi-trigger');
+const multiDrop = multiWrap.querySelector('.multi-dropdown');
+let selectedActList = [];
+//下拉展开收起
+multiTrigger.addEventListener('click',e=>{
+    e.stopPropagation();
+    multiDrop.classList.toggle('show');
+});
+// 点击下拉框内部阻止冒泡，选择复选框不会关闭下拉
+multiDrop.addEventListener('click',e=>{
+    e.stopPropagation();
+});
+document.addEventListener('click',()=>{
+    multiDrop.classList.remove('show');
+});
+//复选框事件
+const checkAll = multiDrop.querySelectorAll('input[type="checkbox"]');
+checkAll.forEach(cb=>{
+    cb.addEventListener('change',()=>{
+        selectedActList = Array.from(checkAll).filter(i=>i.checked).map(i=>i.value);
+        if(selectedActList.length === 0){
+            multiTrigger.innerText = "全部活动";
+        }else{
+            multiTrigger.innerText = selectedActList.join('、');
+        }
+        render();
+    })
+})
+//重置按钮
+resetBtn.addEventListener('click',()=>{
+    searchInput.value = "";
+    areaSelect.value = "";
+    yearSelect.value = "";
+    monthSelect.value = "";
+    selectedActList = [];
+    checkAll.forEach(cb=>cb.checked = false);
+    multiTrigger.innerText = "全部活动";
+    render();
+});
 // =========大区城市对照表=========
 const areaMap = {
   "京津冀":["北京","天津","石家庄","唐山","秦皇岛","邯郸","邢台","保定","张家口","承德","沧州","廊坊","衡水"],
   "江浙沪皖":["上海","南京","无锡","徐州","常州","苏州","南通","连云港","淮安","盐城","扬州","镇江","泰州","宿迁","杭州","宁波","温州","嘉兴","湖州","绍兴","金华","衢州","舟山","台州","丽水","合肥","芜湖","蚌埠","淮南","马鞍山","淮北","铜陵","安庆","黄山","滁州","阜阳","宿州","六安","亳州","池州","宣城"],
-  "闽粤桂湘":["福州","厦门","莆田","三明","泉州","漳州","南平","龙岩","宁德","广州","深圳","珠海","汕头","佛山","韶关","湛江","肇庆","江门","茂名","惠州","梅州","汕尾","河源","阳江","清远","东莞","中山","潮州","揭阳","云浮","南宁","柳州","桂林","梧州","北海","防城港","钦州","贵港","玉林","百色","贺州","河池","来宾","崇左","长沙","株洲","湘潭","衡阳","邵阳","岳阳","常德","张家界","益阳","郴州","永州","怀化","娄底","湘西"],
+  "闽粤桂湘":["福州","厦门","莆田","三明","泉州","漳州","南平","龙岩","宁德","广州","深圳","珠海","汕头","佛山","韶关","湛江","肇庆","江门","茂名","惠州","梅州","汕尾","河源","阳江","清远","东莞","中山","潮州","揭阳","云浮","南宁","柳州","桂林","梧州","北海","防城港","钦州","贵港","玉林","百色","贺州","河池","来宾","长沙","株洲","湘潭","衡阳","邵阳","岳阳","常德","张家界","益阳","郴州","永州","怀化","娄底","湘西"],
   "云贵川渝":["昆明","曲靖","玉溪","保山","昭通","丽江","普洱","临沧","楚雄","红河","文山","西双版纳","大理","德宏","怒江","迪庆","贵阳","六盘水","遵义","安顺","毕节","铜仁","黔西南","黔东南","黔南","成都","自贡","攀枝花","泸州","德阳","绵阳","广元","遂宁","内江","乐山","南充","眉山","宜宾","广安","达州","雅安","巴中","资阳","阿坝","甘孜","凉山","重庆"],
   "港澳台":["中国香港","中国澳门","中国台湾"],
   "其他":["太原","呼和浩特","沈阳","大连","长春","哈尔滨","南昌","济南","青岛","郑州","武汉","拉萨","西安","兰州","西宁","银川","乌鲁木齐"]
 };
-
 // 根据城市自动算出大区
 function getAreaByCity(cityName){
     let name = cityName.trim();
     for(let areaName in areaMap){
         let cityArr = areaMap[areaName];
         for(let c of cityArr){
-            //模糊包含匹配，只要文字里面含有地级市名字就命中大区
             if(name.includes(c)){
                 return areaName;
             }
@@ -247,46 +337,35 @@ function getAreaByCity(cityName){
     }
     return "其他";
 }
-
-
 function render(){
   let kwText = searchInput.value.trim().toLowerCase();
-  let actFilter = selActivity.value;
   let areaFilter = areaSelect.value;
   let yearFilter = yearSelect.value;
   let monthFilter = monthSelect.value;
-
-
-  // 空格分割，支持多关键词
   let keywords = kwText ? kwText.split(/\s+/).filter(x=>x) : [];
-
-  // 永远按日期升序排序
   let arr = [...eventList].sort((a,b)=>{
     return new Date(a.date) - new Date(b.date);
   });
-
   arr = arr.filter(item=>{
-    //====新增地区校验====
     let cityArea = getAreaByCity(item.city);
     let areaOk = areaFilter === "" || cityArea === areaFilter;
     if(!areaOk) return false;
-// ==========新增 年份月份筛选 ==========
     let [y,m] = item.date.split('-');
     if(yearFilter && y !== yearFilter) return false;
     if(monthFilter && m !== monthFilter) return false;
-
-    //多关键词匹配: 任意一个关键词命中艺人/城市/活动即可显示
     if(keywords.length>0){
       const allText = (item.artist + item.city + item.activity + item.remark).toLowerCase();
       let hit = keywords.some(word=> allText.includes(word));
       if(!hit) return false;
     }
-    //活动下拉筛选 (可叠加)
-    if(actFilter && !item.activity.includes(actFilter)) return false;
+    //多选活动过滤逻辑：数组为空=不过滤；有选中，必须匹配
+    if(selectedActList.length > 0){
+        if(!selectedActList.some(sel=> item.activity.includes(sel))){
+            return false;
+        }
+    }
     return true;
 });
-
-
   tableBody.innerHTML = "";
   arr.forEach(row=>{
     let tr = document.createElement('tr');
@@ -300,13 +379,10 @@ function render(){
     tableBody.appendChild(tr);
   })
 }
-
 searchInput.addEventListener('input',render);
-selActivity.addEventListener('change',render);
 areaSelect.addEventListener('change',render);
 yearSelect.addEventListener('change',render);
 monthSelect.addEventListener('change',render);
-
 render();
 </script>
 <style>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>出河芭女线下行程查询表</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Microsoft Yahei}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft Yahei","PingFang SC","Hiragino Sans GB","Helvetica Neue",Arial,sans-serif}
 body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
 .box{background:#fff;padding:22px;border-radius:10px;box-shadow:0 1px 4px #0002}
 .filter-row{
@@ -15,9 +15,9 @@ body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
     align-items:center;
 }
 #searchInput{
-    width:280px;
+    width:200px;
 }
-/* 多选下拉组件，外框和原生select统一尺寸 */
+/* 多选下拉组件 */
 .multi-select-act{
     position:relative;
     width:132px;
@@ -74,20 +74,15 @@ th{
     text-align:center;
     font-weight:bold;
 }
-/* 日期、城市、活动居中 */
-td:nth-child(1),
-td:nth-child(3),
-td:nth-child(4){
+tbody td:nth-child(1),
+tbody td:nth-child(3),
+tbody td:nth-child(4){
     text-align:center;
 }
-/* 艺人列左对齐+换行 */
-td:nth-child(2) {
+tbody td:nth-child(2),
+tbody td:nth-child(5){
     text-align:left;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 1.5;
 }
-/* 备注列左对齐 + 强制自动换行，解决长名单溢出 */
 td:nth-child(5){
     text-align:left;
     max-width: 380px;
@@ -96,7 +91,6 @@ td:nth-child(5){
     line-height: 1.5;
 }
 tr:hover{background:#f7f9fc}
-/*斑马隔行底色，可选，不想要可以删掉下面一行*/
 tbody tr:nth-child(even){background-color:#f9fafc;}
 .tip{
   color:#666;
@@ -105,34 +99,112 @@ tbody tr:nth-child(even){background-color:#f9fafc;}
   margin-bottom:4px;
   line-height:1.6;
 }
-th:nth-child(1),td:nth-child(1){width:120px;}   /*日期*/
-th:nth-child(2),td:nth-child(2){width:230px;}  /*艺人*/
-th:nth-child(3),td:nth-child(3){width:100px;}  /*城市*/
-th:nth-child(4),td:nth-child(4){width:100px;}  /*活动类型*/
-th:nth-child(5),td:nth-child(5){width:250px;}  /*备注*/
-/* ==========只控制下面的数据单元格，表头不动！========== */
-tbody td:nth-child(1),
-tbody td:nth-child(3),
-tbody td:nth-child(4)
-{
-    text-align:center;
-}
-tbody td:nth-child(2),
-tbody td:nth-child(5)
-{
-    text-align:left;
-}
-/* 统一所有原生select高度，保证筛选栏全部格子一样高 */
+th:nth-child(1),td:nth-child(1){width:120px;}
+th:nth-child(2),td:nth-child(2){width:230px;}
+th:nth-child(3),td:nth-child(3){width:100px;}
+th:nth-child(4),td:nth-child(4){width:100px;}
+th:nth-child(5),td:nth-child(5){width:250px;}
 .filter-row select{
     height:24px;
     font-size:13px;
     padding:0 6px;
 }
-#resetBtn{
+#resetBtn,
+#weekBtn{
     height:24px;
     font-size:13px;
     padding:0 12px;
     cursor:pointer;
+}
+/* 当周活动弹窗样式 */
+.week-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(30,41,59,0.55);
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+}
+.week-modal.show{
+    display:flex;
+}
+.week-modal-content{
+    background:#fff;
+    padding:20px;
+    border-radius:14px;
+    max-width:960px;
+    width:92%;
+    max-height:88vh;
+    overflow:auto;
+    box-shadow:0 20px 50px rgba(15,23,42,0.25);
+}
+.week-close{
+    margin-bottom:14px;
+    padding:7px 16px;
+    cursor:pointer;
+    border:none;
+    background:#94a3b8;
+    color:#fff;
+    border-radius:6px;
+    font-size:13px;
+}
+.week-close:hover{
+    background:#64748b;
+}
+.week-title{
+    font-size:18px;
+    font-weight:600;
+    color:#0f172a;
+    margin-bottom:14px;
+}
+/* 周历横向星期布局 */
+.week-calendar-wrap{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap:4px;
+}
+.week-day-col{
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
+}
+.week-day-head{
+    background:#eef2f7;
+    color:#0f172a;
+    padding:10px 8px;
+    text-align:center;
+}
+.week-day-head .day-name{
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:1px;
+}
+.week-day-head{
+    background:#eef2f7;
+    color:#0f172a;
+    padding:7px 8px;
+    text-align:center;
+}
+.week-item{
+    padding:6px 8px;
+    border-bottom:1px dashed #e5e7eb;
+    background:#fff;
+}
+.week-item:last-child{
+    border-bottom:none;
+}
+.week-item-name{
+    font-size:13px;
+    font-weight:400;
+    color:#111827;
+    line-height:1.45;
+}
+.week-item-place{
+    font-size:12px;
+    color:#64748b;
+    margin-top:3px;
 }
 </style>
 </head>
@@ -143,7 +215,6 @@ tbody td:nth-child(5)
 </div>
   <div class="filter-row">
     <input id="searchInput" placeholder="">
-    <!-- 替换为多选下拉 -->
     <div class="multi-select-act">
         <div class="multi-trigger">全部活动</div>
         <div class="multi-dropdown">
@@ -189,6 +260,7 @@ tbody td:nth-child(5)
     <option value="12">12月</option>
 </select>
 <button id="resetBtn">重置</button>
+<button id="weekBtn">当周活动</button>
   </div>
   <table>
     <thead>
@@ -206,6 +278,18 @@ tbody td:nth-child(5)
     最后更新：2026-09-16 14:00
   </div>
 </div>
+
+<!--当周活动弹窗-->
+<div class="week-modal" id="weekModal">
+    <div class="week-modal-content">
+        <button class="week-close" id="weekClose">关闭</button>
+        <div class="week-title">当周活动</div>
+        <div id="weekRenderBox"></div>
+    </div>
+</div>
+
+<div class="watermark"></div>
+
 <script>
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
@@ -280,7 +364,6 @@ const eventList = [
   {date:"2026-11-14", artist:"许佳琪", city:"成都", activity:"演出", remark:"续假期"},
   {date:"2026-12-05", artist:"张润", city:"广州", activity:"演出", remark:"/"},
   {date:"2026-12-06", artist:"张润", city:"广州", activity:"见面会", remark:"/"},
-
   
 ];
 // ====================================================================
@@ -290,37 +373,31 @@ const areaSelect = document.getElementById('areaSelect');
 const yearSelect = document.getElementById('yearSelect');
 const monthSelect = document.getElementById('monthSelect');
 const resetBtn = document.getElementById('resetBtn');
-//多选下拉变量
 const multiWrap = document.querySelector('.multi-select-act');
 const multiTrigger = multiWrap.querySelector('.multi-trigger');
 const multiDrop = multiWrap.querySelector('.multi-dropdown');
 let selectedActList = [];
-//下拉展开收起
+
 multiTrigger.addEventListener('click',e=>{
     e.stopPropagation();
     multiDrop.classList.toggle('show');
 });
-// 点击下拉框内部阻止冒泡，选择复选框不会关闭下拉
 multiDrop.addEventListener('click',e=>{
     e.stopPropagation();
 });
 document.addEventListener('click',()=>{
     multiDrop.classList.remove('show');
 });
-//复选框事件
+
 const checkAll = multiDrop.querySelectorAll('input[type="checkbox"]');
 checkAll.forEach(cb=>{
     cb.addEventListener('change',()=>{
         selectedActList = Array.from(checkAll).filter(i=>i.checked).map(i=>i.value);
-        if(selectedActList.length === 0){
-            multiTrigger.innerText = "全部活动";
-        }else{
-            multiTrigger.innerText = selectedActList.join('、');
-        }
+        multiTrigger.innerText = selectedActList.length === 0 ? "全部活动" : selectedActList.join('、');
         render();
     })
 })
-//重置按钮
+
 resetBtn.addEventListener('click',()=>{
     searchInput.value = "";
     areaSelect.value = "";
@@ -331,7 +408,7 @@ resetBtn.addEventListener('click',()=>{
     multiTrigger.innerText = "全部活动";
     render();
 });
-// =========大区城市对照表=========
+
 const areaMap = {
   "京津冀":["北京","天津","石家庄","唐山","秦皇岛","邯郸","邢台","保定","张家口","承德","沧州","廊坊","衡水"],
   "江浙沪皖":["上海","南京","无锡","徐州","常州","苏州","南通","连云港","淮安","盐城","扬州","镇江","泰州","宿迁","杭州","宁波","温州","嘉兴","湖州","绍兴","金华","衢州","舟山","台州","丽水","合肥","芜湖","蚌埠","淮南","马鞍山","淮北","铜陵","安庆","黄山","滁州","阜阳","宿州","六安","亳州","池州","宣城"],
@@ -340,48 +417,36 @@ const areaMap = {
   "港澳台":["中国香港","中国澳门","中国台湾"],
   "其他":["太原","呼和浩特","沈阳","大连","长春","哈尔滨","南昌","济南","青岛","郑州","武汉","拉萨","西安","兰州","西宁","银川","乌鲁木齐"]
 };
-// 根据城市自动算出大区
+
 function getAreaByCity(cityName){
     let name = cityName.trim();
     for(let areaName in areaMap){
-        let cityArr = areaMap[areaName];
-        for(let c of cityArr){
-            if(name.includes(c)){
-                return areaName;
-            }
-        }
+        if(areaMap[areaName].some(c=>name.includes(c))) return areaName;
     }
     return "其他";
 }
+
 function render(){
   let kwText = searchInput.value.trim().toLowerCase();
   let areaFilter = areaSelect.value;
   let yearFilter = yearSelect.value;
   let monthFilter = monthSelect.value;
   let keywords = kwText ? kwText.split(/\s+/).filter(x=>x) : [];
-  let arr = [...eventList].sort((a,b)=>{
-    return new Date(a.date) - new Date(b.date);
-  });
+  let arr = [...eventList].sort((a,b)=> new Date(a.date) - new Date(b.date));
+
   arr = arr.filter(item=>{
-    let cityArea = getAreaByCity(item.city);
-    let areaOk = areaFilter === "" || cityArea === areaFilter;
-    if(!areaOk) return false;
+    if(areaFilter && getAreaByCity(item.city) !== areaFilter) return false;
     let [y,m] = item.date.split('-');
     if(yearFilter && y !== yearFilter) return false;
     if(monthFilter && m !== monthFilter) return false;
-    if(keywords.length>0){
+    if(keywords.length){
       const allText = (item.artist + item.city + item.activity + item.remark).toLowerCase();
-      let hit = keywords.some(word=> allText.includes(word));
-      if(!hit) return false;
+      if(!keywords.some(word=> allText.includes(word))) return false;
     }
-    //多选活动过滤逻辑：数组为空=不过滤；有选中，必须匹配
-    if(selectedActList.length > 0){
-        if(!selectedActList.some(sel=> item.activity.includes(sel))){
-            return false;
-        }
-    }
+    if(selectedActList.length && !selectedActList.some(sel=> item.activity.includes(sel))) return false;
     return true;
-});
+  });
+
   tableBody.innerHTML = "";
   arr.forEach(row=>{
     let tr = document.createElement('tr');
@@ -395,12 +460,119 @@ function render(){
     tableBody.appendChild(tr);
   })
 }
+
 searchInput.addEventListener('input',render);
 areaSelect.addEventListener('change',render);
 yearSelect.addEventListener('change',render);
 monthSelect.addEventListener('change',render);
 render();
+
+// =====================【每周只修改这里！】=====================
+const weekCalendarData = [
+  {
+        dayTitle:"星期一",
+        dateText:"9/14",
+        list:[
+         
+          
+        ]
+    },
+ 
+  {
+        dayTitle:"星期二",
+        dateText:"9/15",
+        list:[
+           
+        ]
+    },
+
+  {
+        dayTitle:"星期三",
+        dateText:"9/16",
+        list:[
+            {name:"许杨玉琢 一日店长", place:"长沙"},
+            {name:"易嘉爱 驻唱", place:"长沙"}
+        ]
+    },
+    {
+        dayTitle:"星期四",
+        dateText:"9/17",
+        list:[
+            {name:"张智杰 ReaLink", place:"北京"}
+        ]
+    },
+    {
+        dayTitle:"星期五",
+        dateText:"9/18",
+        list:[
+            {name:"易嘉爱 驻唱", place:"长沙"}
+        ]
+    },
+    {
+        dayTitle:"星期六",
+        dateText:"9/19",
+        list:[
+            {name:"莫寒 雨后派对", place:"上海"},            
+            {name:"孙芮 春砂仁活动", place:"阳江"},
+            {name:"易嘉爱 驻唱", place:"长沙"},
+            {name:"曾艾佳 演出", place:"北京"},
+            {name:"段艺璇 一日店长", place:"宁波"},
+            {name:"唐莉佳 见面会/助演", place:"杭州"},
+            {name:"王允宸 一日店长", place:"成都"},
+            {name:"王露皎 idolzoo", place:"沈阳"},
+            {name:"陈盼 采梦", place:"上海"},
+            {name:"李歆乐 星巡", place:"上海"},
+            {name:"王思文 今日晴", place:"北京"}
+        ]
+    },
+    {
+        dayTitle:"星期日",
+        dateText:"9/20",
+        list:[
+            {name:"易嘉爱 驻唱", place:"长沙"},
+            {name:"王露皎 idolzoo", place:"北京"}
+        ]
+    }
+];
+// ==========================================================
+
+const weekBtn = document.getElementById('weekBtn');
+const weekModal = document.getElementById('weekModal');
+const weekClose = document.getElementById('weekClose');
+const weekRenderBox = document.getElementById('weekRenderBox');
+
+function renderWeekCalendar(){
+    let html = `<div class="week-calendar-wrap">`;
+    weekCalendarData.forEach(day=>{
+        html += `<div class="week-day-col">
+            <div class="week-day-head">
+                <div class="day-name">${day.dayTitle}</div>
+                <div class="day-date">${day.dateText}</div>
+            </div>`;
+        day.list.forEach(act=>{
+            html += `<div class="week-item">
+                <div class="week-item-name">${act.name}</div>
+                <div class="week-item-place">${act.place}</div>
+            </div>`;
+        })
+        html += `</div>`;
+    })
+    html += `</div>`;
+    weekRenderBox.innerHTML = html;
+}
+
+weekBtn.onclick = function(){
+    renderWeekCalendar();
+    weekModal.classList.add('show');
+}
+weekClose.onclick = function(){
+    weekModal.classList.remove('show');
+}
+weekModal.onclick = function(e){
+    if(e.target === weekModal) weekModal.classList.remove('show');
+}
 </script>
+
 <style>
 .watermark{
   position:fixed;
@@ -414,6 +586,6 @@ render();
   background-repeat: repeat;
 }
 </style>
-<div class="watermark"></div>
+
 </body>
 </html>

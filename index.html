@@ -276,7 +276,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-09-20 18:50
+    最后更新：2026-09-21 10:00
   </div>
 </div>
 
@@ -293,8 +293,6 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 <script>
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
-  {date:"2026-09-20", artist:"易嘉爱", city:"长沙", activity:"其他", remark:" 驻唱"},
-  {date:"2026-09-20", artist:"王露皎", city:"沈阳", activity:"地偶", remark:"idolzoo 银河系·星屑FESTIVAL IDOL Live Vol.2.0 "},
   {date:"2026-09-23", artist:"沈梦瑶", city:"无锡", activity:"其他", remark:"微博音乐盛典"},
   {date:"2026-09-24", artist:"赵粤", city:"宿迁", activity:"其他", remark:"京东天地品牌活动"},
   {date:"2026-09-25", artist:"唐莉佳 曾艾佳", city:"中国台湾", activity:"演出/见面会", remark:"秋月意浓 Fans concert"},
@@ -316,10 +314,10 @@ const eventList = [
   {date:"2026-10-01", artist:"符冰冰 吴羽霏 杨若惜 赖梓惜", city:"广州", activity:"演出", remark:"出道纪念 星光剧场"},
   {date:"2026-10-01", artist:"罗可嘉", city:"广州", activity:"地偶", remark:"小乖生日助演"},
   {date:"2026-10-02", artist:"戴萌", city:"常州", activity:"音乐节", remark:"太湖湾音乐节"},
-  {date:"2026-10-02", artist:"陈珂", city:"广州", activity:"演出", remark:"UP！上升 嘉宾:梁娇 梁乔 林芝 罗寒月 郑丹妮"},
+  {date:"2026-10-02", artist:"陈珂", city:"广州", activity:"演出", remark:"UP！上升 嘉宾：郑丹妮 梁乔 梁娇 林芝 罗寒月"},
   {date:"2026-10-02", artist:"龙亦瑞 滚滚", city:"广州", activity:"生日会/见面会", remark:"生日冷餐会 滚滚瑞瑞见面会"},
   {date:"2026-10-02", artist:"曾佳", city:"上海", activity:"其他", remark:"redland"},
- {date:"2026-10-02", artist:"钟洁玟", city:"成都", activity:"演出", remark:"男装minilive"},
+  {date:"2026-10-02", artist:"钟洁玟 朱涵佳", city:"成都", activity:"演出", remark:"男装minilive"},
   {date:"2026-10-03", artist:"沈梦瑶", city:"上海", activity:"音乐节", remark:"N次方前滩音乐节"},
   {date:"2026-10-03", artist:"周诗雨", city:"成都", activity:"演出", remark:"IF音乐会"},
   {date:"2026-10-03", artist:"王允宸", city:"上海", activity:"音乐剧", remark:"四大美女"},
@@ -331,23 +329,23 @@ const eventList = [
   {date:"2026-10-04", artist:"惨哥 苏杉杉", city:"杭州", activity:"生日会/见面会", remark:"惨哥生日冷餐会 见面会"},
   {date:"2026-10-04", artist:"周诗雨", city:"成都", activity:"见面会", remark:"/"},
   {date:"2026-10-04", artist:"韩家乐", city:"上海", activity:"演出", remark:"七天乐"},
-    {date:"2026-10-04", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"tenki"},
+  {date:"2026-10-04", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"TENKI"},
   {date:"2026-10-05", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-10-05", artist:"王奕", city:"成都", activity:"演出", remark:"O.N.E"},
   {date:"2026-10-05", artist:"唐莉佳", city:"武汉", activity:"见面会", remark:"/"},
-  {date:"2026-10-05", artist:"梁娇", city:"广州", activity:"演出", remark:"JioJioTIME 逆应援答谢场 助演：梁乔 罗寒月 林芝 卢静 吴羽霏 龙亦瑞 刘力菲 陈珂 叶舒淇 徐楚雯"},
+  {date:"2026-10-05", artist:"梁娇", city:"广州", activity:"演出", remark:"JioJioTIME 逆应援答谢场 助演：梁乔 卢静 林芝 罗寒月 吴羽霏 龙亦瑞 刘力菲 陈珂 徐楚雯 叶舒淇"},
   {date:"2026-10-05", artist:"农燕萍", city:"上海", activity:"见面会", remark:"日月光中心"},
   {date:"2026-10-05", artist:"王允宸", city:"上海", activity:"见面会", remark:"美兰西湖蜂巢艺术中心"},
   {date:"2026-10-05", artist:"韩家乐", city:"上海", activity:"见面会", remark:"/"},
-    {date:"2026-10-05", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"tenki"},
+  {date:"2026-10-05", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"TENKI"},
   {date:"2026-10-06", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-10-06", artist:"陈珂", city:"长沙", activity:"其他", remark:"露营派对"},
-  {date:"2026-10-06", artist:"姜杉", city:"上海", activity:"生日会", remark:"魔力 嘉宾:韩家乐 张昕 张笑盈 陈倩楠 农燕萍 张怡 颜沁 "},
+  {date:"2026-10-06", artist:"姜杉", city:"上海", activity:"生日会", remark:"魔力 嘉宾：张怡 颜沁 陈倩楠 农燕萍 韩家乐 张昕 张笑盈"},
   {date:"2026-10-06", artist:"王奕", city:"成都", activity:"见面会", remark:"/"},
   {date:"2026-10-06", artist:"曾艾佳 王偲越 易嘉爱 龙亦瑞 吴羽霏 杨若惜", city:"广州", activity:"演出/见面会", remark:"幕后玩家▪加载"},
- {date:"2026-10-06", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"tenki"},
-  {date:"2026-10-07", artist:"陈珂", city:"长沙", activity:"演出", remark:"UP！上升 嘉宾:罗寒月 郑丹妮"},
-    {date:"2026-10-07", artist:"姜杉", city:"上海", activity:"见面会", remark:"/"},
+  {date:"2026-10-06", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"TENKI"},
+  {date:"2026-10-07", artist:"陈珂", city:"长沙", activity:"演出", remark:"UP！上升 嘉宾：郑丹妮 罗寒月"},
+  {date:"2026-10-07", artist:"姜杉", city:"上海", activity:"见面会", remark:"/"},
   {date:"2026-10-17", artist:"刘力菲 张昕", city:"北京", activity:"演出", remark:"『叁壹無畏』嘉宾：徐晗 张语格 "},
   {date:"2026-10-17", artist:"王偲越", city:"武汉", activity:"地偶", remark:"/"},
   {date:"2026-10-24", artist:"蒋芸", city:"广州", activity:"演出", remark:"/"},

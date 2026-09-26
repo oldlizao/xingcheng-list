@@ -276,7 +276,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-09-24 14:00
+    最后更新：2026-09-26 10:00
   </div>
 </div>
 
@@ -293,19 +293,6 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 <script>
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
-  {date:"2026-09-24", artist:"赵粤", city:"宿迁", activity:"一日店长", remark:"京东天地阿迪达斯"},
-  {date:"2026-09-25", artist:"陈观慧 李宇琪", city:"宁波", activity:"其他", remark:"C-SONG慈溪紫气嘉年华5.0"},
-  {date:"2026-09-25", artist:"唐莉佳 曾艾佳", city:"中国台湾", activity:"演出/见面会", remark:"秋月意浓 Fans concert"},
-  {date:"2026-09-25", artist:"许杨玉琢", city:"上海", activity:"生日会", remark:"嘉宾：高雪逸 郭爽 农燕萍 赵天杨 陆咚咚 金吉雅 洪珮雲 王思慧 谢妮 小羊biubiu"},
-  {date:"2026-09-25", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
-  {date:"2026-09-25", artist:"段艺璇", city:"中国香港", activity:"嘉宾", remark:"关注流舞蹈大赛"},
-  {date:"2026-09-25", artist:"张怀瑾 李姗姗", city:"上海", activity:"嘉宾", remark:"i-link"},
-  {date:"2026-09-25", artist:"李伊虹", city:"重庆", activity:"地偶", remark:"EVERSUMMER"},
-  {date:"2026-09-25", artist:"王露皎", city:"成都", activity:"地偶", remark:"idolzoo"},
-  {date:"2026-09-25", artist:"罗可嘉", city:"广州", activity:"地偶", remark:"小季Ameku生日助演"},
-  {date:"2026-09-25", artist:"张智杰", city:"北京", activity:"地偶", remark:"REALINK"},
-  {date:"2026-09-25", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
-  {date:"2026-09-25", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦YUMETORI"},
   {date:"2026-09-26", artist:"王允宸", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-09-26", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-09-26", artist:"易嘉爱", city:"上海", activity:"演出", remark:"GIFT收官，嘉宾：林思意 万丽娜"},
@@ -322,6 +309,7 @@ const eventList = [
   {date:"2026-09-27", artist:"李艺彤 王允宸", city:"张家口宣化", activity:"其他", remark:"流行金曲排行榜"},
   {date:"2026-09-27", artist:"刘闲", city:"上海", activity:"演出", remark:"音乐首唱会"},
   {date:"2026-09-27", artist:"张智杰", city:"北京", activity:"地偶", remark:"REALINK"},
+ {date:"2026-09-27", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
   {date:"2026-09-27", artist:"王露皎", city:"成都", activity:"地偶", remark:"idolzoo"},
   {date:"2026-09-27", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦YUMETORI"},
   {date:"2026-09-27", artist:"谢珊珊", city:"成都", activity:"地偶", remark:"地偶飞行"},
@@ -342,6 +330,7 @@ const eventList = [
   {date:"2026-10-02", artist:"曲晨语", city:"上海", activity:"地偶", remark:"/"},
   {date:"2026-10-03", artist:"沈梦瑶", city:"上海", activity:"音乐节", remark:"N次方前滩音乐节"},
   {date:"2026-10-03", artist:"周诗雨", city:"成都", activity:"演出", remark:"IF音乐会"},
+ {date:"2026-10-03", artist:"刘力菲", city:"广州", activity:"见面会", remark:"/"},
   {date:"2026-10-03", artist:"王允宸", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-10-03", artist:"陈珂", city:"广州", activity:"见面会", remark:"/"},
   {date:"2026-10-03", artist:"龙亦瑞", city:"广州", activity:"路演/见面会", remark:"新歌首唱会 见面会"},
@@ -351,11 +340,13 @@ const eventList = [
   {date:"2026-10-04", artist:"唐莉佳", city:"武汉", activity:"演出", remark:"聆一场疯的雨 嘉宾：易嘉爱"},
   {date:"2026-10-04", artist:"曾艾佳", city:"上海", activity:"演出", remark:"刻度之外"},
   {date:"2026-10-04", artist:"惨哥 苏杉杉", city:"杭州", activity:"生日会/见面会", remark:"惨哥生日冷餐会 见面会"},
-  {date:"2026-10-04", artist:"周诗雨", city:"成都", activity:"见面会", remark:"/"},
+  {date:"2026-10-04", artist:"周诗雨", city:"成都", activity:"见面会", remark:"/"},   {date:"2026-09-26", artist:"江雨航", city:"上海", activity:"地偶", remark:"LightDust Idol Fes -V2.0-"},
   {date:"2026-10-04", artist:"韩家乐", city:"上海", activity:"演出", remark:"七天乐 嘉宾：陈倩楠 林慧 刘洁 刘闲 农燕萍 张怀瑾 赵天杨 张昕 张笑盈"},
   {date:"2026-10-04", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"TENKI"},
+ {date:"2026-10-04", artist:"沈小爱", city:"上海", activity:"其他", remark:"/"},
   {date:"2026-10-05", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-10-05", artist:"王奕", city:"成都", activity:"演出", remark:"O.N.E"},
+{date:"2026-10-05", artist:"段艺璇", city:"杭州", activity:"嘉宾", remark:"孙芊浔生日会"},
   {date:"2026-10-05", artist:"唐莉佳", city:"武汉", activity:"见面会", remark:"/"},
   {date:"2026-10-05", artist:"梁娇", city:"广州", activity:"演出", remark:"霹雳娇娃逆应援答谢场 助演：梁乔 卢静 林芝 罗寒月 吴羽霏 龙亦瑞 刘力菲 陈珂 徐楚雯 叶舒淇"},
   {date:"2026-10-05", artist:"农燕萍", city:"上海", activity:"见面会", remark:"日月光中心"},
@@ -371,13 +362,16 @@ const eventList = [
   {date:"2026-10-07", artist:"陈珂", city:"长沙", activity:"演出", remark:"UP！上升 嘉宾：郑丹妮 罗寒月"},
   {date:"2026-10-07", artist:"姜杉", city:"上海", activity:"见面会", remark:"/"},
   {date:"2026-10-17", artist:"刘力菲 张昕", city:"北京", activity:"演出", remark:"『叁壹無畏』嘉宾：徐晗 张语格 "},
+{date:"2026-10-17", artist:"洪静雯", city:"广州", activity:"其他", remark:"/"},
   {date:"2026-10-17", artist:"张韵雯", city:"南京", activity:"地偶", remark:"小猫队cats"},
   {date:"2026-10-17", artist:"王偲越", city:"武汉", activity:"地偶", remark:"/"},
   {date:"2026-10-18", artist:"曾艾佳", city:"北京", activity:"演出", remark:"刻度之外"},
   {date:"2026-10-24", artist:"蒋芸", city:"广州", activity:"演出", remark:"「画戏」"},
   {date:"2026-10-24", artist:"段艺璇", city:"长沙", activity:"演出", remark:"巡演收官"},
+    {date:"2026-09-26", artist:"洪静雯", city:"上海", activity:"嘉宾", remark:"/"},
   {date:"2026-10-25", artist:"蒋芸", city:"广州", activity:"见面会", remark:"/"},
   {date:"2026-10-30", artist:"刘力菲", city:"广州", activity:"生日会", remark:"/"},
+ {date:"2026-10-30", artist:"洪静雯", city:"广州", activity:"/", remark:"/"},
   {date:"2026-10-31", artist:"王允宸", city:"上海", activity:"演出", remark:"镜像双魂 万圣夜live"},
   {date:"2026-11-01", artist:"王允宸", city:"上海", activity:"见面会", remark:"/"},
   {date:"2026-11-06", artist:"卢静", city:"广州", activity:"生日会", remark:"/"},
@@ -531,6 +525,7 @@ const weekCalendarData = [
             {name:"李艺彤 音乐剧", place:"上海"},
             {name:"张怀瑾 李姗姗 i-link嘉宾", place:"上海"},
             {name:"陈盼 地偶", place:"上海"},
+            {name:"李歆乐 地偶", place:"上海"},
             {name:"陈观慧 李宇琪 C-SONG", place:"宁波"},
             {name:"罗可嘉 地偶助演", place:"广州"},
             {name:"王露皎 地偶", place:"成都"},
@@ -564,6 +559,7 @@ const weekCalendarData = [
         list:[
             {name:"张智杰 地偶", place:"北京"},
             {name:"李艺彤 王允宸 流行金曲排行榜", place:"张家口宣化"},
+            {name:"李歆乐 地偶", place:"上海"},
             {name:"刘闲 音乐首唱会", place:"上海"},
             {name:"陈盼 地偶", place:"上海"},
             {name:"王露皎 地偶", place:"成都"},

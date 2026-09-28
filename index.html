@@ -261,7 +261,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <option value="12">12月</option>
 </select>
 <button id="resetBtn">重置</button>
-<button id="weekBtn">当周活动</button>
+<button id="weekBtn">每周活动</button>
   </div>
   <table>
     <thead>
@@ -276,7 +276,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-09-27 10:00
+    最后更新：2026-09-28 10:00
   </div>
 </div>
 
@@ -293,13 +293,6 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 <script>
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
-  {date:"2026-09-27", artist:"李艺彤 王允宸", city:"张家口宣化", activity:"其他", remark:"流行金曲排行榜"},
-  {date:"2026-09-27", artist:"刘闲", city:"上海", activity:"演出", remark:"音乐首唱会"},
-  {date:"2026-09-27", artist:"张智杰", city:"北京", activity:"地偶", remark:"REALINK"},
- {date:"2026-09-27", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
-  {date:"2026-09-27", artist:"王露皎", city:"成都", activity:"地偶", remark:"idolzoo"},
-  {date:"2026-09-27", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦YUMETORI"},
-  {date:"2026-09-27", artist:"谢珊珊", city:"成都", activity:"地偶", remark:"地偶飞行"},
   {date:"2026-10-01", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-10-01", artist:"唐莉佳", city:"广州", activity:"路演/见面会", remark:"/"},
   {date:"2026-10-01", artist:"符冰冰 吴羽霏 杨若惜 赖梓惜", city:"广州", activity:"演出", remark:"出道纪念 星光剧场"},
@@ -473,89 +466,106 @@ render();
 
 // =====================【每周只修改这里！】=====================
 const weekCalendarData = [
-  {
-        dayTitle:"星期一",
-        dateText:"9/21",
+    {
+        dayTitle:"星期四",
+        dateText:"10/1",
         list:[
-         
-          
+            {name:"李艺彤 音乐剧", place:"上海"},          
+            {name:"王露皎 地偶", place:"上海"},  
+            {name:"曲晨语 地偶", place:"上海"},
+            {name:"王偲越 地偶", place:"武汉"},     
+            {name:"唐莉佳 路演见面会", place:"广州"}, 
+            {name:"符冰冰 吴羽霏 杨若惜 赖梓惜 演出", place:"广州"},  
+            {name:"梁婉琳 罗可嘉 地偶", place:"广州"}
+        ]
+    },
+    {
+        dayTitle:"星期五",
+        dateText:"10/2",
+        list:[
+            {name:"戴萌 音乐节", place:"常州"},
+            {name:"曾佳 redland", place:"上海"},
+            {name:"王露皎 地偶", place:"上海"},
+            {name:"江雨航 曲晨语 地偶", place:"上海"},
+            {name:"陈珂 演出", place:"广州"},
+            {name:"龙亦瑞 滚滚 见面会 生日会", place:"广州"},
+            {name:"曾艾佳 演出", place:"广州"},
+            {name:"钟洁玟 朱涵佳 谢珊珊 minilive", place:"成都"}
+        ]
+    },
+    {
+        dayTitle:"星期六",
+        dateText:"10/3",
+        list:[
+            {name:"沈梦瑶 音乐节", place:"上海"},
+            {name:"王允宸 音乐剧", place:"上海"},            
+            {name:"江雨航 曲晨语 地偶", place:"上海"}, 
+            {name:"刘力菲 见面会", place:"广州"},          
+            {name:"陈珂 见面会", place:"广州"}, 
+            {name:"龙亦瑞 路演 见面会 一日店长", place:"广州"},
+            {name:"周诗雨 演出", place:"成都"}
+          ]
+    },
+    {
+        dayTitle:"星期日",
+        dateText:"10/4",
+        list:[
+            {name:"王允宸 音乐剧", place:"上海"},
+            {name:"曾艾佳 演出", place:"上海"},
+            {name:"韩家乐 演出", place:"上海"},
+            {name:"惨哥 苏杉杉 生日会 见面会", place:"杭州"},
+            {name:"沈小爱 见面会", place:"上海"},
+            {name:"钟洁玟 地偶", place:"广州"},
+            {name:"唐莉佳 演出", place:"武汉"},
+            {name:"周诗雨 见面会", place:"成都"},
+            {name:"戴萌 音乐节", place:"泸州"}
+                      
+        ]
+    }
+ {
+        dayTitle:"星期一",
+        dateText:"10/5",
+        list:[
+          {name:"李艺彤 音乐剧", place:"上海"},
+            {name:"王允宸 见面会", place:"上海"},
+            {name:"韩家乐 农燕萍 陈倩楠 见面会", place:"上海"},
+            {name:"谢珊珊 地偶", place:"上海"},
+            {name:"段艺璇 嘉宾", place:"杭州"},
+            {name:"梁娇 演出", place:"广州"},
+            {name:"钟洁玟 地偶", place:"广州"},
+            {name:"唐莉佳 见面会", place:"武汉"},
+            {name:"王奕 演出", place:"成都"}       
         ]
     },
  
   {
         dayTitle:"星期二",
-        dateText:"9/22",
+        dateText:"10/6",
         list:[
+            {name:"李艺彤 音乐剧", place:"上海"},
+            {name:"姜杉 生日会", place:"上海"},
+            {name:"谢珊珊 地偶", place:"上海"},
+            {name:"曾艾佳 王偲越 易嘉爱 龙亦瑞 吴羽霏 杨若惜 演出", place:"广州"},
+            {name:"钟洁玟 地偶", place:"广州"},
+            {name:"陈珂 露营派对", place:"长沙"},
+            {name:"王奕 见面会", place:"成都"}   
            
         ]
     },
 
   {
         dayTitle:"星期三",
-        dateText:"9/23",
+        dateText:"10/7",
         list:[
-            {name:"孙芮 电影首映礼", place:"北京"},          
-        {name:"沈梦瑶 微博音乐盛典", place:"无锡"}
-                   ]
-    },
-    {
-        dayTitle:"星期四",
-        dateText:"9/24",
-        list:[
-            {name:"赵粤 一日店长", place:"宿迁"}
+            {name:"谢珊珊 地偶", place:"北京"},
+            {name:"姜杉 见面会", place:"上海"},
+            {name:"陈珂 演出", place:"长沙"}
         ]
     },
-    {
-        dayTitle:"星期五",
-        dateText:"9/25",
-        list:[
-            {name:"王思文 地偶", place:"北京"},
-            {name:"张智杰 地偶", place:"北京"},
-            {name:"许杨玉琢 生日会", place:"上海"},
-            {name:"李艺彤 音乐剧", place:"上海"},
-            {name:"张怀瑾 李姗姗 i-link嘉宾", place:"上海"},
-            {name:"陈盼 地偶", place:"上海"},
-            {name:"李歆乐 地偶", place:"上海"},
-            {name:"陈观慧 李宇琪 C-SONG", place:"宁波"},
-            {name:"罗可嘉 地偶助演", place:"广州"},
-            {name:"王露皎 地偶", place:"成都"},
-            {name:"李伊虹 地偶", place:"重庆"},
-            {name:"段艺璇 关注流舞蹈大赛", place:"中国香港"},
-            {name:"唐莉佳 曾艾佳 秋月意浓 Fans concert", place:"中国台湾"}
-        ]
-    },
-    {
-        dayTitle:"星期六",
-        dateText:"9/26",
-        list:[
-            {name:"王思文 地偶", place:"北京"},
-            {name:"王允宸 音乐剧", place:"上海"},            
-            {name:"李艺彤 音乐剧", place:"上海"}, 
-            {name:"易嘉爱 GIFT巡演收官", place:"上海"},          
-            {name:"许杨玉琢 见面会 After Party", place:"上海"}, 
-            {name:"张笑盈 见面会", place:"上海"},
-            {name:"刘闲 音乐首唱会", place:"上海"},
-            {name:"陈盼 地偶", place:"上海"},
-            {name:"张韵雯 地偶", place:"上海"},
-            {name:"江雨航 地偶", place:"上海"},
-            {name:"梁婉琳 邓惠恩 罗可嘉 余芷媛 限时幻想", place:"广州"},
-            {name:"李伊虹 地偶", place:"重庆"},
-            {name:"曾艾佳 失序尘编", place:"中国台湾"}
-          ]
-    },
-    {
-        dayTitle:"星期日",
-        dateText:"9/27",
-        list:[
-            {name:"张智杰 地偶", place:"北京"},
-            {name:"李艺彤 王允宸 流行金曲排行榜", place:"张家口宣化"},
-            {name:"李歆乐 地偶", place:"上海"},
-            {name:"刘闲 音乐首唱会", place:"上海"},
-            {name:"陈盼 地偶", place:"上海"},
-            {name:"王露皎 地偶", place:"成都"},
-            {name:"谢珊珊 地偶飞行", place:"成都"}           
-        ]
-    }
+
+
+
+    
 ];
 // ==========================================================
 

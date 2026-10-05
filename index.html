@@ -262,7 +262,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <option value="12">12月</option>
 </select>
 <button id="resetBtn">重置</button>
-<button id="weekBtn">七日活动</button>
+<button id="weekBtn">一周活动</button>
   </div>
   <table>
     <thead>
@@ -277,7 +277,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-10-04 12:00
+    最后更新：2026-10-05 10:00
   </div>
 </div>
 
@@ -347,7 +347,8 @@ const eventList = [
     {date:"2026-10-10", artist:"陈倩楠", city:"上海", activity:"时装周", remark:"moromoro上海时装周"},
      {date:"2026-10-11", artist:"蒋芸 陈倩楠", city:"上海", activity:"时装周", remark:"sevenlong上海时装周"},
      {date:"2026-10-11", artist:"许杨玉琢", city:"上海", activity:"时装周", remark:"transit上海时装周"},
-    {date:"2026-10-12", artist:"蒋芸", city:"上海", activity:"时装周", remark:"jendes上海时装周"},
+    {date:"2026-10-11", artist:"唐莉佳", city:"广州", activity:"其他", remark:"/"},
+    {date:"2026-10-12", artist:"蒋芸", city:"上海", activity:"时装周", remark:"evvly jendes上海时装周"},
       {date:"2026-10-13", artist:"蒋芸", city:"上海", activity:"时装周", remark:"花木深上海时装周"}, 
     {date:"2026-10-14", artist:"王允宸", city:"上海", activity:"时装周", remark:"LetoiiAtelier上海时装周"},
     {date:"2026-10-17", artist:"许佳琪", city:"上海", activity:"其他", remark:"校园音乐会 "},
@@ -483,27 +484,6 @@ render();
 // =====================【每周只修改这里！】=====================
 const weekCalendarData = [
  
-    {
-        dayTitle:"星期日",
-        dateText:"10/4",
-        list:[
-            {name:"王允宸 音乐剧", place:"上海"},
-            {name:"曾艾佳 演出", place:"上海"},
-            {name:"韩家乐 演出", place:"上海"},
-            {name:"沈小爱 见面会", place:"上海"},
-             {name:"王露皎 地偶", place:"上海"},
-            {name:"陈盼 地偶", place:"上海"},
-            {name:"李歆乐 地偶", place:"上海"},
-            {name:"惨哥 苏杉杉 生日会 见面会", place:"杭州"},
-            {name:"刘力菲 助演", place:"广州"},
-            {name:"钟洁玟 地偶", place:"广州"},
-             {name:"邓惠恩 梁婉琳 地偶", place:"广州"},
-            {name:"唐莉佳 演出", place:"武汉"},
-            {name:"周诗雨 见面会", place:"成都"},
-            {name:"戴萌 音乐节", place:"泸州"}
-                      
-        ]
-    },
  {
         dayTitle:"星期一",
         dateText:"10/5",
@@ -580,6 +560,16 @@ const weekCalendarData = [
             {name:"蒋芸 crazyliwei时装周", place:"上海"},
             {name:"陈倩楠 moromoro时装周", place:"上海"},
           ]
+    },
+    {
+        dayTitle:"星期日",
+        dateText:"10/11",
+        list:[
+            {name:"蒋芸 陈倩楠 sevenlong时装周", place:"上海"},
+            {name:"许杨玉琢 transit时装周", place:"上海"},
+            {name:"唐莉佳 线下", place:"广州"},
+            {name:"沈小爱 见面会", place:"上海"}           
+        ]
     }
     
 ];

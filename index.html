@@ -277,7 +277,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-10-05 10:00
+    最后更新：2026-10-06 10:00
   </div>
 </div>
 
@@ -294,18 +294,6 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 <script>
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
-  {date:"2026-10-05", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
-  {date:"2026-10-05", artist:"王奕", city:"成都", activity:"演出", remark:"O.N.E"},
-{date:"2026-10-05", artist:"段艺璇", city:"杭州", activity:"嘉宾", remark:"孙芊浔生日会"},
-  {date:"2026-10-05", artist:"唐莉佳", city:"武汉", activity:"见面会", remark:"/"},
-  {date:"2026-10-05", artist:"梁娇", city:"广州", activity:"演出", remark:"霹雳娇娃逆应援答谢场 助演：梁乔 卢静 林芝 罗寒月 吴羽霏 龙亦瑞 刘力菲 陈珂 徐楚雯 叶舒淇"},
-  {date:"2026-10-05", artist:"王允宸", city:"上海", activity:"见面会", remark:"美兰西湖蜂巢艺术中心"},
-  {date:"2026-10-05", artist:"韩家乐 农燕萍 陈倩楠", city:"上海", activity:"见面会", remark:"/"},
-      {date:"2026-10-05", artist:"王露皎", city:"上海", activity:"地偶", remark:"idolzoo"},
-  {date:"2026-10-05", artist:"钟洁玟", city:"广州", activity:"地偶", remark:"TENKI"},
-    {date:"2026-10-05", artist:"谢珊珊", city:"上海", activity:"地偶", remark:"BubbleNova"},
-    {date:"2026-10-05", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦"},
-    {date:"2026-10-05", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡"},
   {date:"2026-10-06", artist:"李艺彤", city:"上海", activity:"音乐剧", remark:"四大美女"},
   {date:"2026-10-06", artist:"陈珂", city:"长沙", activity:"其他", remark:"露营派对"},
   {date:"2026-10-06", artist:"姜杉", city:"上海", activity:"生日会", remark:"魔力 嘉宾：张怡 颜沁 陈倩楠 农燕萍 韩家乐 张昕 张笑盈"},
@@ -324,7 +312,7 @@ const eventList = [
     {date:"2026-10-07", artist:"谢珊珊", city:"北京", activity:"地偶", remark:"BubbleNova"},
      {date:"2026-10-07", artist:"王露皎", city:"北京", activity:"地偶", remark:"idolzoo"},
      {date:"2026-10-09", artist:"张昕 许杨玉琢", city:"上海", activity:"时装周", remark:"JCDJ上海时装周"},
-    {date:"2026-10-09", artist:"张昕", city:"上海", activity:"时装周", remark:"hacchic couture上海时装周"},
+    {date:"2026-10-09", artist:"张昕 王允宸", city:"上海", activity:"时装周", remark:"hacchic couture上海时装周"},
    {date:"2026-10-09", artist:"戴萌", city:"上海", activity:"时装周", remark:"上海时装周"},
      {date:"2026-10-10", artist:"戴萌", city:"上海", activity:"时装周", remark:"上海时装周"},
      {date:"2026-10-10", artist:"许杨玉琢", city:"上海", activity:"时装周", remark:"上海时装周"},
@@ -345,12 +333,14 @@ const eventList = [
    {date:"2026-10-17", artist:"江雨航", city:"上海", activity:"地偶", remark:"/"},
   {date:"2026-10-18", artist:"曾艾佳", city:"北京", activity:"演出", remark:"刻度之外"},
      {date:"2026-10-18", artist:"张昕 刘力菲", city:"北京", activity:"见面会", remark:"/"},
+      {date:"2026-10-18", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"/"},
     {date:"2026-10-23", artist:"段艺璇", city:"长沙", activity:"路演", remark:"/"},
     {date:"2026-10-24", artist:"蒋芸", city:"广州", activity:"演出", remark:"「画戏」"},
     {date:"2026-10-24", artist:"沈梦瑶", city:"杭州", activity:"见面会", remark:"签售会"},
   {date:"2026-10-24", artist:"段艺璇", city:"长沙", activity:"演出", remark:"lost signal收官"},
     {date:"2026-10-24", artist:"洪静雯", city:"上海", activity:"嘉宾", remark:"i-link"},
         {date:"2026-10-24", artist:"曾艾佳", city:"重庆", activity:"演出", remark:"刻度之外"},
+          {date:"2026-10-24", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"/"},
   {date:"2026-10-25", artist:"蒋芸", city:"广州", activity:"见面会", remark:"/"},
  {date:"2026-10-25", artist:"段艺璇", city:"长沙", activity:"见面会", remark:"/"},
   {date:"2026-10-30", artist:"刘力菲", city:"广州", activity:"生日会", remark:"礼物"},
@@ -360,10 +350,12 @@ const eventList = [
     {date:"2026-10-31", artist:"刘力菲", city:"广州", activity:"见面会", remark:"/"},
   {date:"2026-11-01", artist:"王允宸", city:"上海", activity:"见面会", remark:"/"},
   {date:"2026-11-06", artist:"卢静", city:"广州", activity:"生日会", remark:"/"},
+          {date:"2026-11-07", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"/"},
   {date:"2026-11-14", artist:"许佳琪", city:"成都", activity:"演出", remark:"续假期"},
     {date:"2026-11-21", artist:"沈梦瑶", city:"阜阳", activity:"音乐节", remark:"斑马音乐节"},
       {date:"2026-11-21", artist:"许杨玉琢", city:"北京", activity:"演出", remark:"巡演收官"},
       {date:"2026-11-21", artist:"唐莉佳", city:"成都", activity:"演出", remark:"聆一场疯的雨"},
+          {date:"2026-11-22", artist:"张嘉予", city:"武汉", activity:"地偶", remark:"/"},
   {date:"2026-12-05", artist:"张润", city:"广州", activity:"演出", remark:"/"},
   {date:"2026-12-06", artist:"张润", city:"广州", activity:"见面会", remark:"/"},
   
@@ -534,7 +526,7 @@ const weekCalendarData = [
         dateText:"10/9",
         list:[
             {name:"张昕 许杨玉琢 JCDJ时装周", place:"上海"},
-            {name:"张昕 hacchic couture时装周", place:"上海"},
+            {name:"张昕 王允宸 hacchic couture时装周", place:"上海"},
             {name:"戴萌 时装周", place:"上海"}
         ]
     },

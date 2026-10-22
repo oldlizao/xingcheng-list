@@ -277,7 +277,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-10-21 15:00
+    最后更新：2026-10-22 15:00
   </div>
 </div>
 
@@ -295,6 +295,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 // ===================== 在记事本这里编辑行程数据 =====================
 const eventList = [
     {date:"2026-10-23", artist:"段艺璇", city:"长沙", activity:"路演", remark:"/"},
+     {date:"2026-10-23", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
     {date:"2026-10-24", artist:"蒋芸", city:"广州", activity:"演出", remark:"「画戏」"},
     {date:"2026-10-24", artist:"沈梦瑶", city:"杭州", activity:"见面会", remark:"签售会"},  
     {date:"2026-10-24", artist:"刘倩倩", city:"杭州", activity:"见面会", remark:"/"},
@@ -302,10 +303,17 @@ const eventList = [
     {date:"2026-10-24", artist:"洪静雯 李姗姗", city:"上海", activity:"嘉宾", remark:"i-link"},
      {date:"2026-10-24", artist:"张润", city:"深圳", activity:"嘉宾", remark:"王者嘉年华"},
         {date:"2026-10-24", artist:"曾艾佳", city:"重庆", activity:"演出", remark:"刻度之外 嘉宾：颜沁 陈倩楠"},
-          {date:"2026-10-24", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"/"},
+          {date:"2026-10-24", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"玻璃砂星飞行"},
+      {date:"2026-10-24", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
+     {date:"2026-10-24", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
+       {date:"2026-10-24", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
   {date:"2026-10-25", artist:"蒋芸", city:"广州", activity:"见面会", remark:"/"},
  {date:"2026-10-25", artist:"段艺璇", city:"长沙", activity:"见面会", remark:"/"},
+      {date:"2026-10-25", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
+      {date:"2026-10-25", artist:"张智杰", city:"北京", activity:"地偶", remark:"realink"},
+     {date:"2026-10-25", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
     {date:"2026-10-26", artist:"刘力菲 韩家乐", city:"中国台湾", activity:"见面会", remark:"雪落之前"},
+      {date:"2026-10-28", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
   {date:"2026-10-30", artist:"刘力菲", city:"广州", activity:"生日会", remark:"礼物 洪静雯 郑丹妮 徐楚雯 叶舒淇 梁娇 梁乔"},
      {date:"2026-10-30", artist:"吴羽霏 杨若惜 符冰冰 王偲越 冯思佳 王若诗蓝 赖梓惜", city:"上海", activity:"演出", remark:"云外比邻岛"},
     {date:"2026-10-30", artist:"王允宸", city:"上海", activity:"时装周", remark:"petstar宠物时装周"},
@@ -321,7 +329,7 @@ const eventList = [
   {date:"2026-11-06", artist:"卢静", city:"广州", activity:"生日会/其他", remark:"爱闹 嘉宾：刘力菲 唐莉佳 刘倩倩 after party"},
      {date:"2026-11-07", artist:"卢静", city:"广州", activity:"其他", remark:"冷餐会 嘉宾:曾佳"},
           {date:"2026-11-07", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"/"},
-    {date:"2026-11-**", artist:"叶舒淇", city:"广州", activity:"演出", remark:"逆应援 嘉宾：徐楚雯 唐莉佳 林芝 梁乔 梁娇 "},
+    {date:"2026-11-**", artist:"叶舒淇", city:"广州", activity:"演出", remark:"逆应援 嘉宾：徐楚雯 唐莉佳 刘力菲 林芝 梁乔 梁娇 符冰冰 罗寒月 龙亦瑞 "},
   {date:"2026-11-14", artist:"许佳琪", city:"成都", activity:"演出", remark:"续假期"},
     {date:"2026-11-21", artist:"沈梦瑶", city:"阜阳", activity:"音乐节", remark:"斑马音乐节"},
       {date:"2026-11-21", artist:"许杨玉琢", city:"北京", activity:"演出", remark:"巡演收官"},
@@ -470,7 +478,8 @@ const weekCalendarData = [
         dayTitle:"星期五",
         dateText:"10/23",
         list:[
-            {name:"段艺璇 路演", place:"长沙"}
+            {name:"段艺璇 路演", place:"长沙"},
+             {name:"李歆乐 地偶", place:"上海"}
         ]
     },
 
@@ -478,6 +487,7 @@ const weekCalendarData = [
         dayTitle:"星期六",
         dateText:"10/24",
         list:[
+               {name:"王思文 地偶", place:"北京"}, 
            {name:"蒋芸 演出", place:"广州"},
               {name:"张润 王者嘉年华", place:"深圳"},
              {name:"沈梦瑶 签售会", place:"杭州"},
@@ -485,6 +495,8 @@ const weekCalendarData = [
               {name:"刘倩倩 见面会", place:"杭州"},
           {name:"段艺璇 演出", place:"长沙"},
          {name:"洪静雯 李姗姗 i-link嘉宾", place:"上海"}, 
+               {name:"李歆乐 地偶", place:"上海"}, 
+             {name:"陈盼 地偶", place:"上海"}, 
              {name:"曾艾佳 演出", place:"重庆"}
           ]
     },
@@ -492,7 +504,10 @@ const weekCalendarData = [
         dayTitle:"星期日",
         dateText:"10/25",
         list:[
+              {name:"张智杰 地偶", place:"北京"}, 
          {name:"蒋芸 见面会", place:"广州"},
+             {name:"陈盼 地偶", place:"上海"}, 
+               {name:"李歆乐 地偶", place:"上海"}, 
               {name:"段艺璇 见面会", place:"长沙"}
         ]
     }

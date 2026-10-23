@@ -277,7 +277,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     <tbody id="tableBody"></tbody>
   </table>
 <div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
-    最后更新：2026-10-22 15:00
+    最后更新：2026-10-23 19:00
   </div>
 </div>
 
@@ -305,13 +305,17 @@ const eventList = [
         {date:"2026-10-24", artist:"曾艾佳", city:"重庆", activity:"演出", remark:"刻度之外 嘉宾：颜沁 陈倩楠"},
           {date:"2026-10-24", artist:"张嘉予", city:"杭州", activity:"地偶", remark:"玻璃砂星飞行"},
       {date:"2026-10-24", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
+     {date:"2026-10-24", artist:"李伊虹", city:"重庆", activity:"地偶", remark:"eversummer"},
      {date:"2026-10-24", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
+        {date:"2026-10-24", artist:"谢珊珊", city:"广州", activity:"地偶", remark:"泡泡新星"},
        {date:"2026-10-24", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
+     {date:"2026-10-24", artist:"张韵雯", city:"上海", activity:"地偶", remark:"小猫队cats"},
   {date:"2026-10-25", artist:"蒋芸", city:"广州", activity:"见面会", remark:"/"},
  {date:"2026-10-25", artist:"段艺璇", city:"长沙", activity:"见面会", remark:"/"},
       {date:"2026-10-25", artist:"李歆乐", city:"上海", activity:"地偶", remark:"星巡hoshimeguri"},
       {date:"2026-10-25", artist:"张智杰", city:"北京", activity:"地偶", remark:"realink"},
      {date:"2026-10-25", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
+       {date:"2026-10-25", artist:"谢珊珊", city:"广州", activity:"地偶", remark:"泡泡新星"},
     {date:"2026-10-26", artist:"刘力菲 韩家乐", city:"中国台湾", activity:"见面会", remark:"雪落之前"},
       {date:"2026-10-28", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
   {date:"2026-10-30", artist:"刘力菲", city:"广州", activity:"生日会", remark:"礼物 洪静雯 郑丹妮 徐楚雯 叶舒淇 梁娇 梁乔"},
@@ -322,9 +326,11 @@ const eventList = [
      {date:"2026-10-31", artist:"农燕萍", city:"上海", activity:"见面会", remark:"/"},
   {date:"2026-10-31", artist:"王允宸", city:"上海", activity:"演出", remark:"镜像双魂 万圣夜live"},
     {date:"2026-10-31", artist:"刘力菲", city:"广州", activity:"见面会", remark:"/"},
+    {date:"2026-10-31", artist:"唐莉佳", city:"广州", activity:"见面会", remark:"息壤酒吧"},
     {date:"2026-10-31", artist:"曾艾佳", city:"上海", activity:"见面会", remark:"万圣节"},
         {date:"2026-10-31", artist:"王奕 周诗雨", city:"成都", activity:"演出", remark:"双人巡演 她"},
      {date:"2026-11-01", artist:"吕一", city:"悉尼", activity:"其他", remark:"大合之舞"},
+     {date:"2026-11-01", artist:"戴萌", city:"上海", activity:"见面会", remark:"签售会"},
   {date:"2026-11-01", artist:"王允宸", city:"上海", activity:"见面会", remark:"/"},
   {date:"2026-11-06", artist:"卢静", city:"广州", activity:"生日会/其他", remark:"爱闹 嘉宾：刘力菲 唐莉佳 刘倩倩 after party"},
      {date:"2026-11-07", artist:"卢静", city:"广州", activity:"其他", remark:"冷餐会 嘉宾:曾佳"},
@@ -338,6 +344,7 @@ const eventList = [
           {date:"2026-11-22", artist:"张嘉予", city:"武汉", activity:"地偶", remark:"/"},
   {date:"2026-12-05", artist:"张润", city:"广州", activity:"演出", remark:"/"},
   {date:"2026-12-06", artist:"张润", city:"广州", activity:"见面会", remark:"/"},
+     {date:"2026-12-12", artist:"李伊虹", city:"重庆", activity:"地偶", remark:"eversummer生日&毕业SP"},
   
   
 ];
@@ -489,6 +496,7 @@ const weekCalendarData = [
         list:[
                {name:"王思文 地偶", place:"北京"}, 
            {name:"蒋芸 演出", place:"广州"},
+                  {name:"谢珊珊 地偶", place:"广州"},
               {name:"张润 王者嘉年华", place:"深圳"},
              {name:"沈梦瑶 签售会", place:"杭州"},
                  {name:"张嘉予 地偶", place:"杭州"},
@@ -496,7 +504,9 @@ const weekCalendarData = [
           {name:"段艺璇 演出", place:"长沙"},
          {name:"洪静雯 李姗姗 i-link嘉宾", place:"上海"}, 
                {name:"李歆乐 地偶", place:"上海"}, 
+              {name:"张韵雯 地偶", place:"上海"}, 
              {name:"陈盼 地偶", place:"上海"}, 
+           {name:"李伊虹 地偶", place:"重庆"},
              {name:"曾艾佳 演出", place:"重庆"}
           ]
     },
@@ -506,6 +516,7 @@ const weekCalendarData = [
         list:[
               {name:"张智杰 地偶", place:"北京"}, 
          {name:"蒋芸 见面会", place:"广州"},
+                    {name:"谢珊珊 地偶", place:"广州"},
              {name:"陈盼 地偶", place:"上海"}, 
                {name:"李歆乐 地偶", place:"上海"}, 
               {name:"段艺璇 见面会", place:"长沙"}

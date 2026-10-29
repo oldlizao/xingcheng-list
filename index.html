@@ -5,49 +5,69 @@
 <title>出河芭女线下行程查询表</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft Yahei","PingFang SC","Hiragino Sans GB","Helvetica Neue",Arial,sans-serif}
-body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
-.box{background:#fff;padding:22px;border-radius:10px;box-shadow:0 1px 4px #0002}
+body{padding:24px 20px 40px;max-width:980px;margin:0 auto;background:#f5f7fa}
+.box{background:#fff;padding:26px 26px 20px;border-radius:14px;box-shadow:0 1px 4px #0002}
+.tip{
+  color:#8a94a6;
+  font-size:13px;
+  margin-bottom:16px;
+  line-height:1.6;
+  padding:10px 14px;
+  background:#fdf6ec;
+  border:1px solid #f5e2c8;
+  border-radius:8px;
+}
 .filter-row{
     display:flex;
-    gap:16px;
+    gap:12px;
     flex-wrap:wrap;
-    margin-bottom:22px;
+    margin-bottom:14px;
     align-items:center;
 }
 #searchInput{
-    width:200px;
+    width:210px;
+    height:30px;
+    padding:0 12px;
+    border:1px solid #d9dee7;
+    border-radius:8px;
+    font-size:13px;
+    outline:none;
+    transition:border .15s, box-shadow .15s;
 }
+#searchInput:focus{border-color:#4b7bec;box-shadow:0 0 0 3px #4b7bec1a}
 /* 多选下拉组件 */
 .multi-select-act{
     position:relative;
-    width:132px;
+    width:150px;
 }
 .multi-trigger{
-    height:22px;
-    line-height:20px;
-    padding:0 8px;
-    border:1px solid #000;
-    border-radius:4px;
+    height:30px;
+    line-height:28px;
+    padding:0 10px;
+    border:1px solid #d9dee7;
+    border-radius:8px;
     background:#fff;
     font-size:13px;
     cursor:pointer;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+    transition:border .15s;
 }
+.multi-trigger:hover{border-color:#4b7bec}
 .multi-dropdown{
     display:none;
     position:absolute;
-    top:calc(100% + 2px);
+    top:calc(100% + 4px);
     left:0;
     z-index:100;
     width:100%;
     background:#fff;
-    border:1px solid #ccc;
-    border-radius:4px;
-    max-height:210px;
+    border:1px solid #e2e6ee;
+    border-radius:10px;
+    max-height:230px;
     overflow-y:auto;
-    box-shadow:0 2px 8px rgba(0,0,0,0.12);
+    box-shadow:0 6px 20px rgba(15,23,42,0.14);
     padding:6px 4px;
 }
 .multi-dropdown.show{
@@ -56,23 +76,66 @@ body{padding:20px;max-width:980px;margin:0 auto;background:#f5f7fa}
 .multi-dropdown label{
     display:block;
     font-size:13px;
-    padding:4px 6px;
+    padding:5px 8px;
+    border-radius:6px;
     cursor:pointer;
 }
 .multi-dropdown label:hover{
     background:#f5f7fa;
 }
-table{width:100%;border-collapse:collapse}
+.filter-row select{
+    height:30px;
+    font-size:13px;
+    padding:0 8px;
+    border:1px solid #d9dee7;
+    border-radius:8px;
+    background:#fff;
+    outline:none;
+    cursor:pointer;
+}
+.filter-row select:focus{border-color:#4b7bec}
+#resetBtn,
+#weekBtn{
+    height:30px;
+    font-size:13px;
+    padding:0 14px;
+    border-radius:8px;
+    cursor:pointer;
+    border:1px solid #d9dee7;
+    background:#fff;
+    color:#444;
+    transition:all .15s;
+}
+#resetBtn:hover{border-color:#94a3b8;background:#f8fafc}
+#weekBtn{
+    border:none;
+    background:linear-gradient(135deg,#4b7bec,#6c5ce7);
+    color:#fff;
+    font-weight:500;
+    box-shadow:0 2px 6px #4b7bec44;
+}
+#weekBtn:hover{filter:brightness(1.08)}
+.count-tip{
+    color:#98a2b3;
+    font-size:12.5px;
+    margin-bottom:10px;
+}
+table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e6eaf1;border-radius:10px;overflow:hidden}
 th,td{
-    border:1px solid #ddd;
-    padding:12px 10px;
+    border:none;
+    border-bottom:1px solid #eef1f6;
+    padding:11px 12px;
     font-size:13px;
     vertical-align: middle;
 }
-th{
-    background:#eef2f7 !important;
+thead th{
+    background:#f2f5fa;
     text-align:center;
-    font-weight:bold;
+    font-weight:600;
+    color:#334155;
+    border-bottom:1px solid #e2e8f0;
+    position:sticky;
+    top:0;
 }
 tbody td:nth-child(1),
 tbody td:nth-child(3),
@@ -85,122 +148,172 @@ tbody td:nth-child(5){
 }
 td:nth-child(5){
     text-align:left;
-    max-width: 380px;
-    white-space: normal;
-    word-break: break-all;
-    line-height: 1.5;
+    max-width:380px;
+    white-space:normal;
+    word-break:break-all;
+    line-height:1.5;
+    color:#475569;
 }
-tr:hover{background:#f7f9fc}
-tbody tr:nth-child(even){background-color:#f9fafc;}
-.tip{
-  color:#666;
-  font-size:13px;
-  margin-top:4px;
-  margin-bottom:4px;
-  line-height:1.6;
-}
-th:nth-child(1),td:nth-child(1){width:120px;}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:#f2f7ff}
+tbody tr:last-child td{border-bottom:none}
+.date-cell b{font-weight:600;color:#0f172a}
+.date-cell .wk{color:#94a3b8;font-size:12px;margin-left:4px}
+.date-cell.today b{color:#4b7bec}
+.date-cell.today .wk{color:#4b7bec}
+th:nth-child(1),td:nth-child(1){width:130px;}
 th:nth-child(2),td:nth-child(2){width:230px;}
 th:nth-child(3),td:nth-child(3){width:100px;}
-th:nth-child(4),td:nth-child(4){width:100px;}
+th:nth-child(4),td:nth-child(4){width:110px;}
 th:nth-child(5),td:nth-child(5){width:250px;}
-.filter-row select{
-    height:24px;
-    font-size:13px;
-    padding:0 6px;
-}
-#resetBtn,
-#weekBtn{
-    height:24px;
-    font-size:13px;
-    padding:0 12px;
-    cursor:pointer;
-}
-/* 当周活动弹窗样式 */
+.empty-row td{text-align:center;color:#b0b8c4;padding:34px 0;font-size:13px}
+.updated{margin-top:16px;text-align:right;color:#98a2b3;font-size:12.5px;}
+
+/* ============ 一周活动弹窗 ============ */
 .week-modal{
     display:none;
     position:fixed;
     inset:0;
-    background:rgba(30,41,59,0.55);
+    background:rgba(15,23,42,0.5);
+    backdrop-filter:blur(2px);
     z-index:999;
     align-items:center;
     justify-content:center;
 }
-.week-modal.show{
-    display:flex;
-}
+.week-modal.show{display:flex}
 .week-modal-content{
-    background:#fff;
-    padding:20px;
-    border-radius:14px;
-    max-width:960px;
-    width:92%;
-    max-height:88vh;
+    background:#f8fafc;
+    padding:20px 22px 22px;
+    border-radius:16px;
+    max-width:1060px;
+    width:94%;
+    max-height:90vh;
     overflow:auto;
-    box-shadow:0 20px 50px rgba(15,23,42,0.25);
+    box-shadow:0 24px 60px rgba(15,23,42,0.3);
 }
-.week-close{
-    margin-bottom:14px;
-    padding:7px 16px;
-    cursor:pointer;
-    border:none;
-    background:#94a3b8;
-    color:#fff;
-    border-radius:6px;
-    font-size:13px;
-}
-.week-close:hover{
-    background:#64748b;
+.week-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:16px;
 }
 .week-title{
     font-size:18px;
     font-weight:600;
     color:#0f172a;
-    margin-bottom:14px;
 }
+.week-title .range{font-size:13px;color:#64748b;font-weight:400;margin-left:8px}
+.week-nav{display:flex;align-items:center;gap:8px}
+.week-nav button{
+    height:28px;
+    padding:0 14px;
+    font-size:13px;
+    border:1px solid #d9dee7;
+    background:#fff;
+    border-radius:8px;
+    cursor:pointer;
+    color:#475569;
+    transition:all .15s;
+}
+.week-nav button:hover{border-color:#4b7bec;color:#4b7bec}
+.week-nav button.cur{
+    background:#4b7bec;
+    border-color:#4b7bec;
+    color:#fff;
+    font-weight:500;
+}
+.week-close{
+    padding:7px 16px;
+    cursor:pointer;
+    border:none;
+    background:#e2e8f0;
+    color:#334155;
+    border-radius:8px;
+    font-size:13px;
+    margin-left:6px;
+}
+.week-close:hover{background:#cbd5e1}
 /* 周历横向星期布局 */
 .week-calendar-wrap{
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    gap:4px;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:8px;
+}
+@media (max-width:760px){
+    .week-calendar-wrap{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
 }
 .week-day-col{
     border:1px solid #e2e8f0;
-    border-radius:10px;
+    border-radius:12px;
     overflow:hidden;
     background:#fff;
+    display:flex;
+    flex-direction:column;
 }
+.week-day-col.is-today{border-color:#4b7bec;box-shadow:0 0 0 2px #4b7bec26}
 .week-day-head{
-    background:#eef2f7;
-    color:#0f172a;
-    padding:7px 8px;
+    background:#f2f5fa;
+    color:#334155;
+    padding:8px 6px;
     text-align:center;
 }
-/* 星期文字：星期三 */
-.week-day-head .day-name{
-    font-size:11px;
-    font-weight:500;
-    letter-spacing:0px;
+.is-today .week-day-head{
+    background:linear-gradient(135deg,#4b7bec,#6c5ce7);
+    color:#fff;
 }
-/* 数字日期：9/16，缩小字号 */
+.week-day-head .day-name{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:1px;
+}
 .week-day-head .day-date{
     font-size:11px;
     margin-top:2px;
     opacity:.85;
 }
+.today-badge{
+    display:inline-block;
+    font-size:10px;
+    background:#fff3;
+    border:1px solid #fff6;
+    border-radius:8px;
+    padding:0 6px;
+    margin-top:3px;
+}
+.week-day-body{flex:1;padding:6px;display:flex;flex-direction:column;gap:6px}
+.week-day-empty{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#c3cad6;
+    font-size:12px;
+    padding:14px 0;
+}
 .week-item{
-    padding:4px 7px;
-    border-bottom:1px dashed #e5e7eb;
-    background:#fff;
+    padding:6px 8px;
+    background:#f8fafc;
+    border:1px solid #eef1f6;
+    border-radius:8px;
 }
-.week-item:last-child{
-    border-bottom:none;
-}
+.is-today .week-item{background:#f0f5ff;border-color:#dbe6ff}
 .week-item-name{
     font-size:12px;
-    font-weight:400;
-    color:#111827;
-    line-height:1.35;
+    font-weight:500;
+    color:#1e293b;
+    line-height:1.4;
+}
+.week-item-name .act{
+    display:inline-block;
+    font-size:10.5px;
+    color:#4b7bec;
+    background:#e8f0ff;
+    border-radius:4px;
+    padding:0 5px;
+    margin-left:4px;
+    vertical-align:1px;
 }
 .week-item-place{
     font-size:11px;
@@ -215,7 +328,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
   🌹仅供参考，人工搜索整理无法涵盖所有成员，活动详细讯息请见微博等平台🌹
 </div>
   <div class="filter-row">
-    <input id="searchInput" placeholder="">
+    <input id="searchInput" placeholder="搜索艺人 / 城市 / 备注…">
     <div class="multi-select-act">
         <div class="multi-trigger">全部活动</div>
         <div class="multi-dropdown">
@@ -264,6 +377,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 <button id="resetBtn">重置</button>
 <button id="weekBtn">一周活动</button>
   </div>
+  <div class="count-tip" id="countTip"></div>
   <table>
     <thead>
       <tr>
@@ -276,7 +390,7 @@ th:nth-child(5),td:nth-child(5){width:250px;}
     </thead>
     <tbody id="tableBody"></tbody>
   </table>
-<div style="margin-top:20px;text-align:right;color:#666;font-size:13px;">
+<div class="updated">
     最后更新：2026-10-28 11:00
   </div>
 </div>
@@ -284,7 +398,15 @@ th:nth-child(5),td:nth-child(5){width:250px;}
 <!--当周活动弹窗-->
 <div class="week-modal" id="weekModal">
     <div class="week-modal-content">
-        <button class="week-close" id="weekClose">关闭</button>
+        <div class="week-head">
+            <div class="week-title">一周活动<span class="range" id="weekRange"></span></div>
+            <div class="week-nav">
+                <button id="weekPrev">‹ 上周</button>
+                <button id="weekCur">本周</button>
+                <button id="weekNext">下周 ›</button>
+                <button class="week-close" id="weekClose">关闭</button>
+            </div>
+        </div>
         <div id="weekRenderBox"></div>
     </div>
 </div>
@@ -341,8 +463,8 @@ const eventList = [
   {date:"2026-12-06", artist:"张润", city:"广州", activity:"见面会", remark:"/"},
      {date:"2026-12-26", artist:"刘力菲 韩家乐", city:"中国台湾", activity:"见面会", remark:"雪落之前"},
      {date:"2026-12-12", artist:"李伊虹", city:"重庆", activity:"地偶", remark:"eversummer生日&毕业SP"},
-  
-  
+
+
 ];
 // ====================================================================
 const searchInput = document.getElementById('searchInput');
@@ -404,6 +526,13 @@ function getAreaByCity(cityName){
     return "其他";
 }
 
+function fmtTodayKey(){
+    const d = new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+const todayKey = fmtTodayKey();
+const weekNameArr = ['周日','周一','周二','周三','周四','周五','周六'];
+
 function render(){
   let kwText = searchInput.value.trim().toLowerCase();
   let areaFilter = areaSelect.value;
@@ -425,11 +554,20 @@ function render(){
     return true;
   });
 
+  document.getElementById('countTip').textContent =
+      '共 '+arr.length+' 条活动' + (arr.length?'，其中 '+(new Set(arr.map(i=>i.date))).size+' 个日期':'');
+
   tableBody.innerHTML = "";
+  if(arr.length === 0){
+    tableBody.innerHTML = '<tr class="empty-row"><td colspan="5">没有符合条件的活动，换个条件试试～</td></tr>';
+    return;
+  }
   arr.forEach(row=>{
     let tr = document.createElement('tr');
+    let wk = weekNameArr[new Date(row.date.replace(/-/g,'/')).getDay()];
+    let isToday = row.date === todayKey;
     tr.innerHTML = `
-      <td>${row.date}</td>
+      <td class="date-cell${isToday?' today':''}"><b>${row.date}</b><span class="wk">${wk}${isToday?' · 今天':''}</span></td>
       <td>${row.artist}</td>
       <td>${row.city}</td>
       <td>${row.activity}</td>
@@ -445,127 +583,100 @@ yearSelect.addEventListener('change',render);
 monthSelect.addEventListener('change',render);
 render();
 
-// =====================【每周只修改这里！】=====================
-const weekCalendarData = [
- 
- {
-        dayTitle:"星期一",
-        dateText:"10/26",
-        list:[
-
-        ]
-    },
- 
-  {
-        dayTitle:"星期二",
-        dateText:"10/27",
-        list:[
-         
-        ]
-    },
-
-  {
-        dayTitle:"星期三",
-        dateText:"10/28",
-        list:[     
-            {name:"王思文 地偶", place:"北京"},
-           
-        ]
-    },
-    {
-    dayTitle:"星期四",
-        dateText:"10/29",
-        list:[
-        ]
-    },
-        {
-        dayTitle:"星期五",
-        dateText:"10/30",
-        list:[
-            {name:"刘力菲 生日会", place:"广州"},
-             {name:"吴羽霏 杨若惜 符冰冰 王偲越 冯思佳 王若诗蓝 赖梓惜 曾艾佳 演出/见面会", place:"上海"},
-             {name:"王允宸 宠物时装周", place:"上海"}
-        ]
-    },
-
-    {
-        dayTitle:"星期六",
-        dateText:"10/31",
-        list:[
-             {name:"王思文 地偶", place:"北京"}, 
-               {name:"段艺璇 宋昕冉 孙芮 搜狐", place:"北京"}, 
-               {name:"戴萌 音乐节", place:"上海"}, 
-           {name:"许杨玉琢 万圣节活动", place:"上海"},
-                  {name:"农燕萍  张昕 韩家乐 张笑盈 见面会", place:"上海"},
-               {name:"王允宸 演出", place:"上海"},
-            {name:"刘洁 演出/见面会", place:"上海"},
-              {name:"曾艾佳 吴羽霏 杨若惜 符冰冰 王偲越 冯思佳 王若诗蓝 赖梓惜 见面会", place:"上海"},
-                    {name:"王奕 周诗雨 双巡", place:"成都"},
-            {name:"王露皎 地偶", place:"成都"}, 
-              {name:"刘力菲 见面会", place:"广州"},
-             {name:"林芝 见面会", place:"广州"},
-                {name:"罗可嘉 地偶", place:"广州"},
-             {name:"唐莉佳 罗寒月 龙亦瑞见面会", place:"广州"}
-          ]
-    },
-    {
-        dayTitle:"星期日",
-        dateText:"11/01",
-        list:[
-             {name:"吕一 舞剧", place:"悉尼"}, 
-                 {name:"王思文 地偶", place:"北京"}, 
-              {name:"张智杰 地偶", place:"北京"}, 
-         {name:"蒋芸 见面会", place:"广州"},
-                    {name:"谢珊珊 地偶", place:"广州"},
-                 {name:"罗可嘉 地偶", place:"广州"},
-               {name:"王露皎 地偶", place:"成都"}, 
-            {name:"王奕 周诗雨 双人见面会", place:"成都"},
-             {name:"陈盼 地偶", place:"上海"}, 
-               {name:"戴萌 见面会", place:"上海"}, 
-              {name:"王允宸 见面会", place:"上海"}, 
-               {name:"李歆乐 地偶", place:"上海"}, 
-              {name:"段艺璇 见面会", place:"长沙"}
-        ]
-    }
-    
-];
-// ==========================================================
-
+// =====================【一周活动：自动根据上方 eventList 生成，无需手动维护】=====================
 const weekBtn = document.getElementById('weekBtn');
 const weekModal = document.getElementById('weekModal');
 const weekClose = document.getElementById('weekClose');
 const weekRenderBox = document.getElementById('weekRenderBox');
+const weekRange = document.getElementById('weekRange');
+const weekPrev = document.getElementById('weekPrev');
+const weekNext = document.getElementById('weekNext');
+const weekCur = document.getElementById('weekCur');
+let weekOffset = 0; // 0=本周，正数=往后，负数=往前
+
+function getMonday(d){
+    const day = (d.getDay()+6)%7; // 周一=0
+    const m = new Date(d);
+    m.setDate(d.getDate()-day);
+    m.setHours(0,0,0,0);
+    return m;
+}
+
+function buildWeekData(offset){
+    const mon = getMonday(new Date());
+    mon.setDate(mon.getDate()+offset*7);
+    const days = [];
+    for(let i=0;i<7;i++){
+        const d = new Date(mon);
+        d.setDate(mon.getDate()+i);
+        const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        const list = eventList
+            .filter(e=>e.date===key)
+            .sort((a,b)=>a.city.localeCompare(b.city,'zh'))
+            .map(e=>({
+                name:e.artist,
+                act:e.activity,
+                place:e.city
+            }));
+        days.push({
+            dayTitle:'星期'+'一二三四五六日'[i],
+            dateText:(d.getMonth()+1)+'/'+d.getDate(),
+            key:key,
+            list:list
+        });
+    }
+    return days;
+}
 
 function renderWeekCalendar(){
-    let html = `<div class="week-calendar-wrap">`;
-    weekCalendarData.forEach(day=>{
-        html += `<div class="week-day-col">
+    const data = buildWeekData(weekOffset);
+    const first = data[0], last = data[6];
+    weekRange.textContent = first.dateText + ' - ' + last.dateText + (weekOffset===0?'（本周）':weekOffset===1?'（下周）':weekOffset===-1?'（上周）':'');
+    weekCur.classList.toggle('cur', weekOffset===0);
+
+    let html = '<div class="week-calendar-wrap">';
+    data.forEach(day=>{
+        const isToday = day.key === todayKey;
+        html += `<div class="week-day-col${isToday?' is-today':''}">
             <div class="week-day-head">
                 <div class="day-name">${day.dayTitle}</div>
                 <div class="day-date">${day.dateText}</div>
-            </div>`;
-        day.list.forEach(act=>{
-            html += `<div class="week-item">
-                <div class="week-item-name">${act.name}</div>
-                <div class="week-item-place">${act.place}</div>
-            </div>`;
-        })
-        html += `</div>`;
-    })
-    html += `</div>`;
+                ${isToday?'<div class="today-badge">今天</div>':''}
+            </div>
+            <div class="week-day-body">`;
+        if(day.list.length === 0){
+            html += '<div class="week-day-empty">暂无</div>';
+        }else{
+            day.list.forEach(act=>{
+                html += `<div class="week-item">
+                    <div class="week-item-name">${act.name}<span class="act">${act.act}</span></div>
+                    <div class="week-item-place">${act.place}</div>
+                </div>`;
+            });
+        }
+        html += '</div></div>';
+    });
+    html += '</div>';
     weekRenderBox.innerHTML = html;
 }
 
 weekBtn.onclick = function(){
+    weekOffset = 0;
     renderWeekCalendar();
     weekModal.classList.add('show');
 }
+weekPrev.onclick = function(){ weekOffset--; renderWeekCalendar(); }
+weekNext.onclick = function(){ weekOffset++; renderWeekCalendar(); }
+weekCur.onclick = function(){ weekOffset = 0; renderWeekCalendar(); }
 weekClose.onclick = function(){
     weekModal.classList.remove('show');
 }
 weekModal.onclick = function(e){
     if(e.target === weekModal) weekModal.classList.remove('show');
 }
+document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') weekModal.classList.remove('show');
+});
 </script>
 
 <style>

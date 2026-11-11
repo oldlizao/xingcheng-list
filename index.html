@@ -2,419 +2,300 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>出河芭女线下行程查询表</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft Yahei","PingFang SC","Hiragino Sans GB","Helvetica Neue",Arial,sans-serif}
-body{padding:24px 20px 40px;max-width:980px;margin:0 auto;background:#f5f7fa}
-.box{background:#fff;padding:26px 26px 20px;border-radius:14px;box-shadow:0 1px 4px #0002}
-.tip{
-  color:#8a94a6;
-  font-size:13px;
-  margin-bottom:16px;
-  line-height:1.6;
-  padding:10px 14px;
-  background:#fdf6ec;
-  border:1px solid #f5e2c8;
-  border-radius:8px;
+:root{--blue:#4b7bec;--purple:#6c5ce7;--ink:#0f172a;--txt:#334155;--line:#e6ebf3}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Microsoft Yahei","PingFang SC","Hiragino Sans GB","Helvetica Neue",Arial,sans-serif;
+  background:#f4f6fa;color:var(--txt);padding:26px 20px 46px;line-height:1.5;
 }
-.filter-row{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-bottom:14px;
-    align-items:center;
+.wrap{max-width:1020px;margin:0 auto}
+.head h1{font-size:20px;font-weight:600;color:var(--ink);letter-spacing:.3px}
+.head .sub{
+  margin-top:9px;font-size:13px;color:#9a6b3f;background:#fdf6ec;
+  border:1px solid #f6e7d2;border-radius:8px;padding:9px 13px;line-height:1.6;
 }
+
+/* ============ 面板 / 筛选 ============ */
+.panel{
+  margin-top:14px;background:#fff;border-radius:14px;padding:16px 18px 14px;
+  box-shadow:0 1px 3px rgba(15,23,42,.06),0 10px 28px rgba(15,23,42,.04);
+}
+.filters{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.search-wrap{flex:1 1 200px;min-width:170px;max-width:270px}
 #searchInput{
-    width:210px;
-    height:30px;
-    padding:0 12px;
-    border:1px solid #d9dee7;
-    border-radius:8px;
-    font-size:13px;
-    outline:none;
-    transition:border .15s, box-shadow .15s;
+  width:100%;height:34px;padding:0 12px;border:1px solid #dde3ec;border-radius:9px;
+  font-size:13px;outline:none;background:#fbfcfe;color:#334155;transition:.15s;
 }
-#searchInput:focus{border-color:#4b7bec;box-shadow:0 0 0 3px #4b7bec1a}
-/* 多选下拉组件 */
-.multi-select-act{
-    position:relative;
-    width:150px;
-}
+#searchInput::placeholder{color:#b0bac7}
+#searchInput:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(75,123,236,.13);background:#fff}
+
+.multi{position:relative;min-width:120px;max-width:185px}
 .multi-trigger{
-    height:30px;
-    line-height:28px;
-    padding:0 10px;
-    border:1px solid #d9dee7;
-    border-radius:8px;
-    background:#fff;
-    font-size:13px;
-    cursor:pointer;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    transition:border .15s;
+  height:34px;line-height:32px;padding:0 26px 0 11px;border:1px solid #dde3ec;border-radius:9px;
+  background:#fbfcfe;font-size:13px;color:#5b6678;cursor:pointer;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;transition:.15s;
 }
-.multi-trigger:hover{border-color:#4b7bec}
+.multi-trigger::after{
+  content:"";position:absolute;right:11px;top:14px;border:4px solid transparent;border-top-color:#a9b3c2;
+}
+.multi-trigger:hover{border-color:#b9c8dd}
+.multi-trigger.has{color:var(--blue);border-color:#c3d6ff;background:#f4f8ff}
 .multi-dropdown{
-    display:none;
-    position:absolute;
-    top:calc(100% + 4px);
-    left:0;
-    z-index:100;
-    width:100%;
-    background:#fff;
-    border:1px solid #e2e6ee;
-    border-radius:10px;
-    max-height:230px;
-    overflow-y:auto;
-    box-shadow:0 6px 20px rgba(15,23,42,0.14);
-    padding:6px 4px;
+  display:none;position:absolute;top:calc(100% + 5px);left:0;min-width:100%;width:max-content;
+  max-width:250px;z-index:120;background:#fff;border:1px solid #e6ebf3;border-radius:10px;
+  max-height:252px;overflow:auto;box-shadow:0 10px 28px rgba(15,23,42,.14);padding:5px;
 }
-.multi-dropdown.show{
-    display:block;
-}
+.multi-dropdown.show{display:block}
 .multi-dropdown label{
-    display:block;
-    font-size:13px;
-    padding:5px 8px;
-    border-radius:6px;
-    cursor:pointer;
+  display:block;font-size:13px;padding:6px 9px;border-radius:6px;cursor:pointer;
+  white-space:nowrap;color:#3b4657;
 }
-.multi-dropdown label:hover{
-    background:#f5f7fa;
+.multi-dropdown label:hover{background:#f4f7fc}
+.multi-dropdown input{margin-right:6px;vertical-align:-1px;cursor:pointer}
+
+select{
+  height:34px;font-size:13px;padding:0 8px;border:1px solid #dde3ec;border-radius:9px;
+  background:#fbfcfe;color:#5b6678;outline:none;cursor:pointer;font-family:inherit;
 }
-.filter-row select{
-    height:30px;
-    font-size:13px;
-    padding:0 8px;
-    border:1px solid #d9dee7;
-    border-radius:8px;
-    background:#fff;
-    outline:none;
-    cursor:pointer;
+select:focus{border-color:var(--blue)}
+
+.btn{
+  height:34px;font-size:13px;padding:0 13px;border-radius:9px;cursor:pointer;
+  border:1px solid #dde3ec;background:#fff;color:#4b5665;font-family:inherit;transition:.15s;
 }
-.filter-row select:focus{border-color:#4b7bec}
-#resetBtn,
-#weekBtn{
-    height:30px;
-    font-size:13px;
-    padding:0 14px;
-    border-radius:8px;
-    cursor:pointer;
-    border:1px solid #d9dee7;
-    background:#fff;
-    color:#444;
-    transition:all .15s;
+.btn.ghost:hover{border-color:#a9b9cf;background:#f8fafc}
+.btn.primary{
+  border:none;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;
+  font-weight:500;box-shadow:0 3px 10px rgba(75,123,236,.28);padding:0 15px;
 }
-#resetBtn:hover{border-color:#94a3b8;background:#f8fafc}
-#weekBtn{
-    border:none;
-    background:linear-gradient(135deg,#4b7bec,#6c5ce7);
-    color:#fff;
-    font-weight:500;
-    box-shadow:0 2px 6px #4b7bec44;
+.btn.primary:hover{filter:brightness(1.06)}
+
+/* 已生效的条件 */
+.chips{display:none;flex-wrap:wrap;gap:6px;margin-top:11px;align-items:center}
+.chips.show{display:flex}
+.fchip{
+  border:1px solid #c9dcff;background:#eff5ff;color:#2f6fd0;font-size:12px;
+  padding:3px 9px;border-radius:20px;cursor:pointer;font-family:inherit;transition:.13s;
 }
-#weekBtn:hover{filter:brightness(1.08)}
-.count-tip{
-    color:#98a2b3;
-    font-size:12.5px;
-    margin-bottom:10px;
-}
-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e6eaf1;border-radius:10px;overflow:hidden}
-th,td{
-    border:none;
-    border-bottom:1px solid #eef1f6;
-    padding:11px 12px;
-    font-size:13px;
-    vertical-align: middle;
-}
+.fchip:hover{background:#e0ecff}
+.fchip span{opacity:.55;margin-left:3px}
+.fchip.clear{border-color:#e3e8f0;background:#f7f9fc;color:#7c8798}
+
+.count{font-size:12.5px;color:#98a2b3;margin:12px 2px 9px;line-height:1.7}
+.count b{color:#3b4657;font-weight:600}
+.count a{color:var(--blue);text-decoration:none;border-bottom:1px dashed #b9cffb;cursor:pointer}
+.count a:hover{color:#2f6fd0}
+
+/* ============ 表格 ============ */
+table{width:100%;border-collapse:collapse}
 thead th{
-    background:#f2f5fa;
-    text-align:center;
-    font-weight:600;
-    color:#334155;
-    border-bottom:1px solid #e2e8f0;
-    position:sticky;
-    top:0;
+  background:#f5f8fd;color:#5b6678;font-size:12.5px;font-weight:600;text-align:left;
+  padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;
 }
-tbody td:nth-child(1),
-tbody td:nth-child(3),
-tbody td:nth-child(4){
-    text-align:center;
+tbody td{padding:10px 12px;border-bottom:1px solid #f1f4f9;font-size:13px;vertical-align:top}
+tbody tr.row:hover{background:#f7fbff}
+tbody tr.row:last-child td{border-bottom:none}
+
+tr.group-head td{
+  position:sticky;top:0;z-index:3;background:#eef3fb;padding:7px 12px;
+  border-bottom:1px solid #dde6f4;cursor:pointer;user-select:none;
 }
-tbody td:nth-child(2),
-tbody td:nth-child(5){
-    text-align:left;
+tr.group-head:hover td{background:#e7eefb}
+.gwrap{display:flex;align-items:center;gap:7px}
+.caret{font-size:9px;color:#a9b6c7;transition:transform .15s;display:inline-block}
+tr.group-head.collapsed .caret{transform:rotate(-90deg)}
+.gd{font-weight:600;color:#22304a;font-size:13px}
+.gd.today{color:var(--blue)}
+.gw{font-size:12px;color:#8b97a8}
+.today-tag{
+  font-size:10px;color:#fff;background:var(--blue);border-radius:4px;padding:0 5px;line-height:15px;
 }
-td:nth-child(5){
-    text-align:left;
-    max-width:380px;
-    white-space:normal;
-    word-break:break-all;
-    line-height:1.5;
-    color:#475569;
+.gc{margin-left:auto;font-size:12px;color:#93a0b3}
+
+.c-artist{min-width:185px}
+.names{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.nm{
+  border:1px solid transparent;background:#f2f5fa;color:#243043;font-size:13px;
+  padding:1px 6px;border-radius:5px;cursor:pointer;font-family:inherit;line-height:1.55;transition:.13s;
 }
-tbody tr{transition:background .12s}
-tbody tr:hover{background:#f2f7ff}
-tbody tr:last-child td{border-bottom:none}
-.date-cell b{font-weight:600;color:#0f172a}
-.date-cell .wk{color:#94a3b8;font-size:12px;margin-left:4px}
-.date-cell.today b{color:#4b7bec}
-.date-cell.today .wk{color:#4b7bec}
-th:nth-child(1),td:nth-child(1){width:130px;}
-th:nth-child(2),td:nth-child(2){width:230px;}
-th:nth-child(3),td:nth-child(3){width:100px;}
-th:nth-child(4),td:nth-child(4){width:110px;}
-th:nth-child(5),td:nth-child(5){width:250px;}
-.empty-row td{text-align:center;color:#b0b8c4;padding:34px 0;font-size:13px}
-.updated{margin-top:16px;text-align:right;color:#98a2b3;font-size:12.5px;}
+.nm:hover{background:#e6efff;color:#2f6fd0;border-color:#cfe1ff}
+.nm.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* 备注里的名字：更轻的样式 */
+td.c-remark .nm{background:transparent;color:#4b7bec;padding:0 2px}
+td.c-remark .nm:hover{background:#e6efff;border-color:#cfe1ff}
+td.c-remark .nm.on{background:var(--blue);color:#fff}
+.wb{text-decoration:none;font-size:12px;opacity:.5;line-height:1.4}
+.wb:hover{opacity:1}
+.c-city{width:84px;color:#4b5665;white-space:nowrap}
+.c-act{width:120px;color:#4b5665}
+.c-remark{color:#6b7688;line-height:1.6;word-break:break-word}
+.c-remark .nm{line-height:1.4;vertical-align:baseline}
+.muted{color:#c3cbd8}
+mark{background:#fff2a8;color:inherit;border-radius:2px;padding:0 1px}
+
+.empty{padding:34px 10px;text-align:center;color:#98a2b3;font-size:13px;line-height:2}
+.empty b{color:#5b7fc7;font-weight:500;cursor:pointer}
+.foot{margin-top:14px;text-align:right;color:#98a2b3;font-size:12.5px}
 
 /* ============ 一周活动弹窗 ============ */
 .week-modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(15,23,42,0.5);
-    backdrop-filter:blur(2px);
-    z-index:999;
-    align-items:center;
-    justify-content:center;
+  display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  z-index:1000;align-items:center;justify-content:center;padding:20px;
 }
 .week-modal.show{display:flex}
-.week-modal-content{
-    background:#f8fafc;
-    padding:20px 22px 22px;
-    border-radius:16px;
-    max-width:1060px;
-    width:94%;
-    max-height:90vh;
-    overflow:auto;
-    box-shadow:0 24px 60px rgba(15,23,42,0.3);
+.week-box{
+  background:#f7f9fd;border-radius:16px;width:100%;max-width:1080px;max-height:88vh;
+  overflow:auto;padding:18px 18px 20px;box-shadow:0 24px 60px rgba(15,23,42,.3);
 }
-.week-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:16px;
-}
-.week-title{
-    font-size:18px;
-    font-weight:600;
-    color:#0f172a;
-}
-.week-title .range{font-size:13px;color:#64748b;font-weight:400;margin-left:8px}
-.week-nav{display:flex;align-items:center;gap:8px}
+.week-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.week-title{font-size:17px;font-weight:600;color:var(--ink)}
+.week-title .range{font-size:12.5px;color:#8b97a8;font-weight:400;margin-left:6px}
+.week-nav{margin-left:auto;display:flex;gap:6px;align-items:center}
 .week-nav button{
-    height:28px;
-    padding:0 14px;
-    font-size:13px;
-    border:1px solid #d9dee7;
-    background:#fff;
-    border-radius:8px;
-    cursor:pointer;
-    color:#475569;
-    transition:all .15s;
+  height:30px;padding:0 12px;font-size:12.5px;border:1px solid #dde3ec;background:#fff;
+  border-radius:8px;cursor:pointer;color:#5b6678;font-family:inherit;transition:.13s;
 }
-.week-nav button:hover{border-color:#4b7bec;color:#4b7bec}
-.week-nav button.cur{
-    background:#4b7bec;
-    border-color:#4b7bec;
-    color:#fff;
-    font-weight:500;
+.week-nav button:hover{border-color:var(--blue);color:var(--blue)}
+.week-nav button.cur{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:500}
+.week-nav .close{background:#eef1f6;border-color:transparent;color:#4b5665;margin-left:4px}
+.week-nav .close:hover{background:#e2e7ef;color:#334155}
+.week-cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.wday{
+  background:#fff;border:1px solid var(--line);border-radius:11px;overflow:hidden;
+  display:flex;flex-direction:column;min-height:86px;
 }
-.week-close{
-    padding:7px 16px;
-    cursor:pointer;
-    border:none;
-    background:#e2e8f0;
-    color:#334155;
-    border-radius:8px;
-    font-size:13px;
-    margin-left:6px;
+.wday.today{border-color:#b9cffb;box-shadow:0 0 0 2px rgba(75,123,236,.12)}
+.wday-head{padding:7px 6px;text-align:center;background:#f3f6fb;color:#5b6678;font-size:12px;font-weight:600}
+.wday.today .wday-head{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
+.wday-head .d{font-size:11px;font-weight:400;opacity:.85;margin-top:1px}
+.wday-body{padding:6px;display:flex;flex-direction:column;gap:5px;flex:1}
+.wday-empty{
+  flex:1;display:flex;align-items:center;justify-content:center;color:#c3cad6;
+  font-size:11.5px;padding:12px 0;
 }
-.week-close:hover{background:#cbd5e1}
-/* 周历横向星期布局 */
-.week-calendar-wrap{
-    display:grid;
-    grid-template-columns:repeat(7,minmax(0,1fr));
-    gap:8px;
+.witem{display:block;padding:6px 7px;border-radius:7px;background:#f8fafd;border:1px solid #eef2f8;text-decoration:none;color:inherit}
+a.witem{transition:.13s}
+a.witem:hover{background:#f0f6ff;border-color:#cfe1ff;transform:translateY(-1px)}
+.witem .n{font-size:12px;color:#243043;line-height:1.45}
+.witem .n em{font-style:normal;font-size:10.5px;color:#2f6fd0;background:#e9f1ff;border-radius:4px;padding:0 4px;margin-left:3px}
+.witem .p{font-size:11px;color:#8b97a8;margin-top:1px}
+
+@media (max-width:880px){
+  .week-cal{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}
 }
+
+/* ============ 手机 ============ */
 @media (max-width:760px){
-    .week-calendar-wrap{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+  body{padding:14px 10px 34px}
+  .head h1{font-size:17px}
+  .head .sub{font-size:12px;padding:8px 11px}
+  .panel{padding:12px 12px 10px;border-radius:12px}
+  .filters{gap:8px}
+  .search-wrap{flex:1 1 100%;max-width:none}
+  .multi{flex:1 1 45%;max-width:none;min-width:0}
+  select{flex:1 1 30%;min-width:0}
+  .btn{flex:1 1 auto}
+  table,thead,tbody,tr,td{display:block}
+  thead{display:none}
+  tr.group-head td{position:static;background:transparent;border:none;padding:12px 2px 6px}
+  tr.group-head:hover td{background:transparent}
+  tbody tr.row{
+    border:1px solid #e9eef6;border-radius:10px;padding:10px 12px;margin-bottom:8px;
+    background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.03);
+  }
+  tbody tr.row:hover{background:#fff}
+  tbody tr.row td{border:none;padding:0;width:auto;font-size:13px}
+  .c-artist{min-width:0}
+  .c-artist .names{margin-bottom:5px}
+  .c-city,.c-act{display:inline-block;width:auto;font-size:12px;color:#8b97a8}
+  .c-city::after{content:" · ";color:#cbd5e1}
+  .c-remark{margin-top:5px;color:#5b6678;font-size:12.5px}
+  .week-modal{padding:0}
+  .week-box{max-height:100vh;border-radius:0;height:100%;max-width:none}
 }
-.week-day-col{
-    border:1px solid #e2e8f0;
-    border-radius:12px;
-    overflow:hidden;
-    background:#fff;
-    display:flex;
-    flex-direction:column;
-}
-.week-day-col.is-today{border-color:#4b7bec;box-shadow:0 0 0 2px #4b7bec26}
-.week-day-head{
-    background:#f2f5fa;
-    color:#334155;
-    padding:8px 6px;
-    text-align:center;
-}
-.is-today .week-day-head{
-    background:linear-gradient(135deg,#4b7bec,#6c5ce7);
-    color:#fff;
-}
-.week-day-head .day-name{
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:1px;
-}
-.week-day-head .day-date{
-    font-size:11px;
-    margin-top:2px;
-    opacity:.85;
-}
-.today-badge{
-    display:inline-block;
-    font-size:10px;
-    background:#fff3;
-    border:1px solid #fff6;
-    border-radius:8px;
-    padding:0 6px;
-    margin-top:3px;
-}
-.week-day-body{flex:1;padding:6px;display:flex;flex-direction:column;gap:6px}
-.week-day-empty{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#c3cad6;
-    font-size:12px;
-    padding:14px 0;
-}
-.week-item{
-    padding:6px 8px;
-    background:#f8fafc;
-    border:1px solid #eef1f6;
-    border-radius:8px;
-}
-.is-today .week-item{background:#f0f5ff;border-color:#dbe6ff}
-.week-item-name{
-    font-size:12px;
-    font-weight:500;
-    color:#1e293b;
-    line-height:1.4;
-}
-.week-item-name .act{
-    display:inline-block;
-    font-size:10.5px;
-    color:#4b7bec;
-    background:#e8f0ff;
-    border-radius:4px;
-    padding:0 5px;
-    margin-left:4px;
-    vertical-align:1px;
-}
-.week-item-place{
-    font-size:11px;
-    color:#64748b;
-    margin-top:2px;
+
+/* 水印：压在弹窗之下，更淡更疏 */
+.watermark{
+  position:fixed;inset:0;pointer-events:none;z-index:900;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='300'%3E%3Ctext x='10' y='120' font-size='26' fill='%23000' opacity='0.055' transform='rotate(-25 10 120)'%3Eoldlizao%3C/text%3E%3C/svg%3E");
+  background-repeat:repeat;
 }
 </style>
 </head>
 <body>
-<div class="box">
- <div class="tip">
-  🌹仅供参考，人工搜索整理无法涵盖所有成员，活动详细讯息请见微博等平台🌹
-</div>
-  <div class="filter-row">
-    <input id="searchInput" placeholder="搜索艺人 / 城市 / 备注…">
-    <div class="multi-select-act">
-        <div class="multi-trigger">全部活动</div>
-        <div class="multi-dropdown">
-            <label><input type="checkbox" value="一日店长">一日店长</label>
-            <label><input type="checkbox" value="音乐节">音乐节</label>
-            <label><input type="checkbox" value="演出">演出</label>
-            <label><input type="checkbox" value="见面会">见面会</label>
-            <label><input type="checkbox" value="音乐剧/舞台剧">音乐剧/舞台剧</label>
-            <label><input type="checkbox" value="嘉宾">嘉宾</label>
-            <label><input type="checkbox" value="生日会">生日会</label>
-            <label><input type="checkbox" value="路演">路演</label>
-            <label><input type="checkbox" value="地偶">地偶</label>
-            <label><input type="checkbox" value="时装周">时装周</label>
-            <label><input type="checkbox" value="其他">其他</label>
-        </div>
-    </div>
-<select id="areaSelect" >
-        <option value="">全部地区</option>
-        <option value="京津冀">京津冀</option>
-        <option value="江浙沪皖">江浙沪皖</option>
-        <option value="闽粤桂湘">闽粤桂湘</option>
-        <option value="云贵川渝">云贵川渝</option>
-        <option value="港澳台">港澳台</option>
-        <option value="其他">其他</option>
-    </select>
-<select id="yearSelect">
-    <option value="">全部年份</option>
-    <option value="2026">2026</option>
-    <option value="2027">2027</option>
-</select>
-<select id="monthSelect">
-    <option value="">全部月份</option>
-    <option value="01">1月</option>
-    <option value="02">2月</option>
-    <option value="03">3月</option>
-    <option value="04">4月</option>
-    <option value="05">5月</option>
-    <option value="06">6月</option>
-    <option value="07">7月</option>
-    <option value="08">8月</option>
-    <option value="09">9月</option>
-    <option value="10">10月</option>
-    <option value="11">11月</option>
-    <option value="12">12月</option>
-</select>
-<button id="resetBtn">重置</button>
-<button id="weekBtn">一周活动</button>
+<div class="wrap">
+  <div class="head">
+    <h1>出河芭女线下行程查询表</h1>
+    <p class="sub">🌹 仅供参考，人工搜索整理无法涵盖所有成员，活动详细讯息请见微博等平台 🌹</p>
   </div>
-  <div class="count-tip" id="countTip"></div>
-  <table>
-    <thead>
-      <tr>
-        <th>日期</th>
-        <th>艺人</th>
-        <th>城市</th>
-        <th>活动类型</th>
-        <th>备注</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
-<div class="updated">
-    最后更新：2026-11-11 14:30
+
+  <div class="panel">
+    <div class="filters">
+      <div class="search-wrap">
+        <input id="searchInput" placeholder="搜艺人 / 城市 / 备注（多个词用空格，需同时满足）">
+      </div>
+      <div class="multi" id="actMulti" data-ph="全部类型">
+        <div class="multi-trigger">全部类型</div>
+        <div class="multi-dropdown"></div>
+      </div>
+      <div class="multi" id="cityMulti" data-ph="全部城市">
+        <div class="multi-trigger">全部城市</div>
+        <div class="multi-dropdown"></div>
+      </div>
+      <select id="areaSelect"></select>
+      <select id="monthSelect"></select>
+      <button class="btn ghost" id="resetBtn">重置</button>
+      <button class="btn primary" id="weekBtn">一周活动</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="count" id="countTip"></div>
+    <div id="listBox">
+      <table>
+        <thead>
+          <tr>
+            <th>艺人</th>
+            <th>城市</th>
+            <th>活动类型</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="foot" id="updatedEl"></div>
   </div>
 </div>
 
-<!--当周活动弹窗-->
 <div class="week-modal" id="weekModal">
-    <div class="week-modal-content">
-        <div class="week-head">
-            <div class="week-title">一周活动<span class="range" id="weekRange"></span></div>
-            <div class="week-nav">
-                <button id="weekPrev">‹ 上周</button>
-                <button id="weekCur">本周</button>
-                <button id="weekNext">下周 ›</button>
-                <button class="week-close" id="weekClose">关闭</button>
-            </div>
-        </div>
-        <div id="weekRenderBox"></div>
+  <div class="week-box">
+    <div class="week-head">
+      <div class="week-title">一周活动<span class="range" id="weekRange"></span></div>
+      <div class="week-nav">
+        <button id="weekPrev">‹ 上周</button>
+        <button id="weekCur">本周</button>
+        <button id="weekNext">下周 ›</button>
+        <button class="close" id="weekClose">关闭</button>
+      </div>
     </div>
+    <div class="week-cal" id="weekRenderBox"></div>
+  </div>
 </div>
 
 <div class="watermark"></div>
 
 <script>
-// ===================== 在记事本这里编辑行程数据 =====================
+/* =====================================================================
+   ★ 只改这一区：行程数据 + 最后更新时间
+   类型 / 城市 / 月份等筛选选项全部自动从数据生成，不用手动维护
+   link 字段可选，填了才可点击跳转；格式必须 http(s):// 开头
+   ===================================================================== */
+const LAST_UPDATED = "2026-11-11 14:30";
+
 const eventList = [
   {date:"2026-11-09", artist:"李艺彤", city:"杭州", activity:"其他", remark:"天猫金铲铲活动"},
   {date:"2026-11-11", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
@@ -422,6 +303,7 @@ const eventList = [
   {date:"2026-11-14", artist:"莫寒", city:"上海", activity:"嘉宾", remark:"刘增艳毕业公演"},
   {date:"2026-11-14", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
   {date:"2026-11-14", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
+  {date:"2026-11-14", artist:"张韵雯", city:"上海", activity:"地偶", remark:"小猫队cats"},
   {date:"2026-11-14", artist:"王露皎", city:"上海", activity:"地偶", remark:"idolzoo"},
   {date:"2026-11-14", artist:"张智杰", city:"北京", activity:"地偶", remark:"realink"},
   {date:"2026-11-14", artist:"张幼柠", city:"广州", activity:"演出", remark:"嘉宾：吴羽霏 罗可嘉 邓惠恩 杨若惜 钟洁玟 罗海琳 朱涵佳"},
@@ -434,7 +316,7 @@ const eventList = [
   {date:"2026-11-15", artist:"王思文", city:"北京", activity:"地偶", remark:"今日晴"},
   {date:"2026-11-15", artist:"陈盼", city:"上海", activity:"地偶", remark:"采梦yumetori"},
   {date:"2026-11-15", artist:"张智杰", city:"北京", activity:"地偶", remark:"realink"},
-  {date:"2026-11-15", artist:"张幼柠", city:"广州", activity:"演出", remark:"光棱Fes1.0 异世界魔女降临生日sp 嘉宾：龙亦瑞 吴羽霏 梁婉琳 符冰冰 罗可嘉 王梓 邓惠恩 罗海琳 "},
+  {date:"2026-11-15", artist:"张幼柠", city:"广州", activity:"演出", remark:"光棱Fes1.0 异世界魔女降临生日sp 嘉宾：龙亦瑞 吴羽霏 梁婉琳 符冰冰 罗可嘉 王梓 邓惠恩 罗海琳"},
   {date:"2026-11-20", artist:"赵粤", city:"北京", activity:"音乐剧/舞台剧", remark:"开心麻花甄嬛传 晚场"},
   {date:"2026-11-21", artist:"沈梦瑶", city:"阜阳", activity:"音乐节", remark:"斑马音乐节"},
   {date:"2026-11-21", artist:"龙亦瑞", city:"广州", activity:"助演", remark:"杨媛媛年度mvp嘉宾"},
@@ -453,7 +335,7 @@ const eventList = [
   {date:"2026-11-28", artist:"颜沁", city:"上海", activity:"演出", remark:"一见沁心音乐会 嘉宾：姜杉、郑丹妮、张昕、卢静、陈倩楠、韩家乐、赵佳蕊、农燕萍"},
   {date:"2026-11-28", artist:"曾艾佳", city:"长沙", activity:"演出", remark:"刻度之外 嘉宾：易嘉爱 刘增艳"},
   {date:"2026-11-28", artist:"吴哲晗", city:"上海", activity:"见面会", remark:"/"},
-  {date:"2026-11-28", artist:"赵粤", city:"北京", activity:"音乐剧/舞台剧", remark:"开心麻花甄嬛传 午场/ 晚场"},
+  {date:"2026-11-28", artist:"赵粤", city:"北京", activity:"音乐剧/舞台剧", remark:"开心麻花甄嬛传 午场/晚场"},
   {date:"2026-11-28", artist:"许杨玉琢", city:"北京", activity:"其他", remark:"北京搜狐关注流"},
   {date:"2026-11-28", artist:"刘姝贤", city:"杭州", activity:"演出", remark:"virid演唱会"},
   {date:"2026-11-28", artist:"洪静雯", city:"广州", activity:"演出", remark:"/"},
@@ -475,236 +357,445 @@ const eventList = [
   {date:"2026-12-26", artist:"王露皎", city:"北京", activity:"地偶", remark:"idolzoo"},
   {date:"2026-12-26", artist:"刘力菲 韩家乐", city:"中国台湾", activity:"见面会", remark:"雪落之前 助演：梁娇 梁乔"},
   {date:"2026-12-26", artist:"王允宸", city:"苏州", activity:"音乐剧/舞台剧", remark:"四大美女"},
-  {date:"2027-01-02", artist:"张昕", city:"杭州", activity:"演出", remark:"/"},
-
-
+  {date:"2027-01-02", artist:"张昕", city:"杭州", activity:"演出", remark:"/"}
 ];
-// ====================================================================
-const searchInput = document.getElementById('searchInput');
-const tableBody = document.getElementById('tableBody');
-const areaSelect = document.getElementById('areaSelect');
-const yearSelect = document.getElementById('yearSelect');
-const monthSelect = document.getElementById('monthSelect');
-const resetBtn = document.getElementById('resetBtn');
-const multiWrap = document.querySelector('.multi-select-act');
-const multiTrigger = multiWrap.querySelector('.multi-trigger');
-const multiDrop = multiWrap.querySelector('.multi-dropdown');
-let selectedActList = [];
+/* ========================= 数据区结束 ========================= */
 
-multiTrigger.addEventListener('click',e=>{
-    e.stopPropagation();
-    multiDrop.classList.toggle('show');
-});
-multiDrop.addEventListener('click',e=>{
-    e.stopPropagation();
-});
-document.addEventListener('click',()=>{
-    multiDrop.classList.remove('show');
-});
+const $ = (s, r) => (r || document).querySelector(s);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const escReg = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const toDate = (k) => new Date(k.replace(/-/g, "/"));
+const keyOf = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const todayKey = keyOf(new Date());
+const WEEK = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+const getLink = (it) => (it.link && /^https?:\/\//i.test(String(it.link).trim()) ? String(it.link).trim() : "");
 
-const checkAll = multiDrop.querySelectorAll('input[type="checkbox"]');
-checkAll.forEach(cb=>{
-    cb.addEventListener('change',()=>{
-        selectedActList = Array.from(checkAll).filter(i=>i.checked).map(i=>i.value);
-        multiTrigger.innerText = selectedActList.length === 0 ? "全部活动" : selectedActList.join('、');
-        render();
-    })
-})
+/* ---------- 选项：全部从数据自动生成（类型/城市/月份） ---------- */
+const actCount = new Map();
+eventList.forEach(e => String(e.activity).split(/[\/、]/).forEach(a => {
+  a = a.trim(); if (a) actCount.set(a, (actCount.get(a) || 0) + 1);
+}));
+const ACT_OPTIONS = [...actCount.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh"))
+  .map(([v, c]) => ({ value: v, label: v + "（" + c + "）" }));
 
-resetBtn.addEventListener('click',()=>{
-    searchInput.value = "";
-    areaSelect.value = "";
-    yearSelect.value = "";
-    monthSelect.value = "";
-    selectedActList = [];
-    checkAll.forEach(cb=>cb.checked = false);
-    multiTrigger.innerText = "全部活动";
-    render();
-});
+const cityCount = new Map();
+eventList.forEach(e => cityCount.set(e.city, (cityCount.get(e.city) || 0) + 1));
+const CITY_OPTIONS = [...cityCount.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh"))
+  .map(([v, c]) => ({ value: v, label: v + "（" + c + "）" }));
+
+const MONTHS = [...new Set(eventList.map(e => e.date.slice(5, 7)))].sort();
 
 const areaMap = {
-  "京津冀":["北京","天津","石家庄","唐山","秦皇岛","邯郸","邢台","保定","张家口","承德","沧州","廊坊","衡水"],
-  "江浙沪皖":["上海","南京","无锡","徐州","常州","苏州","南通","连云港","淮安","盐城","扬州","镇江","泰州","宿迁","杭州","宁波","温州","嘉兴","湖州","绍兴","金华","衢州","舟山","台州","丽水","合肥","芜湖","蚌埠","淮南","马鞍山","淮北","铜陵","安庆","黄山","滁州","阜阳","宿州","六安","亳州","池州","宣城"],
-  "闽粤桂湘":["福州","厦门","莆田","三明","泉州","漳州","南平","龙岩","宁德","广州","深圳","珠海","汕头","佛山","韶关","湛江","肇庆","江门","茂名","惠州","梅州","汕尾","河源","阳江","清远","东莞","中山","潮州","揭阳","云浮","南宁","柳州","桂林","梧州","北海","防城港","钦州","贵港","玉林","百色","贺州","河池","来宾","长沙","株洲","湘潭","衡阳","邵阳","岳阳","常德","张家界","益阳","郴州","永州","怀化","娄底","湘西"],
-  "云贵川渝":["昆明","曲靖","玉溪","保山","昭通","丽江","普洱","临沧","楚雄","红河","文山","西双版纳","大理","德宏","怒江","迪庆","贵阳","六盘水","遵义","安顺","毕节","铜仁","黔西南","黔东南","黔南","成都","自贡","攀枝花","泸州","德阳","绵阳","广元","遂宁","内江","乐山","南充","眉山","宜宾","广安","达州","雅安","巴中","资阳","阿坝","甘孜","凉山","重庆"],
-  "港澳台":["中国香港","中国澳门","中国台湾"],
-  "其他":["太原","呼和浩特","沈阳","大连","长春","哈尔滨","南昌","济南","青岛","郑州","武汉","拉萨","西安","兰州","西宁","银川","乌鲁木齐"]
+  "京津冀": ["北京", "天津", "石家庄", "唐山", "秦皇岛", "邯郸", "邢台", "保定", "张家口", "承德", "沧州", "廊坊", "衡水"],
+  "江浙沪皖": ["上海", "南京", "无锡", "徐州", "常州", "苏州", "南通", "连云港", "淮安", "盐城", "扬州", "镇江", "泰州", "宿迁", "杭州", "宁波", "温州", "嘉兴", "湖州", "绍兴", "金华", "衢州", "舟山", "台州", "丽水", "合肥", "芜湖", "蚌埠", "淮南", "马鞍山", "淮北", "铜陵", "安庆", "黄山", "滁州", "阜阳", "宿州", "六安", "亳州", "池州", "宣城"],
+  "闽粤桂湘": ["福州", "厦门", "莆田", "三明", "泉州", "漳州", "南平", "龙岩", "宁德", "广州", "深圳", "珠海", "汕头", "佛山", "韶关", "湛江", "肇庆", "江门", "茂名", "惠州", "梅州", "汕尾", "河源", "阳江", "清远", "东莞", "中山", "潮州", "揭阳", "云浮", "南宁", "柳州", "桂林", "梧州", "北海", "防城港", "钦州", "贵港", "玉林", "百色", "贺州", "河池", "来宾", "长沙", "株洲", "湘潭", "衡阳", "邵阳", "岳阳", "常德", "张家界", "益阳", "郴州", "永州", "怀化", "娄底", "湘西"],
+  "云贵川渝": ["昆明", "曲靖", "玉溪", "保山", "昭通", "丽江", "普洱", "临沧", "楚雄", "红河", "文山", "西双版纳", "大理", "德宏", "怒江", "迪庆", "贵阳", "六盘水", "遵义", "安顺", "毕节", "铜仁", "黔西南", "黔东南", "黔南", "成都", "自贡", "攀枝花", "泸州", "德阳", "绵阳", "广元", "遂宁", "内江", "乐山", "南充", "眉山", "宜宾", "广安", "达州", "雅安", "巴中", "资阳", "阿坝", "甘孜", "凉山", "重庆"],
+  "港澳台": ["中国香港", "中国澳门", "中国台湾"],
+  "其他": ["太原", "呼和浩特", "沈阳", "大连", "长春", "哈尔滨", "南昌", "济南", "青岛", "郑州", "武汉", "拉萨", "西安", "兰州", "西宁", "银川", "乌鲁木齐", "悉尼", "首尔", "东京", "曼谷"]
 };
-
-function getAreaByCity(cityName){
-    let name = cityName.trim();
-    for(let areaName in areaMap){
-        if(areaMap[areaName].some(c=>name.includes(c))) return areaName;
-    }
-    return "其他";
+function getAreaByCity(city) {
+  const name = String(city).trim();
+  for (const a in areaMap) if (areaMap[a].some(c => name.includes(c))) return a;
+  return "其他";
 }
 
-function fmtTodayKey(){
-    const d = new Date();
-    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-}
-const todayKey = fmtTodayKey();
-const weekNameArr = ['周日','周一','周二','周三','周四','周五','周六'];
+/* ---------- 所有出现过的名字（艺人字段 + 备注名字自动收集） ---------- */
+const NAME_SET = new Set();
+eventList.forEach(e => String(e.artist).trim().split(/\s+/).forEach(n => NAME_SET.add(n)));
 
-function render(){
-  let kwText = searchInput.value.trim().toLowerCase();
-  let areaFilter = areaSelect.value;
-  let yearFilter = yearSelect.value;
-  let monthFilter = monthSelect.value;
-  let keywords = kwText ? kwText.split(/\s+/).filter(x=>x) : [];
-  let arr = [...eventList].sort((a,b)=> new Date(a.date) - new Date(b.date));
+// 规则1：备注里「嘉宾：xxx」「助演：xxx」等关键词【后面】的名单（最常见写法）
+const GUEST_RE = /(?:嘉宾|助演|特邀|主持|合演|出演)\s*[::：]?\s*([^。;；\n]+)/g;
+eventList.forEach(e => {
+  const r = String(e.remark || "");
+  let m;
+  GUEST_RE.lastIndex = 0;
+  while ((m = GUEST_RE.exec(r))) {
+    m[1].split(/[、，,；;\s·]+/).forEach(tok => {
+      tok = tok.replace(/^[::：]+|[::：]+$/g, "");
+      if (/^[\u4e00-\u9fa5]{2,4}$/.test(tok)) NAME_SET.add(tok);
+    });
+  }
+});
 
-  arr = arr.filter(item=>{
-    if(areaFilter && getAreaByCity(item.city) !== areaFilter) return false;
-    let [y,m] = item.date.split('-');
-    if(yearFilter && y !== yearFilter) return false;
-    if(monthFilter && m !== monthFilter) return false;
-    if(keywords.length){
-      const allText = (item.artist + item.city + item.activity + item.remark).toLowerCase();
-      if(!keywords.some(word=> allText.includes(word))) return false;
-    }
-    if(selectedActList.length && !selectedActList.some(sel=> item.activity.includes(sel))) return false;
-    return true;
+// 规则2：关键词/事件词【前面】的名字，如「杨媛媛年度mvp嘉宾」「刘增艳毕业公演」
+// （后面没有名单，只有名字时用这条兜底；带停用词表避免把普通词当成名字）
+const NAME_STOP = new Set(["见面会", "演出", "生日", "公演", "活动", "巡演", "舞台", "音乐剧", "主持", "特邀", "年度", "合影", "签售", "助演", "嘉宾", "一日店长", "毕业"]);
+const PRE_NAME_RES = [
+  /([\u4e00-\u9fa5]{2,3})(?:年度|的|生日)?[a-zA-Z]{0,4}(?:嘉宾|助演)/g,
+  /([\u4e00-\u9fa5]{2,3})(?:生日|毕业)(?:公演|会|演出)/g
+];
+eventList.forEach(e => {
+  const r = String(e.remark || "");
+  PRE_NAME_RES.forEach(re => {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(r))) if (!NAME_STOP.has(m[1])) NAME_SET.add(m[1]);
   });
+});
 
-  document.getElementById('countTip').textContent =
-      '共 '+arr.length+' 条活动' + (arr.length?'，其中 '+(new Set(arr.map(i=>i.date))).size+' 个日期':'');
+const NAME_RE = new RegExp("(" + [...NAME_SET].sort((a, b) => b.length - a.length).map(escReg).join("|") + ")", "g");
 
-  tableBody.innerHTML = "";
-  if(arr.length === 0){
-    tableBody.innerHTML = '<tr class="empty-row"><td colspan="5">没有符合条件的活动，换个条件试试～</td></tr>';
+/* ---------- 状态 ---------- */
+let booting = true;
+const state = { q: "", acts: [], cities: [], area: "", month: "", artist: "", mode: "upcoming" };
+const collapsed = new Set();
+
+const searchInput = $("#searchInput");
+const areaSelect = $("#areaSelect");
+const monthSelect = $("#monthSelect");
+const tableBody = $("#tableBody");
+const chipsEl = $("#chips");
+const countEl = $("#countTip");
+const listBox = $("#listBox");
+
+/* ---------- 多选组件 ---------- */
+let openDropdown = null;
+function makeMulti(wrapId, options, onChange) {
+  const wrap = $("#" + wrapId);
+  const trigger = wrap.querySelector(".multi-trigger");
+  const drop = wrap.querySelector(".multi-dropdown");
+  const ph = wrap.dataset.ph;
+  drop.innerHTML = options.map(o => '<label><input type="checkbox" value="' + esc(o.value) + '">' + esc(o.label) + "</label>").join("");
+  const boxes = [...drop.querySelectorAll("input")];
+  let sel = [];
+  function syncLabel() {
+    if (!sel.length) trigger.textContent = ph;
+    else if (sel.length <= 2) trigger.textContent = sel.join("、");
+    else trigger.textContent = sel.slice(0, 2).join("、") + " +" + (sel.length - 2);
+    trigger.classList.toggle("has", sel.length > 0);
+  }
+  boxes.forEach(b => b.addEventListener("change", () => {
+    sel = boxes.filter(x => x.checked).map(x => x.value);
+    syncLabel(); onChange(sel.slice());
+  }));
+  trigger.addEventListener("click", e => {
+    e.stopPropagation();
+    if (openDropdown && openDropdown !== drop) openDropdown.classList.remove("show");
+    drop.classList.toggle("show");
+    openDropdown = drop.classList.contains("show") ? drop : null;
+  });
+  drop.addEventListener("click", e => e.stopPropagation());
+  return {
+    set(vals) {
+      sel = vals.slice();
+      boxes.forEach(b => (b.checked = sel.includes(b.value)));
+      syncLabel();
+    }
+  };
+}
+
+function commit() { render(); if (!booting) writeHash(); }
+
+/* ---------- 筛选 ---------- */
+function matchRow(it) {
+  if (state.mode === "upcoming" && it.date < todayKey) return false;
+  if (state.mode === "past" && it.date >= todayKey) return false;
+  if (state.area && getAreaByCity(it.city) !== state.area) return false;
+  if (state.month && it.date.slice(5, 7) !== state.month) return false;
+  if (state.cities.length && !state.cities.includes(it.city)) return false;
+  if (state.acts.length) {
+    const parts = String(it.activity).split(/[\/、]/).map(s => s.trim());
+    if (!state.acts.some(a => parts.includes(a))) return false;
+  }
+  if (state.artist) {
+    // 艺人字段是主角，或备注里的嘉宾/助演都算 TA 的行程
+    const inArtist = String(it.artist).trim().split(/\s+/).includes(state.artist);
+    const inRemark = String(it.remark || "").includes(state.artist);
+    if (!inArtist && !inRemark) return false;
+  }
+  if (state.q) {
+    const words = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    const hay = (it.artist + " " + it.city + " " + it.activity + " " + it.remark).toLowerCase();
+    if (!words.every(w => hay.includes(w))) return false;  // 多关键词：同时满足
+  }
+  return true;
+}
+
+function hl(text) {
+  let t = esc(text);
+  if (!state.q) return t;
+  state.q.split(/\s+/).filter(Boolean).forEach(w => {
+    const re = new RegExp("(" + escReg(w) + ")", "gi");
+    t = t.replace(re, "<mark>$1</mark>");
+  });
+  return t;
+}
+
+/* 备注里的名字自动变成可点击 */
+function renderRemark(text) {
+  let t = hl(text);
+  t = t.replace(NAME_RE, '<button class="nm rn" data-name="$1" title="只看 TA 的全部行程">$1</button>');
+  return t;
+}
+
+function dateLabel(key) {
+  const d = toDate(key);
+  const sameYear = d.getFullYear() === new Date().getFullYear();
+  const md = d.getMonth() + 1 + "/" + d.getDate();
+  return sameYear ? md : d.getFullYear() + "/" + md;
+}
+
+/* ---------- 渲染 ---------- */
+function render() {
+  const arr = eventList.filter(matchRow);
+  const pastTotal = eventList.filter(e => e.date < todayKey).length;
+
+  // 顶部条件 chip
+  const chips = [];
+  if (state.artist) chips.push({ k: "artist", t: "艺人：" + state.artist });
+  if (state.q) chips.push({ k: "q", t: "关键词：" + state.q });
+  state.acts.forEach(a => chips.push({ k: "act:" + a, t: a }));
+  state.cities.forEach(c => chips.push({ k: "city:" + c, t: c }));
+  if (state.area) chips.push({ k: "area", t: state.area });
+  if (state.month) chips.push({ k: "month", t: parseInt(state.month, 10) + " 月" });
+  chipsEl.innerHTML = chips.length
+    ? chips.map(c => '<button class="fchip" data-k="' + esc(c.k) + '">' + esc(c.t) + "<span>✕</span></button>").join("")
+      + '<button class="fchip clear" data-k="__all">清除全部条件</button>'
+    : "";
+  chipsEl.classList.toggle("show", chips.length > 0);
+
+  // 计数
+  const dates = [...new Set(arr.map(e => e.date))];
+  let tip = "共 <b>" + arr.length + "</b> 场活动";
+  if (dates.length) tip += "　·　" + dates.length + " 个日期";
+  if (state.mode === "upcoming" && pastTotal) tip += "　·　<a data-mode-jump='past'>另有 " + pastTotal + " 场已结束，点此查看</a>";
+  if (state.mode === "past") tip += "　·　<a data-mode-jump='upcoming'>回到即将开始</a>";
+  countEl.innerHTML = tip;
+
+  // 空状态
+  if (!arr.length) {
+    listBox.style.display = "none";
+    countEl.innerHTML = tip +
+      '<div class="empty">' + (state.mode === "upcoming"
+        ? "今天之后暂时没有已收录的行程～<br>已结束的活动可点上方「另有 N 场已结束，点此查看」"
+        : "没有符合条件的活动，换个条件试试～<br><b data-k='__reset'>点此重置全部条件</b>") + "</div>";
     return;
   }
-  arr.forEach(row=>{
-    let tr = document.createElement('tr');
-    let wk = weekNameArr[new Date(row.date.replace(/-/g,'/')).getDay()];
-    let isToday = row.date === todayKey;
-    tr.innerHTML = `
-      <td class="date-cell${isToday?' today':''}"><b>${row.date}</b><span class="wk">${wk}${isToday?' · 今天':''}</span></td>
-      <td>${row.artist}</td>
-      <td>${row.city}</td>
-      <td>${row.activity}</td>
-      <td>${row.remark || ""}</td>
-    `;
-    tableBody.appendChild(tr);
-  })
-}
+  listBox.style.display = "";
 
-searchInput.addEventListener('input',render);
-areaSelect.addEventListener('change',render);
-yearSelect.addEventListener('change',render);
-monthSelect.addEventListener('change',render);
-render();
+  // 按日期分组
+  const groups = new Map();
+  arr.forEach(it => { if (!groups.has(it.date)) groups.set(it.date, []); groups.get(it.date).push(it); });
+  let keys = [...groups.keys()].sort();
+  if (state.mode === "past") keys = keys.reverse();
 
-// =====================【一周活动：自动根据上方 eventList 生成，无需手动维护】=====================
-const weekBtn = document.getElementById('weekBtn');
-const weekModal = document.getElementById('weekModal');
-const weekClose = document.getElementById('weekClose');
-const weekRenderBox = document.getElementById('weekRenderBox');
-const weekRange = document.getElementById('weekRange');
-const weekPrev = document.getElementById('weekPrev');
-const weekNext = document.getElementById('weekNext');
-const weekCur = document.getElementById('weekCur');
-let weekOffset = 0; // 0=本周，正数=往后，负数=往前
-
-function getMonday(d){
-    const day = (d.getDay()+6)%7; // 周一=0
-    const m = new Date(d);
-    m.setDate(d.getDate()-day);
-    m.setHours(0,0,0,0);
-    return m;
-}
-
-function buildWeekData(offset){
-    const mon = getMonday(new Date());
-    mon.setDate(mon.getDate()+offset*7);
-    const days = [];
-    for(let i=0;i<7;i++){
-        const d = new Date(mon);
-        d.setDate(mon.getDate()+i);
-        const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-        const list = eventList
-            .filter(e=>e.date===key)
-            .sort((a,b)=>a.city.localeCompare(b.city,'zh'))
-            .map(e=>({
-                name:e.artist,
-                act:e.activity,
-                place:e.city
-            }));
-        days.push({
-            dayTitle:'星期'+'一二三四五六日'[i],
-            dateText:(d.getMonth()+1)+'/'+d.getDate(),
-            key:key,
-            list:list
-        });
-    }
-    return days;
-}
-
-function renderWeekCalendar(){
-    const data = buildWeekData(weekOffset);
-    const first = data[0], last = data[6];
-    weekRange.textContent = first.dateText + ' - ' + last.dateText + (weekOffset===0?'（本周）':weekOffset===1?'（下周）':weekOffset===-1?'（上周）':'');
-    weekCur.classList.toggle('cur', weekOffset===0);
-
-    let html = '<div class="week-calendar-wrap">';
-    data.forEach(day=>{
-        const isToday = day.key === todayKey;
-        html += `<div class="week-day-col${isToday?' is-today':''}">
-            <div class="week-day-head">
-                <div class="day-name">${day.dayTitle}</div>
-                <div class="day-date">${day.dateText}</div>
-                ${isToday?'<div class="today-badge">今天</div>':''}
-            </div>
-            <div class="week-day-body">`;
-        if(day.list.length === 0){
-            html += '<div class="week-day-empty">暂无</div>';
-        }else{
-            day.list.forEach(act=>{
-                html += `<div class="week-item">
-                    <div class="week-item-name">${act.name}<span class="act">${act.act}</span></div>
-                    <div class="week-item-place">${act.place}</div>
-                </div>`;
-            });
-        }
-        html += '</div></div>';
+  let html = "";
+  keys.forEach(k => {
+    const rows = groups.get(k);
+    const isToday = k === todayKey;
+    const closed = collapsed.has(k);
+    html += '<tr class="group-head' + (closed ? " collapsed" : "") + '" data-date="' + k + '"><td colspan="4">' +
+      '<div class="gwrap"><span class="caret">▼</span>' +
+      '<span class="gd' + (isToday ? " today" : "") + '">' + dateLabel(k) + "</span>" +
+      '<span class="gw">' + WEEK[toDate(k).getDay()] + "</span>" +
+      (isToday ? '<span class="today-tag">今天</span>' : "") +
+      '<span class="gc">' + rows.length + " 场</span></div></td></tr>";
+    if (closed) return;
+    rows.sort((a, b) => a.city.localeCompare(b.city, "zh"));
+    rows.forEach(it => {
+      const names = String(it.artist).trim().split(/\s+/).map(n =>
+        '<button class="nm' + (state.artist === n ? " on" : "") + '" data-name="' + esc(n) + '" title="只看 ' + esc(n) + ' 的行程">' + esc(n) + "</button>"
+      ).join("");
+      const href = getLink(it);
+      html += '<tr class="row">' +
+        '<td class="c-artist"><div class="names">' + names +
+        (href ? '<a class="wb" href="' + esc(href) + '" target="_blank" rel="noopener" title="打开微博原帖">🔗</a>' : "") +
+        "</div></td>" +
+        '<td class="c-city">' + hl(it.city) + "</td>" +
+        '<td class="c-act">' + hl(it.activity) + "</td>" +
+        '<td class="c-remark">' + (it.remark && it.remark !== "/" ? renderRemark(it.remark) : '<span class="muted">—</span>') + "</td>" +
+        "</tr>";
     });
-    html += '</div>';
-    weekRenderBox.innerHTML = html;
+  });
+  tableBody.innerHTML = html;
+
+  $("#updatedEl").textContent = "最后更新：" + LAST_UPDATED + "　·　共收录 " + eventList.length + " 场";
 }
 
-weekBtn.onclick = function(){
-    weekOffset = 0;
-    renderWeekCalendar();
-    weekModal.classList.add('show');
-}
-weekPrev.onclick = function(){ weekOffset--; renderWeekCalendar(); }
-weekNext.onclick = function(){ weekOffset++; renderWeekCalendar(); }
-weekCur.onclick = function(){ weekOffset = 0; renderWeekCalendar(); }
-weekClose.onclick = function(){
-    weekModal.classList.remove('show');
-}
-weekModal.onclick = function(e){
-    if(e.target === weekModal) weekModal.classList.remove('show');
-}
-document.addEventListener('keydown',e=>{
-    if(e.key==='Escape') weekModal.classList.remove('show');
+/* ---------- 事件绑定 ---------- */
+searchInput.addEventListener("input", () => { state.q = searchInput.value.trim(); commit(); });
+
+["areaSelect", "monthSelect"].forEach(id => {
+  $("#" + id).addEventListener("change", e => {
+    const map = { areaSelect: "area", monthSelect: "month" };
+    state[map[id]] = e.target.value;
+    commit();
+  });
 });
-</script>
 
-<style>
-.watermark{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:9999;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Ctext x='0' y='80' font-size='22' fill='%23000' opacity='0.15' transform='rotate(-25)'%3Eoldlizao%3C/text%3E%3C/svg%3E");
-  background-repeat: repeat;
+document.addEventListener("click", e => {
+  if (openDropdown) { openDropdown.classList.remove("show"); openDropdown = null; }
+});
+
+tableBody.addEventListener("click", e => {
+  const nm = e.target.closest(".nm, .rn");
+  if (nm) {
+    const n = nm.dataset.name;
+    state.artist = state.artist === n ? "" : n;
+    commit();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+  const head = e.target.closest("tr.group-head");
+  if (head) {
+    const k = head.dataset.date;
+    collapsed.has(k) ? collapsed.delete(k) : collapsed.add(k);
+    render();
+  }
+});
+
+countEl.addEventListener("click", e => {
+  const jump = e.target.closest("[data-mode-jump]");
+  if (jump) {
+    state.mode = jump.dataset.modeJump;
+    commit();
+  }
+  const reset = e.target.closest("[data-k='__reset']");
+  if (reset) doReset();
+});
+
+chipsEl.addEventListener("click", e => {
+  const chip = e.target.closest(".fchip");
+  if (!chip) return;
+  const k = chip.dataset.k;
+  if (k === "__all") return doReset();
+  if (k === "artist") state.artist = "";
+  else if (k === "q") { state.q = ""; searchInput.value = ""; }
+  else if (k === "area") { state.area = ""; areaSelect.value = ""; }
+  else if (k === "month") { state.month = ""; monthSelect.value = ""; }
+  else if (k.startsWith("act:")) { state.acts = state.acts.filter(x => x !== k.slice(4)); actMulti.set(state.acts); }
+  else if (k.startsWith("city:")) { state.cities = state.cities.filter(x => x !== k.slice(5)); cityMulti.set(state.cities); }
+  commit();
+});
+
+function doReset() {
+  state.q = ""; state.artist = ""; state.acts = []; state.cities = []; state.area = ""; state.month = "";
+  searchInput.value = ""; areaSelect.value = ""; monthSelect.value = "";
+  actMulti.set([]); cityMulti.set([]);
+  commit();
 }
-</style>
 
+$("#resetBtn").addEventListener("click", doReset);
+
+/* ---------- 筛选状态写入网址（可直接分享带筛选的链接） ---------- */
+function hashOf() {
+  const p = new URLSearchParams();
+  if (state.q) p.set("q", state.q);
+  if (state.artist) p.set("a", state.artist);
+  if (state.acts.length) p.set("act", state.acts.join(","));
+  if (state.cities.length) p.set("city", state.cities.join(","));
+  if (state.area) p.set("area", state.area);
+  if (state.month) p.set("m", state.month);
+  if (state.mode !== "upcoming") p.set("t", state.mode);
+  return p.toString();
+}
+function writeHash() {
+  const h = hashOf();
+  history.replaceState(null, "", location.pathname + location.search + (h ? "#" + h : ""));
+}
+
+/* ---------- 一周活动（全部展开，不折叠） ---------- */
+let weekOffset = 0;
+const weekModal = $("#weekModal");
+const weekRenderBox = $("#weekRenderBox");
+
+function getMonday(d) {
+  const m = new Date(d);
+  m.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  m.setHours(0, 0, 0, 0);
+  return m;
+}
+function buildWeekData(offset) {
+  const mon = getMonday(new Date());
+  mon.setDate(mon.getDate() + offset * 7);
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(mon);
+    d.setDate(mon.getDate() + i);
+    const key = keyOf(d);
+    days.push({
+      key,
+      title: "星期" + "一二三四五六日"[i],
+      dateText: d.getMonth() + 1 + "/" + d.getDate(),
+      list: eventList.filter(e => e.date === key)
+        .sort((a, b) => a.city.localeCompare(b.city, "zh"))
+        .map(e => ({ name: e.artist, act: e.activity, place: e.city, href: getLink(e) }))
+    });
+  }
+  return days;
+}
+
+function renderWeek() {
+  const data = buildWeekData(weekOffset);
+  $("#weekRange").textContent = data[0].dateText + " - " + data[6].dateText +
+    (weekOffset === 0 ? "（本周）" : weekOffset === 1 ? "（下周）" : weekOffset === -1 ? "（上周）" : "");
+  $("#weekCur").classList.toggle("cur", weekOffset === 0);
+
+  let html = "";
+  data.forEach(day => {
+    const isToday = day.key === todayKey;
+    html += '<div class="wday' + (isToday ? " today" : "") + '">' +
+      '<div class="wday-head">' + day.title + '<div class="d">' + day.dateText + (isToday ? " · 今天" : "") + "</div></div>" +
+      '<div class="wday-body">';
+    if (!day.list.length) html += '<div class="wday-empty">暂无</div>';
+    else day.list.forEach(act => {
+      const inner = '<div class="n">' + esc(act.name) + "<em>" + esc(act.act) + "</em></div>" +
+        '<div class="p">' + esc(act.place) + "</div>";
+      html += act.href
+        ? '<a class="witem" href="' + esc(act.href) + '" target="_blank" rel="noopener" title="打开微博">' + inner + "</a>"
+        : '<div class="witem">' + inner + "</div>";
+    });
+    html += "</div></div>";
+  });
+  weekRenderBox.innerHTML = html;
+}
+
+function openWeek() {
+  weekOffset = 0;
+  renderWeek();
+  weekModal.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function closeWeek() {
+  weekModal.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+$("#weekBtn").addEventListener("click", openWeek);
+$("#weekPrev").addEventListener("click", () => { weekOffset--; renderWeek(); });
+$("#weekNext").addEventListener("click", () => { weekOffset++; renderWeek(); });
+$("#weekCur").addEventListener("click", () => { weekOffset = 0; renderWeek(); });
+$("#weekClose").addEventListener("click", closeWeek);
+weekModal.addEventListener("click", e => { if (e.target === weekModal) closeWeek(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && weekModal.classList.contains("show")) closeWeek(); });
+
+/* ---------- 初始化 ---------- */
+areaSelect.innerHTML = '<option value="">全部地区</option>' + Object.keys(areaMap).map(a => '<option value="' + a + '">' + a + "</option>").join("");
+monthSelect.innerHTML = '<option value="">全部月份</option>' + MONTHS.map(m => '<option value="' + m + '">' + parseInt(m, 10) + "月</option>").join("");
+
+const actMulti = makeMulti("actMulti", ACT_OPTIONS, sel => { state.acts = sel; commit(); });
+const cityMulti = makeMulti("cityMulti", CITY_OPTIONS, sel => { state.cities = sel; commit(); });
+
+(function loadFromHash() {
+  const p = new URLSearchParams((location.hash || "").replace(/^#/, ""));
+  state.q = p.get("q") || "";
+  state.artist = p.get("a") || "";
+  state.acts = (p.get("act") || "").split(",").filter(Boolean);
+  state.cities = (p.get("city") || "").split(",").filter(Boolean);
+  state.area = p.get("area") || "";
+  state.month = p.get("m") || "";
+  const t = p.get("t");
+  if (t === "all" || t === "past") state.mode = t;
+
+  searchInput.value = state.q;
+  areaSelect.value = state.area;
+  monthSelect.value = state.month;
+  actMulti.set(state.acts);
+  cityMulti.set(state.cities);
+})();
+
+booting = false;
+render();
+</script>
 </body>
 </html>

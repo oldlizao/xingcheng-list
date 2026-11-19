@@ -170,28 +170,44 @@ mark{background:#fff2a8;color:inherit;border-radius:2px;padding:0 1px}
   display:flex;flex-direction:column;min-height:86px;
 }
 .wday.today{border-color:#b9cffb;box-shadow:0 0 0 2px rgba(75,123,236,.12)}
-.wday-head{padding:7px 6px;text-align:center;background:#f3f6fb;color:#5b6678;font-size:12px;font-weight:600}
-.wday.today .wday-head{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
-.wday-head .d{font-size:11px;font-weight:400;opacity:.85;margin-top:1px}
+.wday-head{padding:7px 9px;background:#f3f6fb;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.wday-head .wt{font-size:12.5px;font-weight:600;color:#3b4657}
+.wday-head .d{font-size:11px;color:#8b97a8}
+.wday-head .wc{margin-left:auto;font-size:11px;color:#93a0b3}
+.wday.today .wday-head{background:linear-gradient(135deg,var(--blue),var(--purple))}
+.wday.today .wt{color:#fff}
+.wday.today .d{color:rgba(255,255,255,.85)}
+.wday.today .wc{color:rgba(255,255,255,.85)}
 .wday-body{padding:6px;display:flex;flex-direction:column;gap:5px;flex:1}
 .wday-empty{
   flex:1;display:flex;align-items:center;justify-content:center;color:#c3cad6;
   font-size:11.5px;padding:12px 0;
 }
-.witem{display:block;padding:6px 7px;border-radius:7px;background:#f8fafd;border:1px solid #eef2f8;text-decoration:none;color:inherit}
+.witem{display:block;padding:7px 9px;border-radius:8px;background:#f8fafd;border:1px solid #eef2f8;text-decoration:none;color:inherit}
 a.witem{transition:.13s}
 a.witem:hover{background:#f0f6ff;border-color:#cfe1ff;transform:translateY(-1px)}
-.witem .n{font-size:12px;color:#243043;line-height:1.45}
-.witem .n em{font-style:normal;font-size:10.5px;color:#2f6fd0;background:#e9f1ff;border-radius:4px;padding:0 4px;margin-left:3px}
-.witem .p{font-size:11px;color:#8b97a8;margin-top:1px}
+.witem .n{font-size:12px;color:#243043;line-height:1.5;display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.witem .n .nm{font-size:12px;padding:0 5px}
+.witem .n .act-badge{font-size:10.5px;padding:0 5px}
+.witem .p{font-size:11.5px;color:#5b6678;margin-top:3px}
+.witem .p::before{content:" ";font-size:10px}
+.witem .r{
+  font-size:11.5px;color:#6b7688;margin-top:4px;line-height:1.55;word-break:break-word;
+  border-left:2px solid #dbe4f0;padding-left:7px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.witem .r .nm{background:transparent;color:#4b7bec;padding:0 1px;font-size:inherit}
+.witem .r .nm:hover{background:#e6efff}
 
-@media (max-width:880px){
-  .week-cal{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}
+/* 活动类型彩色标签（主列表 + 弹窗通用，颜色由 JS 按类型注入） */
+.act-badge{
+  display:inline-block;font-size:12px;line-height:1.7;padding:0 7px;border-radius:5px;
+  white-space:nowrap;font-weight:500;vertical-align:baseline;
 }
 
 /* ============ 手机 ============ */
 @media (max-width:760px){
-  body{padding:14px 10px 34px}
+  body{padding:14px 10px 60px;font-size:14px}
   .head h1{font-size:17px}
   .head .sub{font-size:12px;padding:8px 11px}
   .panel{padding:12px 12px 10px;border-radius:12px}
@@ -202,21 +218,82 @@ a.witem:hover{background:#f0f6ff;border-color:#cfe1ff;transform:translateY(-1px)
   .btn{flex:1 1 auto}
   table,thead,tbody,tr,td{display:block}
   thead{display:none}
-  tr.group-head td{position:static;background:transparent;border:none;padding:12px 2px 6px}
-  tr.group-head:hover td{background:transparent}
+
+  /* 日期分组头：吸顶 + 加大 */
+  tr.group-head td{
+    position:sticky;top:0;z-index:5;background:#eaf1fb;border-radius:9px;
+    padding:10px 10px;border-bottom:1px solid #d9e4f5;
+  }
+  tr.group-head:hover td{background:#eaf1fb}
+  .gwrap{gap:8px}
+  .gd{font-size:15.5px;font-weight:700;color:#1e293b}
+  .gw{font-size:13px;color:#64748b}
+  .gc{font-size:13px}
+  .today-tag{font-size:11px;line-height:17px;padding:0 6px}
+
+  /* 活动卡片：信息分层，字号加大、颜色加深 */
   tbody tr.row{
-    border:1px solid #e9eef6;border-radius:10px;padding:10px 12px;margin-bottom:8px;
-    background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.03);
+    border:1px solid #dfe6f0;border-radius:12px;padding:12px 13px 11px;margin-bottom:9px;
+    background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.04);
   }
   tbody tr.row:hover{background:#fff}
-  tbody tr.row td{border:none;padding:0;width:auto;font-size:13px}
+  tbody tr.row td{border:none;padding:0;width:auto;font-size:14px}
   .c-artist{min-width:0}
-  .c-artist .names{margin-bottom:5px}
-  .c-city,.c-act{display:inline-block;width:auto;font-size:12px;color:#8b97a8}
-  .c-city::after{content:" · ";color:#cbd5e1}
-  .c-remark{margin-top:5px;color:#5b6678;font-size:12.5px}
+  .c-artist .names{gap:7px;margin-bottom:8px}
+  .nm{font-size:14.5px;padding:4px 12px;border-radius:8px;font-weight:500}
+  .wb{font-size:16px;opacity:.55;padding:3px 4px}
+  td.c-remark .nm{font-size:14px;padding:1px 4px}
+  /* 城市 + 类型：一行，清晰可辨 */
+  .c-city,.c-act{display:inline-block;width:auto;font-size:13px;color:#475569;font-weight:500}
+  .c-city::before{content:" ";font-size:12px}
+  .c-city::after{content:"";margin:0}
+  .c-act{margin-left:8px}
+  .c-act .act-badge{font-size:12.5px;padding:2px 9px;line-height:1.5}
+  /* 备注：浅色底块，与上文明确分隔 */
+  .c-remark{
+    margin-top:8px;color:#334155;font-size:13.5px;line-height:1.65;
+    background:#f6f8fb;border-radius:8px;padding:7px 10px;
+  }
+  .c-remark:has(> .muted){background:none;padding:0;margin-top:0}
+
+  /* 7 天弹窗：手机改单列按天分组，信息与电脑端一致 */
   .week-modal{padding:0}
-  .week-box{max-height:100vh;border-radius:0;height:100%;max-width:none}
+  .week-box{max-height:100vh;height:100%;max-width:none;border-radius:0;padding:14px 12px 20px}
+  .week-head{gap:8px}
+  .week-title{font-size:16px}
+  .week-title .range{font-size:12px}
+  .week-nav{width:100%;margin-left:0}
+  .week-nav button{height:38px;padding:0 10px;font-size:13.5px;border-radius:10px;flex:1 1 auto}
+  .week-cal{grid-template-columns:1fr;gap:11px}
+  .wday{min-height:0;overflow:visible;border-radius:12px}
+  .wday-head{position:sticky;top:0;z-index:6;padding:10px 12px;border-radius:12px}
+  .wday-head .wt{font-size:15px;font-weight:700}
+  .wday-head .d{font-size:13px}
+  .wday-head .wc{font-size:12.5px}
+  .wday-body{padding:9px 2px}
+  .witem{padding:10px 12px;background:#fff;border-color:#e2e8f0}
+  .witem .n{font-size:14px;gap:6px}
+  .witem .n .nm{font-size:14.5px;padding:3px 10px;font-weight:500}
+  .witem .n .act-badge{font-size:11.5px;padding:1px 7px}
+  .witem .p{font-size:13px;color:#475569;margin-top:5px}
+  .witem .r{
+    font-size:13px;color:#475569;-webkit-line-clamp:unset;display:block;overflow:visible;
+    margin-top:6px;padding-left:8px;
+  }
+  .witem .r .nm{font-size:14px;padding:0 2px}
+  .wday-empty{padding:16px 0;font-size:12.5px}
+}
+
+/* 回顶按钮（仅手机显示） */
+.backtop{display:none}
+@media (max-width:760px){
+  .backtop{
+    display:flex;position:fixed;right:14px;bottom:20px;width:44px;height:44px;
+    align-items:center;justify-content:center;border-radius:50%;border:none;
+    background:#fff;color:var(--blue);box-shadow:0 6px 18px rgba(15,23,42,.22);
+    font-size:19px;cursor:pointer;z-index:800;opacity:0;pointer-events:none;transition:.2s;
+  }
+  .backtop.show{opacity:1;pointer-events:auto}
 }
 
 /* 水印：压在弹窗之下，更淡更疏 */
@@ -538,6 +615,25 @@ function renderRemark(text) {
   return t;
 }
 
+/* ---------- 活动类型 → 彩色标签（主列表和 7 天弹窗通用） ---------- */
+const ACT_STYLE = [
+  ["地偶",   "#1d6fd8", "#e8f1fe"],
+  ["音乐节", "#0e9488", "#e5f7f5"],
+  ["音乐剧", "#7048e8", "#f1ecfd"],
+  ["舞台剧", "#7048e8", "#f1ecfd"],
+  ["生日会", "#d6336c", "#fdecf3"],
+  ["见面会", "#2b8a3e", "#e9f7ec"],
+  ["演出",   "#e8590c", "#fdeee4"],
+  ["驻唱",   "#c2410c", "#fdeee4"],
+  ["嘉宾",   "#a16207", "#fbf3df"],
+  ["店长",   "#0b8a9d", "#e4f6f9"]
+];
+function actStyle(act) {
+  const a = String(act);
+  for (const [k, c, bg] of ACT_STYLE) if (a.includes(k)) return "color:" + c + ";background:" + bg;
+  return "color:#5b6678;background:#f1f4f9";
+}
+
 function dateLabel(key) {
   const d = toDate(key);
   const sameYear = d.getFullYear() === new Date().getFullYear();
@@ -612,7 +708,7 @@ function render() {
         (href ? '<a class="wb" href="' + esc(href) + '" target="_blank" rel="noopener" title="打开微博原帖">🔗</a>' : "") +
         "</div></td>" +
         '<td class="c-city">' + hl(it.city) + "</td>" +
-        '<td class="c-act">' + hl(it.activity) + "</td>" +
+        '<td class="c-act"><span class="act-badge" style="' + actStyle(it.activity) + '">' + hl(it.activity) + "</span></td>" +
         '<td class="c-remark">' + (it.remark && it.remark !== "/" ? renderRemark(it.remark) : '<span class="muted">—</span>') + "</td>" +
         "</tr>";
     });
@@ -704,7 +800,7 @@ function writeHash() {
   history.replaceState(null, "", location.pathname + location.search + (h ? "#" + h : ""));
 }
 
-/* ---------- 一周活动（全部展开，不折叠） ---------- */
+/* ---------- 一周活动（按自然周固定：周一~周日，信息完整，名字可点击筛选） ---------- */
 let weekOffset = 0;
 const weekModal = $("#weekModal");
 const weekRenderBox = $("#weekRenderBox");
@@ -725,11 +821,10 @@ function buildWeekData(offset) {
     const key = keyOf(d);
     days.push({
       key,
-      title: "星期" + "一二三四五六日"[i],
+      title: "周" + "一二三四五六日"[i],
       dateText: d.getMonth() + 1 + "/" + d.getDate(),
       list: eventList.filter(e => e.date === key)
         .sort((a, b) => a.city.localeCompare(b.city, "zh"))
-        .map(e => ({ name: e.artist, act: e.activity, place: e.city, href: getLink(e) }))
     });
   }
   return days;
@@ -745,20 +840,41 @@ function renderWeek() {
   data.forEach(day => {
     const isToday = day.key === todayKey;
     html += '<div class="wday' + (isToday ? " today" : "") + '">' +
-      '<div class="wday-head">' + day.title + '<div class="d">' + day.dateText + (isToday ? " · 今天" : "") + "</div></div>" +
+      '<div class="wday-head"><span class="wt">' + day.title + '</span>' +
+      '<span class="d">' + day.dateText + '</span>' +
+      '<span class="wc">' + (day.list.length ? day.list.length + " 场" : "") + '</span></div>' +
       '<div class="wday-body">';
     if (!day.list.length) html += '<div class="wday-empty">暂无</div>';
-    else day.list.forEach(act => {
-      const inner = '<div class="n">' + esc(act.name) + "<em>" + esc(act.act) + "</em></div>" +
-        '<div class="p">' + esc(act.place) + "</div>";
-      html += act.href
-        ? '<a class="witem" href="' + esc(act.href) + '" target="_blank" rel="noopener" title="打开微博">' + inner + "</a>"
-        : '<div class="witem">' + inner + "</div>";
+    else day.list.forEach(e => {
+      const nameBtns = String(e.artist).trim().split(/\s+/).map(n =>
+        '<button class="nm wn" data-name="' + esc(n) + '" title="只看 TA 的行程">' + esc(n) + '</button>'
+      ).join(" ");
+      const href = getLink(e);
+      const remark = e.remark && e.remark !== "/" ? '<div class="r">' + renderRemark(e.remark) + '</div>' : "";
+      const inner = '<div class="n">' + nameBtns +
+        '<span class="act-badge" style="' + actStyle(e.activity) + '">' + esc(e.activity) + '</span></div>' +
+        '<div class="p">' + esc(e.city) + '</div>' + remark;
+      html += href
+        ? '<a class="witem" href="' + esc(href) + '" target="_blank" rel="noopener" title="打开微博原帖">' + inner + '</a>'
+        : '<div class="witem">' + inner + '</div>';
     });
-    html += "</div></div>";
+    html += '</div></div>';
   });
   weekRenderBox.innerHTML = html;
 }
+
+/* 弹窗里的名字也可点击：关闭弹窗并筛选该艺人 */
+weekRenderBox.addEventListener("click", ev => {
+  const nm = ev.target.closest(".nm");
+  if (!nm) return;
+  ev.preventDefault();
+  ev.stopPropagation();
+  closeWeek();
+  const n = nm.dataset.name;
+  state.artist = state.artist === n ? "" : n;
+  commit();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 function openWeek() {
   weekOffset = 0;
@@ -778,6 +894,17 @@ $("#weekCur").addEventListener("click", () => { weekOffset = 0; renderWeek(); })
 $("#weekClose").addEventListener("click", closeWeek);
 weekModal.addEventListener("click", e => { if (e.target === weekModal) closeWeek(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && weekModal.classList.contains("show")) closeWeek(); });
+
+/* ---------- 手机回顶按钮 ---------- */
+const backtop = document.createElement("button");
+backtop.className = "backtop";
+backtop.textContent = "↑";
+backtop.title = "回到顶部";
+document.body.appendChild(backtop);
+backtop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+window.addEventListener("scroll", () => {
+  backtop.classList.toggle("show", window.scrollY > 500);
+}, { passive: true });
 
 /* ---------- 初始化 ---------- */
 areaSelect.innerHTML = '<option value="">全部地区</option>' + Object.keys(areaMap).map(a => '<option value="' + a + '">' + a + "</option>").join("");
